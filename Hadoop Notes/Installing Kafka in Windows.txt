@@ -1,0 +1,50 @@
+Installing kafka in Windows and test sample Connection
+
+1) Zookeeper Installation
+- Goto your Zookeeper config directory. 
+- Rename file “zoo_sample.cfg” to “zoo.cfg”
+- Open zoo.cfg in any text editor.
+-  Find & edit dataDir=/tmp/zookeeper to :\zookeeper-3.4.7\data
+-  Add entry in System Environment Variables as well.
+-  Run Zookeeper by opening a new cmd and type zkserver.
+
+2) Kafka installation
+- Go to your Kafka config directory.
+- Edit file “server.properties”
+- Find & edit line “log.dirs=/tmp/kafka-logs” to “log.dir= C:\kafka_2.11-0.9.0.0\kafka-logs”.
+- run the following command to start kafka server and start topics
+	- .\bin\windows\kafka-server-start.bat .\config\server.properties
+	- kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+- run the followiong command to test kafka with cmd producer and topic
+	- kafka-console-producer.bat --broker-list localhost:9092 --topic test
+	- kafka-console-consumer.bat --zookeeper localhost:2181 --topic test
+	
+type anythin in producer and check the same in topics
+
+
+https://dzone.com/articles/running-apache-kafka-on-windows-os
+
+
+Notes:
+1) to check Zookeeper is up and running from windows
+	 telnet localhost 2181
+Ex: https://stackoverflow.com/questions/29106546/how-to-check-if-zookeeper-is-running-or-up-from-command-prompt
+
+
+2) To drop a topic in kafka cluster
+	- Stop Kafka server
+	- Delete the topic directory with rm -rf command
+	
+	- zookeeper-shell.sh host:port
+	- ls /brokers/topics
+	- rmr /brokers/topics/yourtopic
+	
+3) to list kafka topics 
+	kafka-topics.sh --list --zookeeper host:port
+
+	 
+	 
+4) to print Consumer data in console.
+	./kafka-console-consumer.sh –zookeeper localhost:2181 –topic “hadoop” –from-beginning
+	
+	
