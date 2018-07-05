@@ -106,6 +106,15 @@ Kafka for Stream Processing
 	- The streams API builds on the core primitives Kafka provides: it uses the producer and consumer APIs for input, uses Kafka for stateful storage, and uses the same group mechanism for fault tolerance among the stream processor instances
 	
 
+Kafka UseCases:
+	- Messaging
+	- Website Activity Tacking
+	- Metrics
+	- Log Aggrigation
+	- Stream Processing
+	- Event Sourcing
+	- Commit Log's
+
 	
 Notes:
 1) to check the list of running topics in Kafka cluster	
