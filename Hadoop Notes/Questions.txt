@@ -1,0 +1,6 @@
+**********************************************Questions******************************************
+1) Formula to Calculate Partition for Each topic
+2) Principle Behind Electing a leader Partition and Follower partition
+3) How Follower partitions Places in Cluster nodes ?
+4) why to have multiple server.properties file for each broker ?
+5) how to hadle Isr Failover ?

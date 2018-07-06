@@ -116,6 +116,18 @@
 			inter.broker.listener.name 
 			or 
 			inter.broker.security.protocol
+			
+	- Important Configurations from Learning Jounal Youtube blog
+		broker.id
+		port
+		log.dirs
+		zookeeper.connect
+		delete.topic.enable --> Not recommended in PRD
+		auto.create.topics.enable --> Not recommended in PRD
+		default.replication.factor --> Effective when Auto crete topic is enabled / or creatin topic without specifying the property.
+		num.partitions --> Effective when Auto crete topic is enabled / or creatin topic without specifying the property.
+		log.retention.ms --> how long a data should keept in Server (Default 7 Days)
+		log.retention.bytes --> how max i can keep data(applicable by partition level/ Not Topic level)
 	
 - Topic-Level Configs
 	- Configurations pertinent to topics have both a server default as well an optional per-topic override.
