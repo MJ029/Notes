@@ -1,0 +1,154 @@
+*******************************************************************Kafka Producer API*************************************************
+- main package: org.apache.kafka.clients.producer
+- Prducer is a Kafka client that publishes records to the Kafka cluster.
+- The producer is thread safe and sharing a single producer instance across threads will generally be faster than having multiple instances.
+- example of using the producer to send records with strings containing sequential numbers as the key/value pairs.
+	Properties props = new Properties();
+	props.put("bootstrap.servers", "localhost:9092");
+	props.put("acks", "all");
+	props.put("retries", 0);
+	props.put("batch.size", 16384);
+	props.put("linger.ms", 1);
+	props.put("buffer.memory", 33554432);
+	props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+	props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+	Producer<String, String> producer = new KafkaProducer<>(props);
+	for (int i = 0; i < 100; i++)
+		producer.send(new ProducerRecord<String, String>("my-topic", Integer.toString(i), Integer.toString(i)));
+	producer.close();
+- The producer consists of a pool of buffer space that holds records that haven't yet been transmitted to the server as well as a background I/O thread that is responsible for turning these records into requests and transmitting them to the cluster. 
+- Failure to close the producer after use will leak these resources.
+- The send() method is asynchronous. When called it adds the record to a buffer of pending record sends and immediately returns. 
+- This allows the producer to batch together individual records for efficiency.
+- The acks config controls the criteria under which requests are considered complete. 
+- The "all" setting we have specified will result in blocking on the full commit of the record, the slowest but most durable setting.
+- If the request fails, the producer can automatically retry, though since we have specified retries as 0 it won't.
+- Enabling retries also opens up the possibility of duplicates.
+- The producer maintains buffers of unsent records for each partition.
+- These buffers are of a size specified by the batch.size config.
+	- Making this larger can result in more batching, but requires more memory (since we will generally have one of these buffers for each active partition).
+- By default a buffer is available to send immediately even if there is additional unused space in the buffer. 
+- However if you want to reduce the number of requests you can set linger.ms to something greater than 0. 
+	- This will instruct the producer to wait up to that number of milliseconds before sending a request in hope that more records will arrive to fill up the same batch.
+	- This is analogous to Nagle's algorithm in TCP.
+	- For example, in the code snippet above, likely all 100 records would be sent in a single request since we set our linger time to 1 millisecond. 
+	- However this setting would add 1 millisecond of latency to our request waiting for more records to arrive if we didn't fill up the buffer.
+	- Note that records that arrive close together in time will generally batch together even with linger.ms=0 so under heavy load batching will occur regardless of the linger configuration
+	- however setting this to something larger than 0 can lead to fewer, more efficient requests when not under maximal load at the cost of a small amount of latency.
+- The buffer.memory controls the total amount of memory available to the producer for buffering.
+	- If records are sent faster than they can be transmitted to the server then this buffer space will be exhausted. 
+	- When the buffer space is exhausted additional send calls will block.
+	- The threshold for time to block is determined by max.block.ms after which it throws a TimeoutException.
+- The key.serializer and value.serializer instruct how to turn the key and value objects the user provides with their ProducerRecord into bytes. 
+- You can use the included ByteArraySerializer or StringSerializer for simple string or byte types.
+- From Kafka 0.11, the KafkaProducer supports two additional modes: 
+	- idempotent producer
+		- The idempotent producer strengthens Kafka's delivery semantics from at least once to exactly once delivery.
+		- In particular producer retries will no longer introduce duplicates.
+		- The enable.idempotence configuration must be set to true To enable idempotence producer.
+		- If set, the retries config will default to Integer.MAX_VALUE and the acks config will default to all.
+		--- There are no API changes for the idempotent producer, so existing applications will not need to be modified to take advantage of this feature.
+		
+		- To take advantage of the idempotent producer, it is imperative to avoid application level re-sends since these cannot be de-duplicated.
+		- it is imperative to avoid application level re-sends since these cannot be de-duplicated. 
+		- As such, if an application enables idempotence, it is recommended to leave the retries config unset, as it will be defaulted to Integer.MAX_VALUE. 
+		-  Additionally, if a send(ProducerRecord) returns an error even with infinite retries (for instance if the message expires in the buffer before being sent), then it is recommended to shut down the producer and check the contents of the last produced message to ensure that it is not duplicated. 
+		- Finally, the producer can only guarantee idempotence for messages sent within a single session.
+		
+	- transactional producer
+		- The transactional producer allows an application to send messages to multiple partitions (and topics!) atomically.
+		- you must set the transactional.id configuration property To use the transactional producer and the attendant APIs
+		- If the transactional.id is set, idempotence is automatically enabled along with the producer configs which idempotence depends on. 
+		--- Further, topics which are included in transactions should be configured for durability. 
+		--- In particular, the replication.factor should be at least 3, and the min.insync.replicas for these topics should be set to 2.
+		- Finally, in order for transactional guarantees to be realized from end-to-end, the consumers must be configured to read only committed messages as well.
+		--- The main purpose of the transactional.id is to enable transaction recovery across multiple sessions of a single producer instance.
+		- It would typically be derived from the shard identifier in a partitioned, stateful, application. As such, it should be unique to each producer instance running within a partitioned application.
+		- The example below illustrates how the new APIs are meant to be used.
+		- It is similar to the example above, except that all 100 messages are part of a single transaction.
+			Properties props = new Properties();
+			props.put("bootstrap.servers", "localhost:9092");
+			props.put("transactional.id", "my-transactional-id");
+			Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer());
+			producer.initTransactions();
+			try {
+				producer.beginTransaction();
+				for (int i = 0; i < 100; i++)
+					producer.send(new ProducerRecord<>("my-topic", Integer.toString(i), Integer.toString(i)));
+					producer.commitTransaction();
+			} catch (ProducerFencedException | OutOfOrderSequenceException | AuthorizationException e) {
+				// We can't recover from these exceptions, so our only option is to close the producer and exit.
+				producer.close();
+			} catch (KafkaException e) {
+				// For all other exceptions, just abort the transaction and try again.
+				producer.abortTransaction();
+			}
+			producer.close();
+		- As is hinted at in the example, there can be only one open transaction per producer. 
+		- All messages sent between the beginTransaction() and commitTransaction() calls will be part of a single transaction. 
+		- When the transactional.id is specified, all messages sent by the producer must be part of a transaction.
+		--- The transactional producer uses exceptions to communicate error states.
+		- In particular, it is not required to specify callbacks for producer.send() or to call .get() on the returned Future: a KafkaException would be thrown if any of the producer.send() or transactional calls hit an irrecoverable error during a transaction.
+		- By calling producer.abortTransaction() upon receiving a KafkaException we can ensure that any successful writes are marked as aborted, hence keeping the transactional guarantees.
+		- This client can communicate with brokers that are version 0.10.0 or newer.
+		- the transactional APIs need broker versions 0.11.0 or later.
+			- You will receive an UnsupportedVersionException when invoking an API that is not available in the running broker version.
+
+- initTransactions​()
+	- Needs to be called before any other methods when the transactional.id is set in the configuration.
+	- This method does the following:
+		- Ensures any transactions initiated by previous instances of the producer with the same transactional.id are completed. 
+		- If the previous instance had failed with a transaction in progress, it will be aborted.
+		- If the last transaction had begun completion, but not yet finished, this method awaits its completion. 
+		- Gets the internal producer id and epoch, used in all future transactional messages issued by the producer.
+	- java.lang.IllegalStateException, UnsupportedVersionException, AuthorizationException, KafkaException.
+
+- beginTransaction​()
+	- Should be called before the start of each new transaction. 
+	--- Note that prior to the first invocation of this method, you must invoke initTransactions() exactly one time.
+	- java.lang.IllegalStateException, ProducerFencedException, UnsupportedVersionException, AuthorizationException, KafkaException.
+	
+- sendOffsetsToTransaction​(java.util.Map<TopicPartition,OffsetAndMetadata> offsets,
+                                     java.lang.String consumerGroupId)
+	- Sends a list of specified offsets to the consumer group coordinator, and also marks those offsets as part of the current transaction.
+	- These offsets will be considered committed only if the transaction is committed successfully. 
+	- The committed offset should be the next message your application will consume, i.e. lastProcessedMessageOffset + 1.
+	--- This method should be used when you need to batch consumed and produced messages together, typically in a consume-transform-produce pattern. 
+	- Thus, the specified consumerGroupId should be the same as config parameter group.id of the used consumer.
+	--- Note, that the consumer should have enable.auto.commit=false and should also not commit offsets manually (via sync or async commits).
+	- java.lang.IllegalStateException, ProducerFencedException, UnsupportedVersionException, UnsupportedForMessageFormatException, AuthorizationException, KafkaException.
+
+- commitTransaction​()
+	- Commits the ongoing transaction. 
+	- This method will flush any unsent records before actually committing the transaction. 
+	- Further, if any of the send(ProducerRecord) calls which were part of the transaction hit irrecoverable errors, this method will throw the last received exception immediately and the transaction will not be committed. 
+	- So all send(ProducerRecord) calls in a transaction must succeed in order for this method to succeed.
+	- java.lang.IllegalStateException, ProducerFencedException, UnsupportedVersionException, AuthorizationException, KafkaException.
+	
+- abortTransaction​()
+	- Aborts the ongoing transaction. 
+	- Any unflushed produce messages will be aborted when this call is made. 
+	- his call will throw an exception immediately if any prior send(ProducerRecord) calls failed with a ProducerFencedException or an instance of AuthorizationException.
+	- java.lang.IllegalStateException, ProducerFencedException, UnsupportedVersionException, AuthorizationException, KafkaException.
+	
+- public java.util.concurrent.Future<RecordMetadata> send​(ProducerRecord<K,V> record)
+	- Asynchronously send a record to a topic. Equivalent to send(record, null). See send(ProducerRecord, Callback) for details.
+	
+- public java.util.concurrent.Future<RecordMetadata> send​(ProducerRecord<K,V> record, Callback callback)
+	- Asynchronously send a record to a topic and invoke the provided callback when the send has been acknowledged.
+	- The send is asynchronous and this method will return immediately once the record has been stored in the buffer of records waiting to be sent. 
+	- This allows sending many records in parallel without blocking to wait for the response after each one.
+	--- The result of the send is a RecordMetadata specifying the partition the record was sent to, the offset it was assigned and the timestamp of the record.
+	- If CreateTime is used by the topic, the timestamp will be the user provided timestamp or the record send time if the user did not specify a timestamp for the record. 
+	- If LogAppendTime is used for the topic, the timestamp will be the Kafka broker local time when the message is appended.
+	
+														
+			
+Note: after creating a KafkaProducer you must always close() it to avoid resource leaks.
+
+	
+		
+	
+	
+
+	
