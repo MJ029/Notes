@@ -1,6 +1,23 @@
-**********************************************Questions******************************************
+<<<<<<< HEAD
+**********************************************Questions & References******************************************
+Question's:
 1) Formula to Calculate Partition for Each topic
+=======
+**********************************************Questions******************************************
+1) Formula to Calculate Partition for Each topic.
+	-- Answer
+>>>>>>> c84df803e83eab16d4ac21306bc25d75f8f7dabf
 2) Principle Behind Electing a leader Partition and Follower partition
 3) How Follower partitions Places in Cluster nodes ?
 4) why to have multiple server.properties file for each broker ?
 5) how to hadle Isr Failover ?
+
+References:
+1) Complete Intro:
+	https://hackernoon.com/thorough-introduction-to-apache-kafka-6fbf2989bbc1
+2) Kafka End to End:
+	https://www.youtube.com/watch?v=gg-VwXSRnmg&list=PLkz1SCf5iB4enAR00Z46JwY9GGkaS2NON
+3) Kafka Home page:
+	https://kafka.apache.org/intro
+4) Kafka Producer API:
+	https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
