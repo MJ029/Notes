@@ -1,7 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 **********************************************Questions & References******************************************
 Question's:
 1) Formula to Calculate Partition for Each topic
+=======
+**********************************************Questions******************************************
+1) Formula to Calculate Partition for Each topic.
+	-- Answer
+>>>>>>> c84df803e83eab16d4ac21306bc25d75f8f7dabf
 =======
 **********************************************Questions******************************************
 1) Formula to Calculate Partition for Each topic.
