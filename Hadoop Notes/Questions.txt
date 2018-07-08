@@ -5,6 +5,7 @@
 3) How Follower partitions Places in Cluster nodes ?
 4) why to have multiple server.properties file for each broker ?
 5) how to hadle Isr Failover ?
+6) how to read same Partition from Consumers in same Group.
 
 References:
 1) Complete Intro:
@@ -15,3 +16,6 @@ References:
 	https://kafka.apache.org/intro
 4) Kafka Producer API:
 	https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
+5) API Oerview
+	https://kafka.apache.org/11/javadoc/overview-summary.html
+	
