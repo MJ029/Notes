@@ -1,5 +1,6 @@
 **********************************************Questions******************************************
-1) Formula to Calculate Partition for Each topic
+1) Formula to Calculate Partition for Each topic.
+	-- Answer
 2) Principle Behind Electing a leader Partition and Follower partition
 3) How Follower partitions Places in Cluster nodes ?
 4) why to have multiple server.properties file for each broker ?
