@@ -6,6 +6,13 @@
 4) why to have multiple server.properties file for each broker ?
 5) how to hadle Isr Failover ?
 6) how to read same Partition from Consumers in same Group.
+7) how Kafka Distiributing MEssages Evenly in partitions.
+	- Kafka used Round Robbin algorithm to Distribute data evenly in available partitions.
+	
+8) Which one to start first Producer/ Consumer ?
+	- we have to start consumer first
+	
+9) How to retrive old records from Producer/topic 
 
 References:
 1) Complete Intro:

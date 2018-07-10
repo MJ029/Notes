@@ -146,6 +146,17 @@
 			
 Note: after creating a KafkaProducer you must always close() it to avoid resource leaks.
 
+
+Learning Journal:
+	- Producer will save the data in Producer buffer and Later sends to Topic.
+	- Callback && Acknowledgement: Basically 3 approches to send a message to kafka
+		- Fire and Forget. -> provides high throughput, but not suitable for PROD env
+		- Synchronous Sent -> provides low throughput, but not suitable for PROD env
+		- Asynchronous Sent -> provides high throughput, but limited by property <max.in.flight.requests.per.connections>
+	- custom partitioner:
+		- 
+		
+
 	
 		
 	

@@ -30,6 +30,7 @@ Topics and Logs:
 	- The Kafka cluster durably persists all published records—whether or not they have been consumed—using a configurable retention period.
 	- For example, if the retention policy is set to two days, then for the two days after a record is published, it is available for consumption, after which it will be discarded to free up space.
 	- Kafka's performance is effectively constant with respect to data size so storing data for a long time is not a problem.
+	- Kafka will create topic if not Exist.(It is configurable)
 
 Distribution
 	- The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. 
@@ -55,6 +56,9 @@ Consumers
 	- Consumer instances can be in separate processes or on separate machines.
 	- If all the consumer instances have the same consumer group, then the records will effectively be load balanced over the consumer instances.
 	- If all the consumer instances have different consumer groups, then each record will be broadcast to all the consumer processes.
+	- To Locate a message consumer needs to know the following 3 things --> TopicName, PartitionNumber & Offset Number
+	- Max number of Consumer in the Group = Total number of Partitions in the topic
+	- to avaid double reading of records Kafka wont allow multiple consumer to read the same partition.
 	Ex: 
 		- A two server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.
 		- More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". 
@@ -171,4 +175,7 @@ Notes:
 			Topic: my-replicated-topic  Partition: 0    Leader: 2   Replicas: 1,2,0 Isr: 2,0
 	- But the messages are still available for consumption even though the leader that took the writes originally is down
 		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
+	- to subscribe all the topics using Consumer API
+		consumer.subscribe(Pattern.compile("test.*"));
+		
 	
