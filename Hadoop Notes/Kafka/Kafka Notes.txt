@@ -177,5 +177,8 @@ Notes:
 		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
 	- to subscribe all the topics using Consumer API
 		consumer.subscribe(Pattern.compile("test.*"));
+	- Kafka Avro Producer 
+		https://www.youtube.com/watch?v=_6HTHH1NCK0&feature=youtu.be
+		
 		
 	

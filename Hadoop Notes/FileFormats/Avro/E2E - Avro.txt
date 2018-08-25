@@ -1,0 +1,115 @@
+***************************************Avro*************************
+- Avro™ is an open source project that provides data serialization and data exchange services for Apache™ Hadoop®.
+- These services can be used together or independently.
+- Data serialization is a mechanism to translate data in computer environment (like memory buffer, data structures or object state) into binary or textual form that can be transported over network or stored in some persistent storage media.
+- Serialization is termed as marshalling and deserialization is termed as unmarshalling.
+
+What is Avro?
+	- Apache Avro is a language-neutral data serialization system. It was developed by Doug Cutting, the father of Hadoop.
+	- Avro is a preferred tool to serialize data in Hadoop.
+	- Avro has a schema-based system.
+	- A language-independent schema is associated with its read and write operations.
+	- Avro serializes the data which has a built-in schema. 
+	- Avro serializes the data into a compact binary format, which can be deserialized by any application.
+
+Avro Schema's:
+	- Avro strongly depends on its schema.
+	- It allows every data to be written with no prior knowledge of the schema.
+	- It serializes fast and the resulting serialized data is lesser in size.  
+	- Schema is stored along with the Avro data in a file for any further processing.
+- Like Avro, there are other serialization mechanisms in Hadoop such as Sequence Files, Protocol Buffers, and Thrift.
+- Avro supports the following functionalities:
+	- static & Dynamic schema
+	- Built into Hadoop
+	- Schema in JSON
+	- language-neutral data serialization system.
+	- Avro creates binary structured format that is both compressible and splittable.
+	- Hence it can be efficiently used as the input to Hadoop MapReduce jobs.
+	- Avro provides rich data structures.
+	- Avro schemas defined in JSON, facilitate implementation in the languages that already have JSON libraries.
+	- Avro creates a self-describing file named Avro Data File, in which it stores data along with its schema in the metadata section.
+	
+	
+	- Avro, being a schema-based serialization utility, accepts schemas as input.
+	- These schemas describe the following details
+		- type of file (record by default)
+		- location of record
+		- name of the record
+		- fields in the record with their corresponding data types
+	- The Avro schema is created in JavaScript Object Notation (JSON) document format, which is a lightweight text-based data interchange format. It is created in one of the following ways −
+		- A JSON string
+		- A JSON object
+		- A JSON array
+		
+Ex Avro schema:
+
+{
+   "type" : "record",
+   "namespace" : "Tutorialspoint",
+   "name" : "Employee",
+   "fields" : [
+      { "name" : "Name" , "type" : "string" },
+      { "name" : "Age" , "type" : "int" }
+   ]
+}
+
+Data Types of Avro
+	- premitive:
+		- null	Null is a type having no value.
+		- int	32-bit signed integer.
+		- long	64-bit signed integer.
+		- float	single precision (32-bit) IEEE 754 floating-point number.
+		- double	double precision (64-bit) IEEE 754 floating-point number.
+		- bytes	sequence of 8-bit unsigned bytes.
+		- string	Unicode character sequence.
+	- complex:
+		- Along with primitive data types, Avro provides six complex data types namely Records, Enums, Arrays, Maps, Unions, and Fixed.
+		- Record: As we know already by now, a record data type in Avro is a collection of multiple attributes. It supports the following attributes.
+			- nameamespace,type,fields
+		- Enum: An enumeration is a list of items in a collection, Avro enumeration supports the following attributes −
+			- name − The value of this field holds the name of the enumeration.
+			- namespace − The value of this field contains the string that qualifies the name of the Enumeration.	
+			- symbols − The value of this field holds the enum's symbols as an array of names.
+			- Ex: 
+			{
+				"type" : "enum",
+				"name" : "Numbers", "namespace": "data", "symbols" : [ "ONE", "TWO", "THREE", "FOUR" ]
+			}
+		- Arrays: This data type defines an array field having a single attribute items. This items attribute specifies the type of items in the array.
+			- Ex: { " type " : " array ", " items " : " int " }
+		- Maps: The map data type is an array of key-value pairs.
+			- The values attribute holds the data type of the content of map.
+			- Avro map values are implicitly taken as strings.
+			- Ex: {"type" : "map", "values" : "int"}
+		- Unions: A union datatype is used whenever the field has one or more datatypes.
+			- They are represented as JSON arrays. 
+			- For example, if a field that could be either an int or null, then the union is represented as ["int", "null"].
+			- Ex: 
+			{ 
+			   "type" : "record", 
+			   "namespace" : "tutorialspoint", 
+			   "name" : "empdetails ", 
+			   "fields" : 
+			   [ 
+				  { "name" : "experience", "type": ["int", "null"] }, { "name" : "age", "type": "int" } 
+			   ] 
+			}
+		- Fixed: This data type is used to declare a fixed-sized field that can be used for storing binary data.
+		- It has field name and data as attributes. Name holds the name of the field, and size holds the size of the field.
+		- Ex: { "type" : "fixed" , "name" : "bdata", "size" : 1048576}
+		
+Note: 
+Serialization:
+	- Java provides a mechanism, called object serialization where an object can be represented as a sequence of bytes that includes the object's data as well as information about the object's type and the types of data stored in the object.
+	- After a serialized object is written into a file, it can be read from the file and deserialized.
+	- That is, the type information and bytes that represent the object and its data can be used to recreate the object in memory.
+	- ObjectInputStream and ObjectOutputStream classes are used to serialize and deserialize an object respectively in Java.
+	
+
+	
+Reference:
+https://cwiki.apache.org/confluence/display/Hive/AvroSerDe
+https://dzone.com/articles/kafka-avro-scala-example
+https://community.hortonworks.com/questions/32385/how-to-create-and-store-the-avro-files-in-hive-tab.html
+https://acadgild.com/blog/avro-hive
+http://discuss.itversity.com/t/creating-hive-table-in-avro-format/2269/10

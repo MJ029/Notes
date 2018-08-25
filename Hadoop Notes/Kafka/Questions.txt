@@ -13,6 +13,9 @@
 	- we have to start consumer first
 	
 9) How to retrive old records from Producer/topic 
+10) Commonly used Key and Value Serializer in Kafka
+11) 
+
 
 References:
 1) Complete Intro:

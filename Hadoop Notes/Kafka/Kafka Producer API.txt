@@ -4,14 +4,15 @@
 - The producer is thread safe and sharing a single producer instance across threads will generally be faster than having multiple instances.
 - example of using the producer to send records with strings containing sequential numbers as the key/value pairs.
 	Properties props = new Properties();
-	props.put("bootstrap.servers", "localhost:9092");
+	props.put("bootstrap.servers", "localhost:9092");  --> Imp for basic confgurations
 	props.put("acks", "all");
 	props.put("retries", 0);
 	props.put("batch.size", 16384);
 	props.put("linger.ms", 1);
 	props.put("buffer.memory", 33554432);
-	props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-	props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+	props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer"); --> Imp for basic confgurations
+	props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer"); --> Imp for basic confgurations
+	props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer"); --> Imp for basic confgurations
 	Producer<String, String> producer = new KafkaProducer<>(props);
 	for (int i = 0; i < 100; i++)
 		producer.send(new ProducerRecord<String, String>("my-topic", Integer.toString(i), Integer.toString(i)));

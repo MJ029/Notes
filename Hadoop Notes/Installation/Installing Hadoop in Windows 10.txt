@@ -1,0 +1,3 @@
+*****************************Installing Hadoop in Windows 10******************************
+https://github.com/MuhammadBilalYar/Hadoop-On-Window/wiki/Step-by-step-Hadoop-2.8.0-installation-on-Window-10
+http://hadooponwindows10.blogspot.com/2016/07/apache-hadoop-271-installation-on-win10.html

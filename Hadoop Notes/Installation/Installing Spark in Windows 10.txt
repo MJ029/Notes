@@ -1,0 +1,2 @@
+*********************************Installing Spark in Windows 10************************
+https://hernandezpaul.wordpress.com/2016/01/24/apache-spark-installation-on-windows-10/
