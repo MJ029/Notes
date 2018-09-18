@@ -107,9 +107,20 @@ Serialization:
 	
 
 	
+- Avro uses JSON for defining data types and protocols and serializes data in a compact binary format.
+- Avro relies on a schema. When Avro data is read, the schema used for writing it is always present.
+- This permits each datum to be written with no per-value overheads, making serialization both fast and small.
+- This also facilitates using it with dynamic scripting languages, since data together with its schema, is fully self-describing.
+- When Avro is used in RPC, the client and server exchange schemas in the connection handshake. (This can be optimized so that, for most calls, no schemas are actually transmitted.) Since both client and server both have the other’s full schema, correspondence between same named fields, missing fields, extra fields, etc. can all be easily resolved.
+
+
+	
 Reference:
 https://cwiki.apache.org/confluence/display/Hive/AvroSerDe
 https://dzone.com/articles/kafka-avro-scala-example
 https://community.hortonworks.com/questions/32385/how-to-create-and-store-the-avro-files-in-hive-tab.html
 https://acadgild.com/blog/avro-hive
 http://discuss.itversity.com/t/creating-hive-table-in-avro-format/2269/10
+
+
+

@@ -184,3 +184,16 @@ The primary components of NiFi on the JVM are as follows:
 		./nifi.sh stop - to stop the service background
 		./nifi.sh status - to check the status of the nifi service
 		./nifi.sh run - to start the nifi service foreground and wait for CTRL+C to stor the Nifi
+***********************************************************
+*****************Creating custom Nifi package**************
+Steps to create new Nifi maven project
+1) mvn archetype:generate
+2)type "nifi" and search for nifi realted bundles
+3) from the output search for " org.apache.nifi:nifi-processor-bundle-archetype" and enter the respective number
+4) choose respective number for the version you are expecting
+5) type the required Details
+
+
+Ref:
+	https://community.hortonworks.com/articles/4318/build-custom-nifi-processor.htmlRef:
+**********************************************************
