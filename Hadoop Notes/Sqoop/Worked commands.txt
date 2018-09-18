@@ -1,0 +1,53 @@
+With Mysql:
+
+create table patient(pid int, pname varchar(100), drug varchar(100), gender varchar(20),amount float(10,2),ts TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+insert into patient(pid,pname,drug,gender,amount) values(1,'Bradon Bunker','avil','female',525);
+insert into patient(pid,pname,drug,gender,amount) values(2,'Veda Hopkins','avil','male',633);
+insert into patient(pid,pname,drug,gender,amount) values(3,'Zia Underwood','paracetamol','male',980);
+insert into patient(pid,pname,drug,gender,amount) values(4,'Austin Mayer','paracetamol','female',338);
+insert into patient(pid,pname,drug,gender,amount) values(5,'Mara Higgins','avil','female',153);
+insert into patient(pid,pname,drug,gender,amount) values(6,'Sybill Crosby','avil','male',193);
+insert into patient(pid,pname,drug,gender,amount) values(7,'Tyler Rosales','paracetamol','male',778);
+insert into patient(pid,pname,drug,gender,amount) values(8,'Ivan Hale','avil','female',454);
+insert into patient(pid,pname,drug,gender,amount) values(9,'Alika Gilmore','paracetamol','female',833);
+insert into patient(pid,pname,drug,gender,amount) values(10,'Len Burgess','metacin','male',325);
+
+insert into patient(pid,pname,drug,gender,amount) values(11,'Admin','tablet','male',178);
+insert into patient(pid,pname,drug,gender,amount) values(12,'Len Burgess','brokin','male',836);
+insert into patient(pid,pname,drug,gender,amount) values(13,'Len Burgess','Alextin','female',938);
+insert into patient(pid,pname,drug,gender,amount) values(14,'Burger','Alextin','female',401);
+
+bin/sqoop eval --connect jdbc:mysql://192.168.152.131:3306/retail_db --username root --password cloudera --query "select * from customers"
+
+bin/sqoop eval --connect jdbc:mysql://localhost:3306/test --username root --password iamadmin --query "select * from patient"
+bin/sqoop list-databases --connect jdbc:mysql://localhost/information_schema --username root --password -iamadmin 
+bin/sqoop list-tables --connect jdbc:mysql://localhost/information_schema --username root --password iamadmin
+bin/sqoop list-tables --connect jdbc:mysql://localhost/Sqoop_Test --username root --password iamadmin
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --table patient --username root --password iamadmin -m 1
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --table patient --username root --password iamadmin --split-by gender -m 2 --target-dir '/Sqoop/Output/hdfs/patient'
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --username root --password iamadmin --query 'select * from patient where drug = "avil" AND $CONDITIONS'  -m 1 --target-dir '/Sqoop/Output/hdfs/patient0'
+
+bin/sqoop import --connect jdbc:mysql://localhost/test --username root --password iamadmin --table patient --hive-table hive_test.patient_mysql --create-hive-table --hive-import -m 1 --target-dir '/Sqoop/Output/hdfs/patient_Hive'
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --username root --password iamadmin --table patient --hive-table hive_test.patient --create-hive-table --hive-overwrite -m 1 --target-dir '/Sqoop/Output/hdfs/patient_Hive123'
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --username root -P --table patient --hive-import --create-hive-table --hive-table hive_test.pat --target-dir '/Sample/1'
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --username root -P --table patient --hive-import --create-hive-table --hive-table hive_test.pat --target-dir '/Sample/0' -m 1
+
+bin/sqoop import --connect jdbc:mysql://localhost/DB_Test --username root -P --table patient -hbase-table sqoop_hbase --column-family cf1 --hbase-row-key pid --hbase-create-table -m 1
+bin/sqoop import --connect jdbc:mysql://localhost/Sqoop_Test --username root -P --table patient --check-column pid --incremental append --last-value 0 --hbase-table sqoop_hbase --column-family cf1 --hbase-row-key pid --hbase-create-table -m 1
+
+job for incremental loading into Hbase table:
+bin/sqoop job --create inc_imp_patient_hbase -- import --connect jdbc:mysql://localhost/test --username root -P --table patient --check-column pid --incremental append --last-value 0 --hbase-table sqoop_hbase --column-family cf1 --hbase-row-key pid  -m 1
+
+bin/sqoop job --exec inc_imp_patient_hbase
+
+job for incremental loading into Hive Table:
+bin/sqoop job --create inc_imp_patient_hive -- import --connect jdbc:mysql://localhost:3306/test --username root -P --table patient --check-column pid --incremental append --last-value 0 --hive-table hive_test.patient_mysql --hive-import -m 1
+bin/sqoop job --exec inc_imp_patient_hive
+bin/sqoop job --delete inc_imp_patient_hive
+
+bin/sqoop job --create inc_imp_ts -- import --connect jdbc:mysql://localhost/test --username root --password iamadmin --table patient --check-column ts --incremental lastmodified --hive-import --hive-table hive_test.patient_mysql --target-dir /Sqoop/Output/hdfs/patient_Hive -m 1
+bin/sqoop job --exec inc_imp_ts
+bin/sqoop job --delete inc_imp_ts
+
+
+create external table patient(pid int,pname string,drug string,gender string,amount float) row format delimited fields terminated by ',' lines terminated by '\n' stored as textfile location '/Sqoop/Ooutput/Hive'

@@ -1,0 +1,714 @@
+************************************MongoDB*******************************
+1) Database: 
+	- Database is a physical container for collections.
+	- Each database gets its own set of files on the file system.
+	- A single MongoDB server typically has multiple databases.
+	- use Mongo_Test  -> to create a databse use the following.
+	- db -> to show selected DB
+	- show dbs to check databse list.
+	- db.dropDatabases() -> to drop database.
+	- 
+2) Collection:
+	- Collection is a group of MongoDB documents. 
+	- It is the equivalent of an RDBMS table. 
+	- A collection exists within a single database. 
+	- Collections do not enforce a schema. 
+	- Documents within a collection can have different fields. 
+	- Typically, all documents in a collection are of similar or related purpose.
+	- db.createCollection(name,option) -> to create a COllection in a database
+		ex: db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } )
+	- name -> name of the collection
+	- option -> 	1) capped(boolean)
+			2) autoIndexid(boolean)
+			3) size
+			4) max
+	- show Test_collection -> to show the collection
+	- db.Test_collection.Drop() -> to drop the collection.
+	- to insert a value in a collection
+		> db.test.insert({name:"Manikandan Jeyabal",Father_Name:"Jeyabal",email:"manikandanjeyabal@gmail.com",phone:9791423428,hobbies:["Bike Riding","Mount Climbing"]}
+	- >db.test.insert([
+   {
+      title: 'MongoDB Overview', 
+      description: 'MongoDB is no sql database',
+      by: 'tutorials point',
+      url: 'http://www.tutorialspoint.com',
+      tags: ['mongodb', 'database', 'NoSQL'],
+      likes: 100
+   },
+	
+   {
+      title: 'NoSQL Database', 
+      description: 'NoSQL database doesn't have tables',
+      by: 'tutorials point',
+      url: 'http://www.tutorialspoint.com',
+      tags: ['mongodb', 'database', 'NoSQL'],
+      likes: 20, 
+      comments: [	
+         {
+            user:'user1',
+            message: 'My first comment',
+            dateCreated: new Date(2013,11,10,2,35),
+            like: 0 
+         }
+      ]
+  }
+])
+	- to insert a document we can use db.test.post(document) also.
+	- 
+
+
+
+3) Document:
+	- A document is a set of key-value pairs. 
+	- Documents have dynamic schema. 
+	- Dynamic schema means that documents in the same collection do not need to have the same set of fields or structure, and common fields in a collection's documents may hold different types of data.
+	- Projection in Mongodb 
+		db.test.find() ->  like select statement.
+		db.mycol.find({},{"title":1,_id:0}) -> will select all title alone.
+		db.mycol.find({},{"title":1,_id:0}).limit(2) -> Like limit in Hive and pig and top * from RDBMS
+		db.mycol.find({},{"title":1,_id:0}).limit(1).skip(1) -> To skip some records from selection
+	- db.test.find().pretty() -> to show the select statement in structured way.
+	- Where caluse operations in MongoDB.
+		1) Equality - {<key>:<value>} - db.test.find({"name":"manikandan Jeyabal"}).pretty()
+		2) Less Than - {<key>:{$lt:<value>}} - db.collection.find({"salary":{$lt:15000}}).pretty()
+		3) Less Than Equals - {<key>:{$lte:<value>}} - db.collection.find({"salary":{$lte:15000}}).pretty()
+		4) Greater Than - {<key>:{$t:<value>}} - db.collection.find({"salary":{$gt:15000}}).pretty()
+		5) Greater Than Equals - {<key>:{$gte:<value>}} - db.collection.find({"salary":{$gte:15000}}).pretty()
+		6) Not Equals - {<key>:{$ne:<value>}} - db.collection.find({"likes":{$ne:50}}).pretty()
+	- AND Clause in MongoDB.
+		1) db.collection.find({$and:[{name:"Mani"}, {Father_Name:"Jeyabal"}]}).pretty()
+	- OR in MongoDB.
+		1) db.collection.find({$or: [{name:"Mani"}, {Father_Name:"Jeyabal"}]}).pretty()
+	- Update and Save methods.
+		1) Update() - normal update like RDBMS.
+			to update single Document -> db.collection.update({'name':'MJ'},{$set:{'name':'Son Of Kalyani'}})
+			to update Multi Documents -> db.collection.update({'name':'MJ'},{$set:{'name':'Son Of Kalyani'}},{multi:true})
+		2) Save() - Replace the Existing document with new document(like overwrite.)
+			db.mycol.save({"_id" : ObjectId(5983548781331adf45ec7), "title":"Tutorials Point New Topic","by":"Tutorials Point"})
+	- to remove onely one record a Method. like delete in RDBMS
+		 db.collection.remove({'name':'MAnikandan Jeyabal'})
+	- to remove all docs like Delete all or truncate in RDBMS.
+		db.mycol.remove()
+
+	- Sorting Recorde. 1 is used for ascending order while -1 is used for descending order.
+		db.mycol.find({},{"title":1,_id:0}).sort({"title":-1})	
+
+4) Relation b/w RDBMS and MongoDB
+
+	RDBMS				MongoDB
+	Database			Database
+	table				Collections
+	Tuple/Row			Document
+	column				Field
+	Table Join			Embedded Documents
+	Primary Key			Primary Key(default key id provided by MongoDb itself.)
+
+- _id is a 12 bytes hexadecimal number which assures the uniqueness of every document.
+- You can provide _id while inserting the document.
+- If you don’t provide then MongoDB provides a unique id for every document.
+- These 12 bytes 
+	- first 4 bytes for the current timestamp, 
+	- next 3 bytes for machine id, 
+	- next 2 bytes for process id of MongoDB server and 
+	- remaining 3 bytes are simple incremental VALUE.
+
+
+5) Data types in MongodDB:
+	1) String - This is the most commonly used datatype to store the data. String in MongoDB must be UTF-8 valid.
+	2) Integer - This type is used to store a numerical value. Integer can be 32 bit or 64 bit depending upon your server.
+	3) Boolean - This type is used to store a boolean (true/ false) value.
+	4) Double - This type is used to store floating point values.
+	5) Min/ Max keys - This type is used to compare a value against the lowest and highest BSON elements.
+	6) Arrays - This type is used to store arrays or list or multiple values into one key.
+	7) Timestamp - ctimestamp. This can be handy for recording when a document has been modified or added.
+	8) Object - This datatype is used for embedded documents.
+	9) Null - This type is used to store a Null value.
+	10) Symbol - This datatype is used identically to a string; however, it's generally reserved for languages that use a specific symbol type.
+	11) Date - This datatype is used to store the current date or time in UNIX time format. 
+		 - You can specify your own date time by creating object of Date and passing day, month, year into it.
+	12) Object ID - This datatype is used to store the document’s ID.
+	13) Binary data - This datatype is used to store binary data.
+	14) Code - This datatype is used to store JavaScript code into the document.
+	15) Regular expression - This datatype is used to store regular expression.
+
+6) Indexing in Mongodb
+	- Create index in MongoDb. 1 is used for ascending order while -1 is used for descending order.
+		db.mycol.ensureIndex({"title":1})
+	Option parameters:
+	1) background (Boolean) 
+	- Builds the index in the background so that building an index does not block other database activities. 
+	- Specify true to build in the background. 
+	- The default value is false.
+	2) unique (Boolean)
+	- Creates a unique index so that the collection will not accept insertion of documents where the index key or keys match an existing value in the index.
+	- Specify true to create a unique index. 
+	- The default value is false.
+	3) name (String) 
+	- The name of the index. 
+	- If unspecified, MongoDB generates an index name by concatenating the names of the indexed fields and the sort order.
+	4) dropDups (Boolean)
+	- Creates a unique index on a field that may have duplicates.
+	- MongoDB indexes only the first occurrence of a key and removes all documents from the collection that contain subsequent occurrences of that key. 	
+	- Specify true to create unique index. 
+	- The default value is false.
+	5) sparse (Boolean)
+	- If true, the index only references documents with the specified field. 
+	- These indexes use less space but behave differently in some situations (particularly sorts). 
+	- The default value is false.
+	6) expireAfterSeconds (integer)
+	- Specifies a value, in seconds, as a TTL to control how long MongoDB retains documents in this collection.
+	7) v (index version)
+	- The index version number. 
+	- The default index version depends on the version of MongoDB running when creating the index.
+	8) weights (document)
+	- The weight is a number ranging from 1 to 99,999 and denotes the significance of the field relative to the other indexed fields in terms of the score.
+	9) default_language (string)
+	- For a text index, the language that determines the list of stop words and the rules for the stemmer and tokenizer.
+	- The default value is english.
+	10) language_override (string)
+	- For a text index, specify the name of the field in the document that contains, the language to override the default language.
+	- The default value is language.
+
+7) Aggregation:
+- Aggrifation in MongoDB. example of select by_user, count(*) from mycol group by by_user.
+		db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : 1}}}])
+{
+   "result" : [
+      {
+         "_id" : "tutorials point",
+         "num_tutorial" : 2
+      },
+      {
+         "_id" : "Neo4j",
+         "num_tutorial" : 1
+      }
+   ],
+   "ok" : 1
+}
+
+	- Expressions in Aggrigation operation.
+		1) $sum - Sums up the defined value from all documents in the collection.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$sum : "$likes"}}}])
+		2) $avg - Calculates the average of all given values from all documents in the collection.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$avg : "$likes"}}}])
+		3) $min	- Gets the minimum of the corresponding values from all documents in the collection.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$min : "$likes"}}}])
+		4) $max - Gets the maximum of the corresponding values from all documents in the collection.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", num_tutorial : {$max : "$likes"}}}])
+		5) $push - Inserts the value to an array in the resulting document.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", url : {$push: "$url"}}}])
+		6) $addToSet - Inserts the value to an array in the resulting document but does not create duplicates.
+			- db.mycol.aggregate([{$group : {_id : "$by_user", url : {$addToSet : "$url"}}}])
+		7) $first - Gets the first document from the source documents according to the grouping.
+			  - Typically this makes only sense together with some previously applied “$sort”-stage
+			  - db.mycol.aggregate([{$group : {_id : "$by_user", first_url : {$first : "$url"}}}])
+		8) $last - Gets the last document from the source documents according to the grouping.
+			 - Typically this makes only sense together with some previously applied “$sort”-stage.
+			 - db.mycol.aggregate([{$group : {_id : "$by_user", last_url : {$last : "$url"}}}])
+
+	- Pipeline Concept: In UNIX command, shell pipeline means the possibility to execute an operation on some input and use the output as the input for the next command and so on. 
+	- MongoDB also supports same concept in aggregation framework. 
+	- There is a set of possible stages and each of those is taken as a set of documents as an input and produces a resulting set of documents	
+	- This can then in turn be used for the next stage and so on.
+	- Following are the possible stages in aggregation framework\
+		- $project - Used to select some specific fields from a collection.
+		- $match - This is a filtering operation and thus this can reduce the amount of documents that are given as input to the next stage.
+		- $group - This does the actual aggregation as discussed above.
+		- $sort - Sorts the documents.
+		- $skip - With this, it is possible to skip forward in the list of documents for a given amount of documents.
+		- $limit - This limits the amount of documents to look at, by the given number starting from the current positions.
+		- $unwind - This is used to unwind document that are using arrays. When using an array, the data is kind of pre-joined and this operation will be undone 
+		  with this to have individual documents again. Thus with this stage we will increase the amount of documents for the next stage.
+
+8) Replication:
+	- Replication is the process of synchronizing data across multiple servers. 
+	- Replication provides redundancy and increases data availability with multiple copies of data on different database servers.
+	- Replication protects a database from the loss of a single server.
+	- Replication also allows you to recover from hardware failure and service interruptions.
+	- With additional copies of the data, you can dedicate one to disaster recovery, reporting, or backup.
+
+	- MongoDB achieves replication by the use of replica set.
+	- A replica set is a group of mongod instances that host the same data set.
+	- In a replica, one node is primary node that receives all write operations.
+	- All other instances, such as secondaries, apply operations from the primary so that they have the same data set. 
+	- Replica set can have only one primary node.
+
+	- Replica set is a group of two or more nodes (generally minimum 3 nodes are required).
+	- In a replica set, one node is primary node and remaining nodes are secondary.
+	- All data replicates from primary to secondary node.
+	- At the time of automatic failover or maintenance, election establishes for primary and a new primary node is elected.
+	- After the recovery of failed node, it again join the replica set and works as a secondary node.
+
+How to setup Replica in MongoDB.
+	- Shutdown already running MongoDB server.
+	- Start the MongoDB server by specifying -- replSet option. Following is the basic syntax of --replSet
+		mongod --port "PORT" --dbpath "YOUR_DB_DATA_PATH" --replSet "REPLICA_SET_INSTANCE_NAME"
+		Ex: mongod --port 27017 --dbpath "D:\set up\mongodb\data" --replSet rs0
+	- It will start a mongod instance with the name rs0, on port 27017.
+	- Now start the command prompt and connect to this mongod instance
+	- In Mongo client, issue the command rs.initiate() to initiate a new replica set.
+	- To check the replica set configuration, issue the command rs.conf(). 
+	- To check the status of replica set issue the command rs.status().
+
+Add Members to Replica Set
+	- To add members to replica set, start mongod instances on multiple machines. 
+	- Now start a mongo client and issue a command rs.add().
+	- rs.add(HOST_NAME:PORT) Ex: rs.add("mongod1.net:27017")
+	- To check whether you are connected to primary or not, issue the command db.isMaster() in mongo client.
+
+
+9) Sharding
+	- Sharding is the process of storing data records across multiple machines and it is MongoDB's approach to meeting the demands of data growth.
+	- As the size of the data increases, a single machine may not be sufficient to store the data nor provide an acceptable read and write throughput.
+	- Sharding solves the problem with horizontal scaling.
+	- With sharding, you add more machines to support data growth and the demands of read and write operations.
+	- Single replica set has limitation of 12 nodes
+	- Vertical scaling is too expensive
+	
+	Shards - Shards are used to store data. They provide high availability and data consistency. In production environment, each shard is a separate replica set.
+	Config Servers - Config servers store the cluster's metadata.
+			- This data contains a mapping of the cluster's data set to the shards.
+			- The query router uses this metadata to target operations to specific shards. 
+			- In production environment, sharded clusters have exactly 3 config servers.
+	Query Routers - Query routers are basically mongo instances
+			- interface with client applications and direct operations to the appropriate shard.
+			- he query router processes and targets the operations to shards and then returns results to the clients.
+			- A sharded cluster can contain more than one query router to divide the client request load. 
+			- A client sends requests to one query router. Generally, a sharded cluster have many query routers.
+
+
+10) Dump MongoDB Data
+	- To create backup of database in MongoDB, you should use mongodump command.
+	- This command will dump the entire data of your server into the dump directory. 
+	- There are many options available by which you can limit the amount of data or create backup of your remote server.
+	- mongodump --host HOST_NAME --port PORT_NUMBER
+		- This commmand will backup all databases of specified mongod instance.
+		- Ex: mongodump --host tutorialspoint.com --port 27017
+	- mongodump --dbpath DB_PATH --out BACKUP_DIRECTORY
+		- This command will backup only specified database at specified path.
+		- Ex: mongodump --dbpath /data/db/ --out /data/backup/
+	- mongodump --collection COLLECTION --db DB_NAME
+		- This command will backup only specified collection of specified database.
+		- Ex: mongodump --collection mycol --db test
+
+11) Restore MongoDB data
+	- To restore backup data MongoDB's mongorestore command is used. 
+
+
+12) JAVA JDBC Connectivity:
+	- Before you start using MongoDB in your Java programs, you need to make sure that you have MongoDB JDBC driver and Java set up on the machine.
+	- You need to download the jar from the path Download mongo.jar. Make sure to download latest release of it.
+	- You need to include the mongo.jar into your classpath.
+
+Sample mongo connectivity program................
+
+import com.mongodb.MongoClient;
+import com.mongodb.MongoException;
+import com.mongodb.WriteConcern;
+
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.DBCursor;
+
+import com.mongodb.ServerAddress;
+import java.util.Arrays;
+
+public class MongoDBJDBC {
+
+   public static void main( String args[] ) {
+	
+      try{
+		
+         // To connect to mongodb server
+         MongoClient mongoClient = new MongoClient( "localhost" , 27017 );
+			
+         // Now connect to your databases
+         DB db = mongoClient.getDB( "test" );
+         System.out.println("Connect to database successfully");
+         boolean auth = db.authenticate(myUserName, myPassword);
+         System.out.println("Authentication: "+auth);
+	
+	 //Create a Collection
+ 	 DBCollection coll = db.createCollection("mycol");
+         System.out.println("Collection created successfully");
+	
+	 //Getting or selecting a collection
+	 DBCollection coll = db.getCollection("mycol");
+         System.out.println("Collection mycol selected successfully");
+	
+	 //Insert a document
+	 BasicDBObject doc = new BasicDBObject("title", "MongoDB").
+            append("description", "database").
+            append("likes", 100).
+            append("url", "http://www.tutorialspoint.com/mongodb/").
+            append("by", "tutorials point");
+				
+         coll.insert(doc);
+         System.out.println("Document inserted successfully");
+
+	 //Retrieve All Documents
+	 DBCursor cursor = coll.find();
+         int i = 1;
+			
+         while (cursor.hasNext()) { 
+            System.out.println("Inserted Document: "+i); 
+            System.out.println(cursor.next()); 
+            i++;
+         }
+
+	 //Update Document
+	 DBCursor cursor = coll.find();
+			
+         while (cursor.hasNext()) { 
+            DBObject updateDocument = cursor.next();
+            updateDocument.put("likes","200")
+            col1.update(updateDocument); 
+         }
+			
+         System.out.println("Document updated successfully");
+         cursor = coll.find();
+			
+         int i = 1;
+			
+         while (cursor.hasNext()) { 
+            System.out.println("Updated Document: "+i); 
+            System.out.println(cursor.next()); 
+            i++;
+         }
+	
+	//Delete First Document
+	DBObject myDoc = coll.findOne();
+         col1.remove(myDoc);
+         DBCursor cursor = coll.find();
+         int i = 1;
+			
+         while (cursor.hasNext()) { 
+            System.out.println("Inserted Document: "+i); 
+            System.out.println(cursor.next()); 
+            i++;
+         }
+
+      }catch(Exception e){
+         System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+      }
+   }
+}
+
+
+13) Relations in Mongodb.
+	- Relationships in MongoDB represent how various documents are logically related to each other. 
+	- Relationships can be modeled via Embedded and Referenced approaches. 
+	- Such relationships can be either 1:1, 1:N, N:1 or N:N.
+
+	- Let us consider the case of storing addresses for users. So, one user can have multiple addresses making this a 1:N relationship.
+
+	1) Modeling Embedded Relationships
+
+{
+   "_id":ObjectId("52ffc33cd85242f436000001"),
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin",
+   "address": [
+      {
+         "building": "22 A, Indiana Apt",
+         "pincode": 123456,
+         "city": "Los Angeles",
+         "state": "California"
+      },
+      {
+         "building": "170 A, Acropolis Apt",
+         "pincode": 456789,
+         "city": "Chicago",
+         "state": "Illinois"
+      }
+   ]
+} 
+
+	- This approach maintains all the related data in a single document, which makes it easy to retrieve and maintain.
+	- The whole document can be retrieved in a single query such as
+		Ex: db.users.findOne({"name":"Tom Benzamin"},{"address":1})
+	- Main drawback is that if the embedded document keeps on growing too much in size, it can impact the read/write performance.
+
+	2) Modeling Referenced Relationships
+	- This is the approach of designing normalized relationship. 
+	- In this approach, both the user and address documents will be maintained separately but the user document will contain a field that will reference the 
+	  address document's id field.
+
+{
+   "_id":ObjectId("52ffc33cd85242f436000001"),
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin",
+   "address_ids": [
+      ObjectId("52ffc4a5d85242602e000000"),
+      ObjectId("52ffc4a5d85242602e000001")
+   ]
+}
+
+var result = db.users.findOne({"name":"Tom Benzamin"},{"address_ids":1})
+var addresses = db.address.find({"_id":{"$in":result["address_ids"]}})
+
+14) Database References:
+	- to implement a normalized database structure in MongoDB, we use the concept of Referenced Relationships also referred to as Manual References 
+	  in which we manually store the referenced document's id inside other document.
+	- However, in cases where a document contains references from different collections, we can use MongoDB DBRefs.
+
+DBRefs vs Manual References
+	- consider a database where we are storing different types of addresses (home, office, mailing, etc.) 
+	  in different collections (address_home, address_office, address_mailing, etc).
+	- There are three fields in DBRefs
+		$ref - This field specifies the collection of the referenced document
+		$id - This field specifies the _id field of the referenced document
+		$db - This is an optional field and contains the name of the database in which the referenced document lies
+
+{
+   "_id":ObjectId("53402597d852426020000002"),
+   "address": {
+   "$ref": "address_home",
+   "$id": ObjectId("534009e4d852427820000002"),
+   "$db": "tutorialspoint"},
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "name": "Tom Benzamin"
+}
+
+	- to view the referenced data(like join)
+		var user = db.users.findOne({"name":"Tom Benzamin"})
+		var dbRef = user.address
+		db[dbRef.$ref].findOne({"_id":(dbRef.$id)})
+
+	- above code returns the following:
+
+{
+   "_id" : ObjectId("534009e4d852427820000002"),
+   "building" : "22 A, Indiana Apt",
+   "pincode" : 123456,
+   "city" : "Los Angeles",
+   "state" : "California"
+}
+
+15) Covered Query
+	- All the fields in the query are part of an index.
+	- All the fields returned in the query are in the same index.
+
+{
+   "_id": ObjectId("53402597d852426020000002"),
+   "contact": "987654321",
+   "dob": "01-01-1991",
+   "gender": "M",
+   "name": "Tom Benzamin",
+   "user_name": "tombenzamin"
+}
+
+db.users.ensureIndex({gender:1,user_name:1})
+db.users.find({gender:"M"},{user_name:1,_id:0})
+	- index cannot cover a query if
+		1) Any of the indexed fields is an array
+		2) Any of the indexed fields is a subdocument
+
+16) Analyzing Query
+	- Analyzing queries is a very important aspect of measuring how effective the database and indexing design is.
+	- We will learn about the frequently used $explain and $hint queries.
+
+Using $explain
+	- provides information on the query, like indexes used in a query and other statistics.
+	- It is very useful when analyzing how well your indexes are optimized.
+		db.users.ensureIndex({gender:1,user_name:1})
+		db.users.find({gender:"M"},{user_name:1,_id:0}).explain()
+
+Using $hint
+	- forces the query optimizer to use the specified index to run a query.
+	- This is particularly useful when you want to test performance of a query with different indexes.
+		db.users.find({gender:"M"},{user_name:1,_id:0}).hint({gender:1,user_name:1})
+		db.users.find({gender:"M"},{user_name:1,_id:0}).hint({gender:1,user_name:1}).explain()
+
+17) Atomic Operations
+	- MongoDB does not support multi-document atomic transactions.
+	- However, it does provide atomic operations on a single document. 
+	- So if a document has hundred fields the update statement will either update all the fields or none, hence maintaining atomicity at the document-level.
+
+{
+   "_id":1,
+   "product_name": "Samsung S3",
+   "category": "mobiles",
+   "product_total": 5,
+   "product_available": 3,
+   "product_bought_by": [
+      {
+         "customer": "john",
+         "date": "7-Jan-2014"
+      },
+      {
+         "customer": "mark",
+         "date": "8-Jan-2014"
+      }
+   ]
+}
+
+
+
+db.products.findAndModify({ 
+   query:{_id:2,product_available:{$gt:0}}, 
+   update:{ 
+      $inc:{product_available:-1}, 
+      $push:{product_bought_by:{customer:"rob",date:"9-Jan-2014"}} 
+   }    
+})
+
+
+18) Advanced Indexing
+	- Indexing Array Fields
+
+{
+   "address": {
+      "city": "Los Angeles",
+      "state": "California",
+      "pincode": "123"
+   },
+   "tags": [
+      "music",
+      "cricket",
+      "blogs"
+   ],
+   "name": "Tom Benzamin"
+}
+
+		- db.users.ensureIndex({"tags":1})
+		- db.users.find({tags:"cricket"})
+		- db.users.find({tags:"cricket"}).explain()
+
+	- Indexing Sub-Document Fields
+		db.users.ensureIndex({"address.city":1,"address.state":1,"address.pincode":1})
+		db.users.find({"address.city":"Los Angeles"})   
+		db.users.find({"address.city":"Los Angeles","address.state":"California"}) 
+		db.users.find({"address.city":"LosAngeles","address.state":"California","address.pincode":"123"})
+
+	- A collection cannot have more than 64 indexes.
+	- The length of the index name cannot be longer than 125 characters.
+	- A compound index can have maximum 31 fields indexed.
+
+19) MapReduce
+	- MongoDB uses mapReduce command for map-reduce operations.	
+	- Basic Mapreduce Command
+	- The map-reduce function first queries the collection, then maps the result documents to emit key-value pairs, 
+	  which is then reduced based on the keys that have multiple values.
+
+db.collection.mapReduce(
+   function() {emit(key,value);},  //map function
+   function(key,values) {return reduceFunction}, {   //reduce function
+      out: collection,
+      query: document,
+      sort: document,
+      limit: number
+   }
+)
+
+	- map is a javascript function that maps a value with a key and emits a key-value pair
+	- reduce is a javascript function that reduces or groups all the documents having the same key
+	- out specifies the location of the map-reduce query result
+	- query specifies the optional selection criteria for selecting documents
+	- sort specifies the optional sort criteria
+	- limit specifies the optional maximum number of documents to be returned
+
+Example source:
+
+{
+   "post_text": "tutorialspoint is an awesome website for tutorials",
+   "user_name": "mark",
+   "status":"active"
+}
+
+Example mapreduce Code:
+db.posts.mapReduce( 
+   function() { emit(this.user_id,1); }, 
+	
+   function(key, values) {return Array.sum(values)}, {  
+      query:{status:"active"},  
+      out:"post_total" 
+   }
+)
+
+
+Output:
+{
+   "result" : "post_total",
+   "timeMillis" : 9,
+   "counts" : {
+      "input" : 4,
+      "emit" : 4,
+      "reduce" : 2,
+      "output" : 2
+   },
+   "ok" : 1,
+}
+
+20) Text Search
+	- The Text Search uses stemming techniques to look for specified words in the string fields by dropping stemming stop words like a, an, the, etc. 
+	- Enabling Text Search
+		db.adminCommand({setParameter:true,textSearchEnabled:true})
+
+{
+   "post_text": "enjoy the mongodb articles on tutorialspoint",
+   "tags": [
+      "mongodb",
+      "tutorialspoint"
+   ]
+}
+
+	-Creating Text Index
+		db.posts.ensureIndex({post_text:"text"})
+	- Using Text Index
+		db.posts.find({$text:{$search:"tutorialspoint"}})
+	- Deleting Text Index
+		db.posts.getIndexes()
+		db.posts.dropIndex("post_text_text")
+
+
+21) GridFS
+	- GridFS is the MongoDB specification for storing and retrieving large files such as images, audio files, video files, etc.
+	- It is kind of a file system to store files but its data is stored within MongoDB collections.
+	- GridFS has the capability to store files even greater than its document size limit of 16MB.
+	- GridFS divides a file into chunks and stores each chunk of data in a separate document, each of maximum size 255k.
+	- GridFS by default uses two collections fs.files and fs.chunks to store the file's metadata and the chunks. 
+	- Each chunk is identified by its unique _id ObjectId field.
+	- The fs.files severs as a parent document. 
+	- The files_id field in the fs.chunks document links the chunk to its parent.
+	- Following is a sample document of fs.files collection
+{
+   "filename": "test.txt",
+   "chunkSize": NumberInt(261120),
+   "uploadDate": ISODate("2014-04-13T11:32:33.557Z"),
+   "md5": "7b762939321e146569b07f72c62cca4f",
+   "length": NumberInt(646)
+}
+	- Following is a sample document of fs.chunks document
+{
+   "files_id": ObjectId("534a75d19f54bfec8a2fe44b"),
+   "n": NumberInt(0),
+   "data": "Mongo Binary Data"
+}
+
+	- Adding Files to GridFS
+		mongofiles.exe -d gridfs put song.mp3
+	Note: 	- gridfs is the name of the database in which the file will be stored.
+		- If the database is not present, MongoDB will automatically create a new document on the fly.
+		- Song.mp3 is the name of the file uploaded. 
+		- To see the file's document in database, you can use find query 
+			db.fs.files.find()
+
+the above command return the following odc:
+
+{
+   _id: ObjectId('534a811bf8b4aa4d33fdf94d'), 
+   filename: "song.mp3", 
+   chunkSize: 261120, 
+   uploadDate: new Date(1397391643474), md5: "e4f53379c909f7bed2e9d631e15c1c41",
+   length: 10401959 
+}
+
+	- We can also see all the chunks present in fs.chunks collection related to the stored file with the following code
+		db.fs.chunks.find({files_id:ObjectId('534a811bf8b4aa4d33fdf94d')})
+

@@ -1,0 +1,222 @@
+*****************HBase************************
+Current scenario need to meet the following problems: so NOSQL DB is needed
+
+1) NoSql or No-SQL
+2) Huge Data Storage.
+3) Access Pattern (Fast random Access)
+4) Structured,Semi Strectured and unstructured data.
+5) No-fixed Schema(Dynamic or Variable Schema(no of columns)).
+6) Table(RowKey,Column-Family1<Column-1,Column-2...Column-n>,Column-Family2<Column-1,Column-2...Column-n>)
+7) Compression of Data.
+8) Distribution across multiple machine(Availability-flexibility)
+9) selective Insert,update,delete not possible in Hive.(or here we can only apend the file not modify the File)
+
+1) HBase supports all the problem above mentioned.
+2) Example:	User Table have(userId,Name,Sex,Age,etx...)
+		Connection tbale have(Used_Id,ConnectionId,type)
+
+here we can have both in single table as a colum family
+	in HBase User(Row_Key,User-CF<UserID:value,Name:value,Sex:value,age:value>,Connection-CF<ConnectionId:value,Userid:value,type:value>...)
+
+3) HBase has the following:
+	a) Distributed Database -> Distributed among multiple machines.
+	b) Sorted Data -> data need to be automatically sorted.
+	c) Spare Data Store -> no need to store the Null column or cell in table.
+	d) Automatic sharding -> Distributed among multiple machines. fixed horizontal scability.
+
+4) Types of databases:
+	1) Key-Value Pair -> Dynamo(Amazon),Voldemote(Linkedin) etc... 
+	2) Big Tables -> Big Table(Google),Casendra,HBase etc...
+	3) Dicument Database -> CouchOne,MongoDB,OrientDB etc...
+	4) Graph Database -> Neo4J,FlockDB(Twitter),InfoGrid,DEx etc...
+
+5)  When to use HBase:
+	a) Unstructured Data.
+	b) Huge volume and Fast retrival.
+	c) Column oriented.
+	d) Versioned Data.(Minimum 3 versions and Maximum upto x.
+	e) High scability.
+	f) supports Existing MR flow.
+
+6) When Not to Use:
+	a) for Few Thosands or Milllions of rows.
+	b) Lack of RDBMS Commands.
+	c) Data nodes less than 5 and Replication factor is 3.
+
+7)  HBase - its schema is a simple MAP.
+8) HBase by default it stores data in Byte array. so no need to specify any datatype in HBase.
+9) Always it shows the Latest updated value in scan and get.
+10) to see the previous version use {COLUMN=>'cf:c1',VERSIONS=>3}
+11) Simple Structure like JSON Format.
+	"R_0001":{
+		"UserInformation":{
+			    	"Name":{
+				        13266384621947:"Manikandan Jeyabal"
+				   	},
+			        "Dept":{
+				        18683628361184:"IT"
+				        },
+			        "Grade":{
+				        54726136294698:"Grade-1"
+				        }
+			          }
+		"PersonalInformation":{
+					"FatherName":{
+							1484282396186:"Jeyabal R"
+						      },
+					"City":{
+						 126748762984:"Bangalore",
+						 169874306284:"Bangalore-560100"
+						}
+					}
+			}
+12) Always sorting will be based on rowkey in HBase.
+13) Less number of Column family for fast access.
+14) it has the comcept of Memstore for each column family.
+15) columns inside column family is unlimited.
+16) store diff versions of value.
+17) shows recent version of values.
+
+***********************HBase Architecture*****************
+Zookeeper: HQuorum
+	1) Resides in Hbase Master
+	2) Controls whole HBase Echosystem and Hadoop Ecosystem.
+	3) each HBase Master will send Heart beat to Zookeeper for every 3 sec.
+	4) Controls NameNodes in Hadoop Ecosystem too.
+	5) Mainly implemnted to Avoid single point failure.
+	6) All the sync Activity controled by Zookeeper.
+
+1) HBase Master:
+	1) Which is also known as HMaster Demon.
+	2) Controls the whole HBase server.
+	3) Similar like NameNode in Hadoop.
+
+2) HRegion Server:
+	1) Where actual data's stored and data's stored across multiple region servers to split and store the data.
+	2) Has its own Memstore for each Region Server.
+	3) Memstore is nothing but the Inmemory where data's stored and quering operations were performed.
+	4) it's similar to Name Node in Hadoop Ecosystem.
+
+3) HClient:
+	1) Used for client to access the data.
+
+4) MemStore:
+	1)For each table in hBase we have an Imemory space called MemStore.
+	2) By default its size is 64MB or 1000 records.
+	3) first put->Memstore->Disk(HFile)->HDFS  HBase Table.
+	4) Write also will happen inmemory only.
+	5) write -> Memstore -> Writeahed log(WAL)
+	6) Client doesn't interact directly with HFile during writes only take it from WAL.
+
+Note:
+	1) Blockcache:-> to maintain recently used data and while retrival it will send the data.
+	2) Compaction HFile:-> opens up all the small HFile and comapct and store in the form of Compaction HFile.
+
+no of machines needed if Zookeeper comes to picture.
+1- HBase Master + Zookeeper
+1- HDFS NameNode + Zookeeper
+1- HDFS SNN+Zookeeper
+
+1- Zookeeper + HBase Region Server + Data Node.
+1- Zookeeper + HBase Region Server + Data Node.
+1- Zookeeper + HBase Region Server + Data Node.
+*****************************HBase Components*********************
+1) table is made of diff region and distributed acress multiple machine
+2) Region: a range of row stored together is called a region.
+3) Resion Server: 
+	1) servers one or more Regions.
+	2) A region is server by only one Region Server.
+4) Master Server: 
+	1) Also known as HMaster Demon.
+	2) Controls the Whole HBase Cluster.
+
+5) HDFS:
+	1) to archive High availability.
+	2) Finaly data's stored here.
+
+*****************Working With HBase Queris****************
+Create Table:
+	Create 'Table_Name','Column_Family1','Column_Family2'
+	create 'My_Table','UserInformation','PersonalInformation'
+
+Alter Table:
+	1) Disable table.
+	2) Alter 'My_Table','NAME=>WorkExperience'
+	3) Enable Table
+	
+Drop Table:
+	1) Disable table
+	2) Drop 'Table_Name'
+
+Enable/Disable Table:
+	Enable 'Table_Name'
+	Disable 'Table_Name'
+
+To show all tables:
+	List
+
+Describe table:
+	Describe 'Table_Name' -> to see all the table information.
+	Describe 'My_Table'
+Insert Data:
+	put 'Table_Name','Row_Key(Primary Key)','Column_Famil1:column1','value'
+	put 'Table_Name','Row_Key(Primary Key)','Column_Famil1:column2','value'
+	put 'Table_Name','Row_Key(Primary Key)','Column_Famil2:column1','value'
+	put 'Table_Name','Row_Key(Primary Key)','Column_Famil3:column2','value'
+	
+	put 'My_Table','R_0001','UserInformation:Name','Manikandan Jeyabal'
+	put 'My_Table','R_0001','UserInformation:Dept','IT'
+	put 'My_Table','R_0001','UserInformation:Grade','Grade-1'
+	put 'My_Table','R_0001','UserInformation:Mail','ManikandanJeyabal029@gmail.com'
+	put 'My_Table','R_0001','UserInformation:Phone','9791423428'
+	put 'My_Table','R_0001','PersonalInformation:FatherName','Jeyabal'
+	put 'My_Table','R_0001','PersonalInformation:Status','Single'
+	put 'My_Table','R_0001','PersonalInformation:BloodGroup','B+ve'
+	put 'My_Table','R_0001','PersonalInformation:Age','24'
+	put 'My_Table','R_0001','PersonalInformation:Address','Bangalore'
+
+	put 'My_Table','R_0002','UserInformation:Name','Yogesh RameshKumar'
+	put 'My_Table','R_0002','UserInformation:Dept','IT'
+	put 'My_Table','R_0002','UserInformation:Grade','Grade-1'
+	put 'My_Table','R_0002','UserInformation:Mail','Yogesh.warriors@gmail.com'
+	put 'My_Table','R_0002','UserInformation:Phone','8220551114'
+	put 'My_Table','R_0002','PersonalInformation:FatherName','Ramesh Kumar'
+	put 'My_Table','R_0002','PersonalInformation:Status','Single'
+	put 'My_Table','R_0002','PersonalInformation:BloodGroup','O+ve'
+	put 'My_Table','R_0002','PersonalInformation:Age','24'
+	put 'My_Table','R_0002','PersonalInformation:Address','Chennai'
+	
+	put 'My_Table','R_0003','UserInformation:Name','Karmugil Muthu'
+	put 'My_Table','R_0003','UserInformation:Dept','IT'
+	put 'My_Table','R_0003','UserInformation:Grade','Grade-1'
+	put 'My_Table','R_0003','UserInformation:Mail','muthu.mugil@gmail.com'
+	put 'My_Table','R_0003','UserInformation:Phone','9688514443'
+	put 'My_Table','R_0003','PersonalInformation:FatherName','Mani'
+	put 'My_Table','R_0003','PersonalInformation:Status','Single'
+	put 'My_Table','R_0003','PersonalInformation:BloodGroup','B+ve'
+	put 'My_Table','R_0003','PersonalInformation:Age','26'
+	put 'My_Table','R_0003','PersonalInformation:Address','Chennai'
+	
+Retrive Data:
+	scan 'Table_Name'.  -> to retrive all the rows from a table.
+	get 'Table_Name','Row_Key' -> to get sellective information.
+
+	scan 'My_Table'.
+	get 'My_Table','R_0001'
+	get 'My_Table','R_0001','PersonalInformation:Address'
+	get 'My_Table','R_0001',{COLUMN=>'PersonalInformation:Address',VERSIONS=>3}
+	get 'My_Table','R_0001',{COLUMN=>'PersonalInformation:Address',TIMESTAMP=>(Timestamp-value)}
+
+Update/Modify Data:
+	put 'Table_Name','Row_Key','Column_Family1:Column1','Value_Modified'
+
+	put 'My_Table','R_0001','PersonalInformation:Address','Bangalore-560100'
+	put 'My_Table','R_0002','PersonalInformation:Address','Chennai-600041'
+	put 'My_Table','R_0003','PersonalInformation:Address','Chennai-600008'
+	
+Delete Data:
+	Delete 'Table_Name','Row_Key','ColumnFamily1:column1'
+	
+	Delete 'My_table','R_0003'
+	Delete 'My_table','R_0003','PersonalInformation:Age'
+ 

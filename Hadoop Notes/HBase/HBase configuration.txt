@@ -1,0 +1,62 @@
+1) Extract the Tar file
+2) update the hbase-site.xml inside conf folder as follows.
+<!-- HBase Files stored in this folder()storeage related property. (if we replace with our home oath then it is Standalone.) -->
+
+<property>
+
+<name>hbase.rootdir</name>
+
+<value>hdfs://master:9000/hbase</value>
+
+</property>
+
+<!-- RPC Port number of Master ( by default in v.94 =60001  and in v.98=16000 ) -->
+
+<property>
+
+<name>hbase.master.port</name>
+
+<value>60001</value>
+
+</property>
+
+<!-- Distribution Property. -->
+
+<property>
+
+<name>hbase.cluster.distributed</name>
+
+<value>true</value>
+
+</property>
+
+<!--Zookeeper Property.(if not embedded need to give IP address else no need) -->
+
+<property>
+
+<name>hbase.zookeeper.quorum</name>
+
+<value>master</value>
+
+</property>
+
+<!--Production in it will be overloaded deamon so we need to increase this property file. recomended 500+ connections.  -->
+
+<property>
+
+<name>hbase.zookeeper.property.maxClientCnxns</name>
+
+<value>35</value>
+
+</property>
+
+3) Update the the following in hbase-env.sh in conf directory:
+
+export JAVA_HOME = /home/mj/jdk1.7.0_45
+export HBASE_MANAGES_ZK=true
+
+4) to start he HBase
+./start-hbase.sh
+
+5) to enter Hbase shell:
+	hbase shell
