@@ -1,0 +1,385 @@
+*******************************************************Python Strings*******************************************
+- Strings are amongst the most popular types in Python. 
+- We can create them simply by enclosing characters in quotes. 
+- Python treats single quotes the same as double quotes. 
+- Creating strings is as simple as assigning a value to a variable.
+	- Ex:
+		var1 = 'Hello World!'
+		var2 = "Python Programming"
+- Python does not support a character type; these are treated as strings of length one, thus also considered a substring.
+	- Ex:
+		print "var1[0]: ", var1[0]
+		print "var2[1:5]: ", var2[1:5]
+
+- Updating Strings:
+	- You can "update" an existing string by (re)assigning a variable to another string.
+	- The new value can be related to its previous value or to a completely different string altogether.
+	- Ex:
+		var1 = 'Hello World!'
+		print "Updated String :- ", var1[:6] + 'Python'
+
+- Escape Characters:
+	Backslash notation	Hexadecimal character	Description
+		\a						0x07			Bell or alert
+		\b						0x08			Backspace
+		\cx				 						Control-x
+		\C-x	 								Control-x
+		\e						0x1b			Escape
+		\f						0x0c			Formfeed
+		\M-\C-x	 								Meta-Control-x
+		\n						0x0a			Newline
+		\nnn	 								Octal notation, where n is in the range 0.7
+		\r						0x0d			Carriage return
+		\s						0x20			Space
+		\t						0x09			Tab
+		\v						0x0b			Vertical tab
+		\x	 									Character x
+		\xnn	 								Hexadecimal notation, where n is in the range 0.9, a.f, or A.F
+
+- Special Operators;:
+	+ 		Concatenation 
+	* 		Repetition 
+	[] 		Slice 
+	[:] 	Range Slice
+	in  	Membership 
+	not in  Membership 
+	r/R 	Raw String
+	% 		Format 
+
+- String Formatting:
+	- One of Python's coolest features is the string format operator %. 
+	- This operator is unique to strings and makes up for the pack of having functions from C's printf() family. 
+	- Ex:
+		print "My name is %s and weight is %d kg!" % ('Zara', 21)
+	- Ref:
+		Format Symbol	Conversion
+		%c				character
+		%s				string conversion via str() prior to formatting
+		%i				signed decimal integer
+		%d				signed decimal integer
+		%u				unsigned decimal integer
+		%o				octal integer
+		%x				hexadecimal integer (lowercase letters)
+		%X				hexadecimal integer (UPPERcase letters)
+		%e				exponential notation (with lowercase 'e')
+		%E				exponential notation (with UPPERcase 'E')
+		%f				floating point real number
+		%g				the shorter of %f and %e
+		%G				the shorter of %f and %E
+	
+- Triple Quotes:
+	- Python's triple quotes comes to the rescue by allowing strings to span multiple lines, including verbatim NEWLINEs, TABs, and any other special characters.
+	- Ex:
+		para_str = """this is a long string that is made up of
+		several lines and non-printable characters such as
+		TAB ( \t ) and they will show up that way when displayed.
+		NEWLINEs within the string, whether explicitly given like
+		this within the brackets [ \n ], or just a NEWLINE within
+		the variable assignment will also show up.
+		"""
+		print para_str
+	- Raw strings do not treat the backslash as a special character at all. Every character you put into a raw string stays the way you wrote it
+	- Ex:
+		print 'C:\\nowhere'
+	- Using r'exp'
+		print r'C:\\nowhere'
+
+- Built-in String Methods:
+	- center(width, filterchar):
+		- The method center() returns centered in a string of length width.
+		- Padding is done using the specified fillchar.
+		- Default filler is a space.
+		- Ex:
+			str = "this is string example....wow!!!"
+			print "str.center(40, 'a') : ", str.center(40, 'a')
+	- count():
+		- The method count() returns the number of occurrences of substring sub in the range [start, end]. 
+		- Optional arguments start and end are interpreted as in slice notation.
+		- Ex:
+			str = "this is string example....wow!!!";
+			sub = "i";
+			print "str.count(sub, 4, 40) : ", str.count(sub, 4, 40)
+			sub = "wow";
+			print "str.count(sub) : ", str.count(sub)
+	- len():
+		The method len() returns the length of the string.
+		Ex:
+			str = "this is string example....wow!!!";
+			print "Length of the string: ", len(str)	
+	- max():
+		The method max() returns the max alphabetical character from the string str.
+		Ex:
+			str = "this is really a string example....wow!!!";
+			print "Max character: " + max(str)
+
+			str = "this is a string example....wow!!!";
+			print "Max character: " + max(str)
+	- min():
+		The method min() returns the min alphabetical character from the string str.
+		Ex:
+			str = "this-is-real-string-example....wow!!!";
+			print "Min character: " + min(str)
+
+			str = "this-is-a-string-example....wow!!!";
+			print "Min character: " + min(str)
+	- decode():
+		The method decode() decodes the string using the codec registered for encoding. It defaults to the default string encoding.
+		Ex:
+			Str = "this is string example....wow!!!";
+			Str = Str.encode('base64','strict');
+			print "Encoded String: " + Str
+			print "Decoded String: " + Str.decode('base64','strict')
+	- encode():
+		- The method encode() returns an encoded version of the string.
+		- Default encoding is the current default string encoding. 
+		- The errors may be given to set a different error handling scheme.
+		- Ex:
+			str = "this is string example....wow!!!";
+			print "Encoded String: " + str.encode('base64','strict')
+	- endswith():
+		- It returns True if the string ends with the specified suffix, otherwise return False
+		- optionally restricting the matching with the given indices start and end.
+		- Ex:
+			str = "this is string example....wow!!!";
+			suffix = "wow!!!";
+			print str.endswith(suffix)
+			print str.endswith(suffix,20)
+			suffix = "is";
+			print str.endswith(suffix, 2, 4)
+			print str.endswith(suffix, 2, 6)
+	- startswith():
+		The method startswith() checks whether string starts with str, optionally restricting the matching with the given indices start and end.
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.startswith( 'this' )
+			print str.startswith( 'is', 2, 4 )
+			print str.startswith( 'this', 2, 4 )
+	- expandtabs():
+		- It returns a copy of the string in which tab characters ie. '\t' are expanded using spaces, optionally using the given tabsize (default 8)
+		- Ex:
+			str = "this is\tstring example....wow!!!";
+			print "Original string: " + str
+			print "Defualt exapanded tab: " +  str.expandtabs()
+			print "Double exapanded tab: " +  str.expandtabs(16)
+	- isalnum():
+		The method isalnum() checks whether the string consists of alphanumeric characters.
+		Ex:	
+			str = "this2009";  # No space in this string
+			print str.isalnum()
+			str = "this is string example....wow!!!";
+			print str.isalnum()
+	- isalpha():
+		The method isalpha() checks whether the string consists of alphabetic characters only.
+		Ex:
+			str = "this";  # No space & digit in this string
+			print str.isalpha()
+
+			str = "this is string example....wow!!!";
+			print str.isalpha()
+	- isdigit():
+		The method isdigit() checks whether the string consists of digits only.
+		Ex:
+			str = "123456";  # Only digit in this string
+			print str.isdigit()
+
+			str = "this is string example....wow!!!";
+			print str.isdigit()
+	- islower():
+		The method islower() checks whether all the case-based characters (letters) of the string are lowercase.
+		Ex:	
+			str = "THIS is string example....wow!!!"; 
+			print str.islower()
+
+			str = "this is string example....wow!!!";
+			print str.islower()
+	- isnumeric():
+		The method isnumeric() checks whether the string consists of only numeric characters.
+		This method is present only on unicode objects.
+		Ex:
+			str = u"this2009";  
+			print str.isnumeric()
+
+			str = u"23443434";
+			print str.isnumeric()
+	- isdecimal():
+		The method isdecimal() checks whether the string consists of only decimal characters.
+		This method are present only on unicode objects.
+		Ex:
+			str = u"this2009";  
+			print str.isdecimal();
+
+			str = u"23443434";
+			print str.isdecimal();
+	- isspace():
+		The method isspace() checks whether the string consists of whitespace.
+		Ex:
+			str = "       "; 
+			print str.isspace()
+
+			str = "This is string example....wow!!!";
+			print str.isspace()
+	- istitle():
+		The method istitle() checks whether all the case-based characters in the string following non-casebased letters are uppercase and all other case-based characters are lowercase.
+		Ex:
+			str = "This Is String Example...Wow!!!";
+			print str.istitle()
+
+			str = "This is string example....wow!!!";
+			print str.istitle()
+	- isupper():
+		The method isupper() checks whether all the case-based characters (letters) of the string are uppercase.
+		Ex:
+			str = "THIS IS STRING EXAMPLE....WOW!!!"; 
+			print str.isupper()
+
+			str = "THIS is string example....wow!!!";
+			print str.isupper()
+	- join():
+		The method join() returns a string in which the string elements of sequence have been joined by str separator.
+		Ex:
+			s = "-";
+			seq = ("a", "b", "c"); # This is sequence of strings.
+			print s.join( seq )
+	- split():
+		The method split() returns a list of all the words in the string, using str as the separator (splits on all whitespace if left unspecified), optionally limiting the number of splits to num.
+		Ex:
+			str = "Line1-abcdef \nLine2-abc \nLine4-abcd";
+			print str.split( )
+			print str.split(' ', 1 )
+	- splitlines():
+		The method splitlines() returns a list with all the lines in string, optionally including the line breaks (if num is supplied and is true)
+		Ex:
+			str = "Line1-a b c d e f\nLine2- a b c\n\nLine4- a b c d";
+			print str.splitlines( )
+			print str.splitlines( 0 )
+			print str.splitlines( 3 )
+			print str.splitlines( 4 )
+			print str.splitlines( 5 )
+	- ljust():
+		The method ljust() returns the string left justified in a string of length width. 
+		Padding is done using the specified fillchar (default is a space).
+		The original string is returned if width is less than len(s).
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.ljust(50, '0')
+	- rjust():
+		The method rjust() returns the string right justified in a string of length width.
+		Padding is done using the specified fillchar (default is a space).
+		The original string is returned if width is less than len(s).
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.rjust(50, '0')
+	- strip():
+		The method strip() returns a copy of the string in which all chars have been stripped from the beginning and the end of the string (default whitespace characters).
+		Ex:
+			str = "0000000this is string example....wow!!!0000000";
+			print str.strip( '0' )
+	- lstrip():
+		The method lstrip() returns a copy of the string in which all chars have been stripped from the beginning of the string (default whitespace characters).
+		Ex:
+			str = "     this is string example....wow!!!     ";
+			print str.lstrip()
+			str = "88888888this is string example....wow!!!8888888";
+			print str.lstrip('8')
+	- rstrip():
+		The method rstrip() returns a copy of the string in which all chars have been stripped from the end of the string (default whitespace characters).
+		Ex:
+			str = "     this is string example....wow!!!     ";
+			print str.rstrip()
+			str = "88888888this is string example....wow!!!8888888";
+			print str.rstrip('8')
+	- find():
+		It determines if string str occurs in string, or in a substring of string if starting index beg and ending index end are given.
+		Index if found and -1 otherwise.
+		Ex:
+			str1 = "this is string example....wow!!!";
+			str2 = "exam";
+			print str1.find(str2)
+			print str1.find(str2, 10)
+			print str1.find(str2, 40)
+	- rfind():
+		The method rfind() returns the last index where the substring str is found.
+		-1 if no such index exists
+		optionally restricting the search to string[beg:end]
+		Ex:
+			str1 = "this is really a string example....wow!!!";
+			str2 = "is";
+
+			print str1.rfind(str2)
+			print str1.rfind(str2, 0, 10)
+			print str1.rfind(str2, 10, 0)
+
+			print str1.find(str2)
+			print str1.find(str2, 0, 10)
+			print str1.find(str2, 10, 0)
+	- index():
+		It determines if string str occurs in string or in a substring of string if starting index beg and ending index end are given.
+		This method is same as find(), but raises an exception if sub is not found.
+		Ex:
+			str1 = "this is string example....wow!!!";
+			str2 = "exam";
+			print str1.index(str2)
+			print str1.index(str2, 10)
+			print str1.index(str2, 40)			
+	- rindex():
+		The method rindex() returns the last index where the substring str is found
+		or raises an exception if no such index exists
+		optionally restricting the search to string[beg:end].
+		Ex:
+			str1 = "this is string example....wow!!!";
+			str2 = "is";
+
+			print str1.rindex(str2)
+			print str1.index(str2)
+	- capitalize():
+		It returns a copy of the string with only its first character capitalized.
+		Ex:
+			str = "this is string example....wow!!!";
+			print "str.capitalize() : ", str.capitalize()			
+	- lower():
+		The method lower() returns a copy of the string in which all case-based characters have been lowercased.
+		Ex:
+			str = "THIS IS STRING EXAMPLE....WOW!!!";
+			print str.lower()
+	- upper():
+		The method upper() returns a copy of the string in which all case-based characters have been uppercased.
+		Ex:
+			str = "this is string example....wow!!!";
+			print "str.capitalize() : ", str.upper()
+	- maketrans() and translate():
+		The method maketrans() returns a translation table that maps each character in the intabstring into the character at the same position in the outtab string.
+		Then this table is passed to the translate() function.
+		Ex:
+			from string import maketrans   # Required to call maketrans function.
+
+			intab = "aeiou"
+			outtab = "12345"
+			trantab = maketrans(intab, outtab)
+
+			str = "this is string example....wow!!!"
+			print str.translate(trantab)
+	- replace():
+		The method replace() returns a copy of the string in which the occurrences of old have been replaced with new, optionally restricting the number of replacements to max.
+		Ex:
+			str = "this is string example....wow!!! this is really string"
+			print str.replace("is", "was")
+			print str.replace("is", "was", 3)
+	- swapcase():
+		The method swapcase() returns a copy of the string in which all the case-based characters have had their case swapped.
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.swapcase()
+
+			str = "THIS IS STRING EXAMPLE....WOW!!!";
+			print str.swapcase()
+	- title():
+		The method title() returns a copy of the string in which first characters of all the words are capitalized.
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.title()
+	- zfill():
+		The method zfill() pads string on the left with zeros to fill width.
+		Ex:
+			str = "this is string example....wow!!!";
+			print str.zfill(40)
+			print str.zfill(50)
