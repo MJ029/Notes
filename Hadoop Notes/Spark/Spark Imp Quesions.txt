@@ -1,0 +1,135 @@
+**************************************************************Spark Imp Quesions*************************************************
+
+What is the difference between DAG and Lineage?
+	Lineage:
+		- Lineage is the graph of how all the parent RDD’s are connected to the derived RDD’s.
+		- It hence is a graph of how each RDD is dependent on the other and how the transformations are applied to each RDD. 
+		- it is also know as RDD operator graph or RDD dependency graph. 
+		- Each RDD points to one or more parent along with the metadata about the type of relationship with the parent.
+		- For example, val result=data.map(), where result keeps a reference of the RDD data, that’s a lineage.
+		- This RDD lineage is used to recompute the data if there are any faults as it contains the pattern of the computation. 
+		- toDebugString() method is used to display the RDD lineage.
+		Ex:
+			rdd.toDebugString
+		
+	DAG:
+		- Proper Definition of DAG:  is a combination of Vertices as well as Edges.  In DAG vertices represent the RDDs and the edges represent the Operation to be applied on RDD. 
+		- DAG (Directed Acyclic Graph) is a collection of all the RDD and the corresponding transformations on them. 
+		- A DAG is created when the user creates a RDD and applies transformations on it, this results in a DAG.
+		- When the action is called, the DAG is given to the DAG Scheduler which divides it into stages.
+		- Spark DAG allows the user to look at the expanded stage and understand the various transformations on it.
+		- As the end to end plan is available, it can be optimized that is, we can mix the transformations and reduce the shuffling of data.
+		- The DAG does not have a dedicated storage but is in memory and not on disk. A DAG can help in fault tolerance.
+		
+- Reference:
+	https://www.quora.com/What-is-the-difference-between-RDD-Lineage-Graph-and-Directed-Acyclic-Graph-DAG-in-Spark
+	https://data-flair.training/blogs/rdd-lineage/
+		
+What is Directed Acyclic Graph ?
+	- Directed Acyclic Graph (DAG) in Apache Spark is a set of Vertices and Edges, where vertices represent the RDDs and the edges represent the Operation to be applied on RDD.
+	- In Spark DAG, every edge is directed from earlier to later in the sequence.
+	- On calling of Action, the created DAG is submitted to DAG Scheduler which further splits the graph into the stages of the task.
+	- DAG is a finite directed graph with no directed cycles.
+	- There are finitely many vertices and edges, where each edge directed from one vertex to another.
+	- It contains a sequence of vertices such that every edge is directed from earlier to later in the sequence. 
+	- It is a strict generalization of MapReduce model.
+	- DAG operations can do better global optimization than other systems like MapReduce. 
+	- Stage View:
+		- Apache Spark DAG allows the user to dive into the stage and expand on detail on any stage.
+		- In the stage view, the details of all RDDs belonging to that stage are expanded. 
+		- The Scheduler splits the Spark RDD into stages based on various transformation applied.
+		- Each stage is comprised of tasks, based on the partitions of the RDD, which will perform same computation in parallel.
+		- The graph here refers to navigation, and directed and acyclic refers to how it is done.
+- Reference:
+	https://data-flair.training/blogs/dag-in-apache-spark/
+	https://data-flair.training/blogs/spark-rdd-operations-transformations-actions/
+
+How DAG works ?
+	- The interpreter is the first layer, using a Scala interpreter, Spark interprets the code with some modifications.
+	- Spark creates an operator graph when you enter your code in Spark console.
+	- When an Action is called on Spark RDD at a high level, Spark submits the operator graph to the DAG Scheduler.
+	- Operators are divided into stages of the task in the DAG Scheduler.
+	- A stage contains task based on the partition of the input data. 
+	- The DAG scheduler pipelines operators together.
+	- For example, map operators are scheduled in a single stage.
+	- The stages are passed on to the Task Scheduler.
+	- It launches task through cluster manager.
+	- The dependencies of stages are unknown to the task scheduler.
+	- The Workers execute the task on the slave.
+	
+- Reference:
+	https://data-flair.training/blogs/dag-in-apache-spark/
+
+Narrow Transformations available in Spark.
+	Narrow transformation does not require the shuffling of data across a partition, the narrow transformations will be grouped into single stage
+	- Map
+	- FlatMap
+	- MapPartition
+	- Filter
+	- Sample
+	- Union
+- Reference:
+	https://data-flair.training/blogs/spark-rdd-operations-transformations-actions/
+
+Wide Transofrmations Available in Spark.
+	 Wide transformation does shuffling of data across a partition, so the wide transformations will be splited in to multiple stages.
+	 - Intersection
+	 - Distinct
+	 - ReduceByKey
+	 - GroupByKey
+	 - Join
+	 - Cartesian
+	 - Repartition
+	 - Coalesce
+- Reference:
+	https://data-flair.training/blogs/spark-rdd-operations-transformations-actions/
+	 
+How Stages are created in DAG:
+	- At higher level, two type of RDD transformations can be applied: narrow transformation (e.g. map(), filter() etc.) and wide transformation (e.g. reduceByKey()).
+	- Narrow transformation does not require the shuffling of data across a partition, the narrow transformations will be grouped into single stage 
+	- while in wide transformation the data is shuffled. Hence, Wide transformation results in stage boundaries.
+	- Each RDD maintains a pointer to one or more parent along with metadata about what type of relationship it has with the parent. 
+	- For example, if we call val b=a.map() on an RDD, the RDD b keeps a reference to its parent RDD a, that’s an RDD lineage.
+- Reference:
+	https://data-flair.training/blogs/dag-in-apache-spark/
+
+How is Fault tolerance achieved through DAG?
+	- RDD is split into the partition and each node is operating on a partition at any point in time.
+	- Here, the series of Scala function is executing on a partition of the RDD.
+	- These operations are composed together and Spark execution engine view these as DAG (Directed Acyclic Graph).
+	- When any node crashes in the middle of any operation say O3 which depends on operation O2, which in turn O1.
+	- The cluster manager finds out the node is dead and assign another node to continue processing.
+	- This node will operate on the particular partition of the RDD and the series of operation that it has to execute (O1->O2->O3).  Now there will be no data loss.
+	
+- Reference:
+	https://data-flair.training/blogs/dag-in-apache-spark/
+	https://data-flair.training/blogs/fault-tolerance-in-apache-spark/
+
+Working of DAG Optimizer in Spark
+	- The DAG in Apache Spark is optimized by rearranging and combining operators wherever possible. 
+	- For, example if we submit a spark job which has a map() operation followed by a filter operation. The DAG Optimizer will rearrange the order of these operators since filtering will reduce the number of records to undergo map operation.
+	
+Difference between Repartition and Coalesce.
+	- Repartition:
+		- The repartition algorithm does a full shuffle and creates new partitions with data that's distributed evenly. 
+		- repartition creates new partitions and does a full shuffle.
+		- repartitioning your data is a fairly expensive operation. 
+		- the number of partitions can be increased/decreased.
+		- repartition results in roughly equal sized partitions.
+	
+	- Coalesce:
+		- optimized version of repartition() called coalesce() 
+		- avoiding data movement, but only if you are decreasing the number of RDD partitions.
+		- the number of partitions can only be decreased.
+		- coalesce uses existing partitions to minimize the amount of data that's shuffled.
+		- coalesce results in partitions with different amounts of data
+		
+	- Is coalesce or repartition faster?
+		- coalesce may run faster than repartition, but unequal sized partitions are generally slower to work with than equal sized partitions.
+		- You'll usually need to repartition datasets after filtering a large data set.
+		-  I've found repartition to be faster overall because Spark is built to work with equal sized partitions.
+- Reference:
+	https://stackoverflow.com/questions/31610971/spark-repartition-vs-coalesce
+	https://hackernoon.com/managing-spark-partitions-with-coalesce-and-repartition-4050c57ad5c4
+		
+	
