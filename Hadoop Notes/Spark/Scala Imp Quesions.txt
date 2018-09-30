@@ -1,0 +1,29 @@
+******************************Scala Imp Quesions********************************
+1) Diff between foldleft and reduce left in Functional programming language:
+	foldleft():
+		- signature of foldLeft --> def foldLeft [B] (z: B)(f: (B, A) => B): B
+		- When you call foldLeft say on a List[Int] it will fold the whole list (imagine rolling a piece of paper) into a single value, but this value doesn't have to be even related to Int (hence [B]).
+		- foldLeft is more generic, you can use it to produce something completely different than what you originally put in.
+		- foldLeft is more generic, you can use it to produce something completely different than what you originally put in.The foldLeft will apply the closure with the last folded result (first time using initial value) and the next value.
+			List(1,3,5).foldLeft(List[String]()) { (a, b) => b.toString :: a }
+			
+	reduceLeft():
+		- signature of reduceLeft --> def reduceLeft [B >: A] (f: (B, A) => B): B
+		- reduceLeft is a special case of foldLeft (which by the way means that you sometimes can express the same thing by using either of them).
+		- When you call reduceLeft say on a List[Int] it will literally reduce the whole list of integers into a single value, which is going to be of type Int (or a supertype of Int, hence [B >: A]).
+		- reduceLeft can only produce an end result of the same type or super type of the collection type.
+		- foldLeft is more generic, you can use it to produce something completely different than what you originally put in.
+		- reduceLeft on the other hand will first combine two values from the list and apply those to the closure. Next it will combine the rest of the values with the cumulative result.
+			List(1,3,5).reduceLeft { (a, b) => println("a " + a + ", b " + b); a + b }
+
+2) Difference between fold, foldleft and foldright in Functional programming language:
+	- fold:
+		fold is associative in that the order in which the elements are added together is not defined. I.e. the arguments to fold form a monoid.
+	- fold right
+		foldRight associates to the right. I.e. elements will be accumulated in right-to-left order:
+	- fold left
+		foldLeft associates to the left. I.e. an accumulator will be initialized and elements will be added to the accumulator in left-to-right order:
+		
+3) Arrray sorting and reversiog:
+	scala.util.Sorting.quickSort(array)
+	Collections.reverse(Arrays.asList(array))

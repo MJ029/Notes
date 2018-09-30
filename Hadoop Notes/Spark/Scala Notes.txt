@@ -1,0 +1,277 @@
+*****************************************************************Scala Notes*****************************************************************
+- Scala, short for Scalable Language, is a hybrid functional programming language. It was created by Martin Odersky.
+- Scala smoothly integrates the features of object-oriented and functional languages.
+- Scala is compiled to run on the Java Virtual Machine.
+- Classes are extended by subclassing and a flexible mixin-based composition mechanism as a clean replacement for multiple inheritance.
+- Scala is also a functional language in the sense that every function is a value and every value is an object so ultimately every function is an object.
+- Scala provides a lightweight syntax for defining anonymous functions, it supports higher-order functions, it allows functions to be nested, and supports currying. 
+- Scala is statically typed
+- Scala:
+	Object − Objects have states and behaviors. An object is an instance of a class. Example − A dog has states - color, name, breed as well as behaviors - wagging, barking, and eating.
+	Class − A class can be defined as a template/blueprint that describes the behaviors/states that are related to the class.
+	Methods − A method is basically a behavior. A class can contain many methods.
+			- It is in methods where the logics are written, data is manipulated and all the actions are executed.
+	Fields 	− Each object has its unique set of instance variables, which are called fields. 
+			- An object's state is created by the values assigned to these fields.
+	Closure − A closure is a function, whose return value depends on the value of one or more variables declared outside this function.
+	Traits 	− A trait encapsulates method and field definitions, which can then be reused by mixing them into classes.
+			- Traits are used to define object types by specifying the signature of the supported methods.
+- basic syntaxes and coding conventions:
+	Case Sensitivity 	− Scala is case-sensitive, which means identifier Hello and hello would have different meaning in Scala.
+	Class Names 		− For all class names, the first letter should be in Upper Case.
+						- If several words are used to form a name of the class, each inner word's first letter should be in Upper Case.
+	Method Names 		− All method names should start with a Lower Case letter. 
+						- If multiple words are used to form the name of the method, then each inner word's first letter should be in Upper Case.					
+	Program File Name 	− Name of the program file should exactly match the object name. 
+						- When saving the file you should save it using the object name (Remember Scala is case-sensitive) and append ‘.scala’ to the end of the name. 
+	def main(args: Array[String]) − Scala program processing starts from the main() method which is a mandatory part of every Scala Program.
+- Scala Identifiers:
+	- Alphanumeric Identifiers:
+		An alphanumeric identifier starts with a letter or an underscore, which can be followed by further letters, digits, or underscores.
+	- Operator Identifiers:
+		An operator identifier consists of one or more operator characters.
+		Operator characters are printable ASCII characters such as +, :, ?, ~ or #.
+	- Mixed Identifiers:
+		A mixed identifier consists of an alphanumeric identifier, which is followed by an underscore and an operator identifier.
+	- Literal Identifiers:
+		A literal identifier is an arbitrary string enclosed in back ticks (` . . . `).
+
+- DataTypes:
+	- Scala has all the same data types as Java, with the same memory footprint and precision.
+		Byte --> 8 bit signed value. Range from -128 to 127
+		Short --> 16 bit signed value. Range -32768 to 32767
+		Int --> 32 bit signed value. Range -2147483648 to 2147483647
+		Long --> 64 bit signed value. -9223372036854775808 to 9223372036854775807
+		Float --> 32 bit IEEE 754 single-precision float
+		Double --> 64 bit IEEE 754 double-precision float
+		Char --> 16 bit unsigned Unicode character. Range from U+0000 to U+FFFF
+		String --> A sequence of Chars
+		Boolean --> Either the literal true or the literal false
+		Unit --> Corresponds to no value
+		Null --> null or empty reference
+		Nothing --> The subtype of every other type; includes no values
+		Any --> The supertype of any type; any object is of type Any
+		AnyRef --> The supertype of any reference type
+	- All the data types listed above are objects. There are no primitive types like in Java. This means that you can call methods on an Int, Long, etc.
+
+- Variables:
+	- Variables are nothing but reserved memory locations to store values. 
+	- This means that when you create a variable, you reserve some space in memory.
+	- Based on the data type of a variable, the compiler allocates memory and decides what can be stored in the reserved memory.
+	- Therefore, by assigning different data types to variables, you can store integers, decimals, or characters in these variables.
+	- Scala has a different syntax for declaring variables. They can be defined as value, i.e., constant or a variable.
+	- Here, myVar is declared using the keyword var. 
+	- It is a variable that can change value and this is called mutable variable. 
+	- Ex:
+		var myVar : String = "Foo"
+	- Here, myVal is declared using the keyword val.
+	- This means that it is a variable that cannot be changed and this is called immutable variable.
+	- Ex:
+		val myVal : String = "Foo"
+	- The type of a variable is specified after the variable name and before equals sign.
+	- Ex:
+		val or val VariableName : DataType = [Initial Value]
+	- Variable Type Inference:
+		- When you assign an initial value to a variable, the Scala compiler can figure out the type of the variable based on the value assigned to it. This is called variable type inference.
+		- Ex:
+			var myVar = 10;
+			val myVal = "Hello, Scala!";
+	- Multiple assignments:
+		- Scala supports multiple assignments. If a code block or method returns a Tuple (Tuple − Holds collection of Objects of different types), the Tuple can be assigned to a val variable. 
+		- Ex:
+			val (myVar1, myVar2) = Pair(40, "Foo")
+	- Variable Scope:
+		- Variables in Scala can have three different scopes depending on the place where they are being used.
+		- They can exist as fields, as method parameters and as local variables. Below are the details about each type of scope.
+		- Field:
+			- Fields are variables that belong to an object.
+			- The fields are accessible from inside every method in the object.
+			- Fields can also be accessible outside the object depending on what access modifiers the field is declared with. +
+			- Object fields can be both mutable and immutable types and can be defined using either var or val.
+		- Method Parameters:
+			- Method parameters are variables, which are used to pass the value inside a method, when the method is called.
+			- Method parameters are only accessible from inside the method but the objects passed in may be accessible from the outside, if you have a reference to the object from outside the method. 
+			- Method parameters are always immutable which are defined by val keyword.
+		- Local Variables:
+			- Local variables are variables declared inside a method.
+			- Local variables are only accessible from inside the method, but the objects you create may escape the method if you return them from the method.
+			- Local variables can be both mutable and immutable types and can be defined using either var or val.
+
+- Classes and Objects:
+	- A class is a blueprint for objects. Once you define a class, you can create objects from the class blueprint with the keyword new.
+	- Through the object you can use all functionalities of the defined class.
+	- Basic Class:
+		- This class defines two variables x and y and a method: move, which does not return a value. 
+		- Class variables are called, fields of the class and methods are called class methods.
+		- The class name works as a class constructor which can take a number of parameters.
+		- The above code defines two constructor arguments, xc and yc; they are both visible in the whole body of the class.
+		Ex:
+			import java.io._
+			class Point(val xc: Int, val yc: Int) {
+			   var x: Int = xc
+			   var y: Int = yc
+			   def move(dx: Int, dy: Int) {
+				  x = x + dx
+				  y = y + dy
+				  println ("Point x location : " + x);
+				  println ("Point y location : " + y);
+			   }
+			}
+			object Demo {
+			   def main(args: Array[String]) {
+				  val pt = new Point(10, 20);
+				  // Move to a new location
+				  pt.move(10, 10);
+			   }
+			}
+			
+	- Extending a Class:
+		- You can extend a base Scala class and you can design an inherited class in the same way you do it in Java
+		- But there are two restrictions:
+			- method overriding requires the override keyword,
+			- only the primary constructor can pass parameters to the base constructor.
+		Ex:
+			- Let us take an example of two classes Point class (as same example as above) and Location class is inherited class using extends keyword.
+			- Such an ‘extends’ clause has two effects: it makes Location class inherit all non-private members from Point class, and it makes the type Location a subtype of the type Point class. 
+			- So here the Point class is called superclass and the class Location is called subclass.
+			- Extending a class and inheriting all the features of a parent class is called inheritance but Scala allows the inheritance from just one class only.
+			
+			import java.io._
+			class Point(val xc: Int, val yc: Int) {
+			   var x: Int = xc
+			   var y: Int = yc
+			   def move(dx: Int, dy: Int) {
+				  x = x + dx
+				  y = y + dy
+				  println ("Point x location : " + x);
+				  println ("Point y location : " + y);
+			   }
+			}
+
+			class Location(override val xc: Int, override val yc: Int,
+			   val zc :Int) extends Point(xc, yc){
+			   var z: Int = zc
+			   def move(dx: Int, dy: Int, dz: Int) {
+				  x = x + dx
+				  y = y + dy
+				  z = z + dz
+				  println ("Point x location : " + x);
+				  println ("Point y location : " + y);
+				  println ("Point z location : " + z);
+			   }
+			}
+
+			object Demo {
+			   def main(args: Array[String]) {
+				  val loc = new Location(10, 20, 15);
+				  // Move to a new location
+				  loc.move(10, 10, 5);
+			   }
+			}
+			
+	- Implicit Classes:
+		- Implicit classes allow implicit conversations with class’s primary constructor when the class is in scope.
+		- Implicit class is a class marked with ‘implicit’ keyword. 
+		Ex:
+			object Run {
+			   implicit class IntTimes(x: Int) {
+				  def times [A](f: =>A): Unit = {
+					 def loop(current: Int): Unit =
+					 
+					 if(current > 0){
+						f
+						loop(current - 1)
+					 }
+					 loop(x)
+				  }
+			   }
+			}
+			
+			import Run._
+			object Demo {
+			   def main(args: Array[String]) {
+				  4 times println("hello")
+			   }
+			}
+		- Implicit classes must be defined inside another class/object/trait (not in top level).
+		- Implicit classes may only take one non –implicit argument in their constructor.
+		- Implicit classes may not be any method, member or object in scope with the same name as the implicit class.
+	
+	- Singleton Objects:
+		- Scala is more object-oriented than Java because in Scala, we cannot have static members.
+		-  Instead, Scala has singleton objects.
+		- A singleton is a class that can have only one instance
+		- You create singleton using the keyword object instead of class keyword. 
+		- Since you can't instantiate a singleton object, you can't pass parameters to the primary constructor.
+
+- Access Modifiers:
+	- Members of packages, classes or objects can be labeled with the access modifiers private and protected, and if we are not using either of these two keywords, then access will be assumed as public. 
+	- These modifiers restrict accesses to the members to certain regions of code. 
+	- Private Members:
+		- A private member is visible only inside the class or object that contains the member definition.
+		Ex:
+			class Outer {
+			   class Inner {
+				  private def f() { println("f") }
+				  
+				  class InnerMost {
+					 f() // OK
+				  }
+			   }
+			   (new Inner).f() // Error: f is not accessible
+			}
+		- In Scala, the access (new Inner). f() is illegal because f is declared private in Inner and the access is not from within class Inner.
+	- Protected Members:
+		- A protected member is only accessible from subclasses of the class in which the member is defined.
+		Ex:
+			package p {
+			   class Super {
+				  protected def f() { println("f") }
+			   }
+			   
+			   class Sub extends Super {
+				  f()
+			   }
+			   
+			   class Other {
+				  (new Super).f() // Error: f is not accessible
+			   }
+			}
+		- The access to f in class Sub is OK because f is declared protected in ‘Super’ class and ‘Sub’ class is a subclass of Super. 
+	- Public Members:
+		- Unlike private and protected members, it is not required to specify Public keyword for Public members. 
+		- There is no explicit modifier for public members. Such members can be accessed from anywhere.
+		Ex:
+			class Outer {
+			   class Inner {
+				  def f() { println("f") }
+				  
+				  class InnerMost {
+					 f() // OK
+				  }
+			   }
+			   (new Inner).f() // OK because now f() is public
+			}
+	- Scope of Protection:
+		- Access modifiers in Scala can be augmented with qualifiers. 
+		- A modifier of the form private[X] or protected[X] means that access is private or protected "up to" X, where X designates some enclosing package, class or singleton object.
+		Ex:
+			package society {
+			   package professional {
+				  class Executive {
+					 private[professional] var workDetails = null
+					 private[society] var friends = null
+					 private[this] var secrets = null
+
+					 def help(another : Executive) {
+						println(another.workDetails)
+						println(another.secrets) //ERROR
+					 }
+				  }
+			   }
+			}
+		- Variable workDetails will be accessible to any class within the enclosing package professional.
+		- Variable friends will be accessible to any class within the enclosing package society.
+		- Variable secrets will be accessible only on the implicit object within instance methods (this).
+- Operators:
+	- Scala supports Arithmetic, Relational, Logical, Bitwise and Assignment operators
