@@ -317,7 +317,10 @@
 		def last[A](list: List[A]): A = list.foldLeft[A](list.head) { (_, cur) => cur }
 		
 		Reverse the order of a list.
-		def last[A](list: List[A]): A = list.foldLeft[A](list.head) { (_, cur) => cur }
+		def reverse[A](list: List[A]): List[A] = list.foldLeft(List[A]()) { (r,c) => c :: r }
+		
+		Reference: 
+			https://commitlogs.com/2016/09/10/scala-fold-foldleft-and-foldright/
 		
 	- reduceLeft()
 		val a = Array(20, 12, 6, 15, 2, 9)

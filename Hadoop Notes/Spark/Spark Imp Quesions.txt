@@ -133,3 +133,45 @@ Difference between Repartition and Coalesce.
 	https://hackernoon.com/managing-spark-partitions-with-coalesce-and-repartition-4050c57ad5c4
 		
 	
+Spark SQL Performance Tuning in Apache Spark
+	- spark.sql.codegen
+		- The default value of spark.sql.codegen is false.
+		- When the value of this is true, Spark SQL will compile each query to Java bytecode very quickly. Thus, improves the performance for large queries.
+		- But the issue with codegen is that it slows down with very short queries. This happens because it has to run a compiler for each query.
+	- spark.sql.inMemorycolumnarStorage.compressed
+		- The default value of spark.sql.inMemorycolumnarStorage.compressed is true.
+		- When the value is true we can compress the in-memory columnar storage automatically based on statistics of the data.
+	- spark.sql.inMemoryColumnarStorage.batchSize
+		- The default value of spark.sql.inMemoryColumnarStorage.batchSize is 10000.
+		- It is the batch size for columnar caching. 
+		- The larger values can boost up memory utilization but causes an out-of-memory problem.
+	- spark.sql.parquet.compression.codec
+		- The spark.sql.parquet.compression.codec uses default snappy compression.
+		- Snappy is a library which for compression/decompression.
+		- It mainly aims at very high speed and reasonable compression. 
+		- In most compression, the resultant file is 20 to 100% bigger than other inputs although it is the order of magnitude faster.
+		-  Other possible option includes uncompressed, gzip and lzo.
+- Reference:
+	https://data-flair.training/blogs/apache-spark-sql-performance-tuning/
+
+When should we use SORT BY instead of ORDER BY?
+	- Despite ORDER BY we should use SORT BY. 
+	- Especially while we have to sort huge datasets. 
+	- The reason is SORT BY clause sorts the data using multiple reducers. 
+	- However, ORDER BY sorts all of the data together using a single reducer.
+	- Hence, using ORDER BY will take a lot of time to execute a large number of inputs.
+
+How Hive distributes the rows into buckets?
+	(bucketing_column) modulo (num_of_buckets) 
+
+What is indexing and why do we need it?
+	- Hive index is a Hive query optimization techniques. Basically, we use it to speed up the access of a column or set of columns in a Hive database.
+	- Since, the database system does not need to read all rows in the table to find the data with the use of the index, especially that one has selected.
+	CREATE INDEX inedx_salary ON TABLE employee(salary) AS ‘org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler’;
+	DROP INDEX index_salary ON employee;
+	
+Explain about the different types of join in Hive.
+	JOIN-  It is very similar to Outer Join in SQL
+	FULL OUTER JOIN – This join Combines the records of both the left and right outer tables. Basically, that fulfill the join condition.
+	LEFT OUTER JOIN- Through this Join, All the rows from the left table are returned even if there are no matches in the right table.
+	RIGHT OUTER JOIN – Here also, all the rows from the right table are returned even if there are no matches in the left table.
