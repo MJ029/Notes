@@ -1,0 +1,4 @@
+*****************************************C++ Imp Ref*****************************************
+endl --> which inserts a new-line character after every line.
+<< --> operator is being used to pass multiple values out to the screen.
+sizeof() --> to get size of various data types.
