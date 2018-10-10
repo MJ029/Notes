@@ -1,13 +1,20 @@
 ************************************MongoDB*******************************
+- MongoDB is a cross-platform, document oriented database that provides, high performance, high availability, and easy scalability.
+- MongoDB works on concept of collection and document.
+
 1) Database: 
 	- Database is a physical container for collections.
 	- Each database gets its own set of files on the file system.
 	- A single MongoDB server typically has multiple databases.
-	- use Mongo_Test  -> to create a databse use the following.
-	- db -> to show selected DB
-	- show dbs to check databse list.
-	- db.dropDatabases() -> to drop database.
-	- 
+	- Ex:
+		use test_db --> to create DB, The command will create a new database if it doesn't exist, otherwise it will return the existing database.
+		db --> to check your currently selected database
+		show dbs --> to check your databases list
+		db.dropDatabases() -> to drop database, This will delete the selected database. If you have not selected any database, then it will delete default 'test' database.
+	Note:
+		- To display database, you need to insert at least one document into it.
+		- db.movie.insert({"name":"tutorials point"}) --> which will create a Dummy Collection with name Movie and insert a document in it as name and its value.
+	
 2) Collection:
 	- Collection is a group of MongoDB documents. 
 	- It is the equivalent of an RDBMS table. 
@@ -17,16 +24,38 @@
 	- Typically, all documents in a collection are of similar or related purpose.
 	- db.createCollection(name,option) -> to create a COllection in a database
 		ex: db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } )
-	- name -> name of the collection
-	- option -> 	1) capped(boolean)
-			2) autoIndexid(boolean)
-			3) size
-			4) max
+	- name is name of collection to be created. 
+	- Options is a document and is used to specify configuration of collection.
+	- Options parameter is optional, so you need to specify only the name of the collection. 
+	- Following is the list of options you can use:
+		capped --> Boolean:
+			(Optional) If true, enables a capped collection. Capped collection is a fixed size collection that automatically overwrites its oldest entries when it reaches its maximum size.
+			If you specify true, you need to specify size parameter also.
+		autoIndexId --> Boolean:
+			(Optional) If true, automatically create index on _id field.
+			Default value is false.
+		size --> Number:
+			(Optional) Specifies a maximum size in bytes for a capped collection.
+			If capped is true, then you need to specify this field also.
+		max	--> number:
+			(Optional) Specifies the maximum number of documents allowed in the capped collection.
+			
+	Note: 
+		- While inserting the document, MongoDB first checks size field of capped collection, then it checks max field.
+		- In MongoDB, you don't need to create collection. MongoDB creates collection automatically, when you insert some document.
+		
+	- To create Collection in multiple ways
+		db.createCollection("mycollection")
+		db.createCollection("mycol", { capped : true, autoIndexId : true, size : 6142800, max : 10000 } )
+		db.tutorialspoint.insert({"name" : "tutorialspoint"})
+		
+		
 	- show Test_collection -> to show the collection
-	- db.Test_collection.Drop() -> to drop the collection.
+	- db.Test_collection.Drop() -> to drop the collection. the drop() method will return true, if the selected collection is dropped successfully, otherwise it will return false.
 	- to insert a value in a collection
 		> db.test.insert({name:"Manikandan Jeyabal",Father_Name:"Jeyabal",email:"manikandanjeyabal@gmail.com",phone:9791423428,hobbies:["Bike Riding","Mount Climbing"]}
-	- >db.test.insert([
+	- > to insert multiple documents
+	db.test.insert([
    {
       title: 'MongoDB Overview', 
       description: 'MongoDB is no sql database',
@@ -54,19 +83,44 @@
   }
 ])
 	- to insert a document we can use db.test.post(document) also.
-	- 
-
 
 
 3) Document:
 	- A document is a set of key-value pairs. 
 	- Documents have dynamic schema. 
 	- Dynamic schema means that documents in the same collection do not need to have the same set of fields or structure, and common fields in a collection's documents may hold different types of data.
+	- To insert data into MongoDB collection, you need to use MongoDB's insert() or save() method.
+		db.COLLECTION_NAME.insert(document)
+		Ex:
+			db.mycol.insert({
+							   _id: ObjectId(7df78ad8902c),
+							   title: 'MongoDB Overview', 
+							   description: 'MongoDB is no sql database',
+							   by: 'tutorials point',
+							   url: 'http://www.tutorialspoint.com',
+							   tags: ['mongodb', 'database', 'NoSQL'],
+							   likes: 100
+							})
+		- Here mycol is our collection name, as created in the previous chapter.
+		- If the collection doesn't exist in the database, then MongoDB will create this collection and then insert a document into it.
+		- In the inserted document, if we don't specify the _id parameter, then MongoDB assigns a unique ObjectId for this document.
+		- can insert multiple documetns too
+		- you can use db.post.save(document) also.
+		- If you don't specify _id in the document then save() method will work same as insert() method.
+		- If you specify _id then it will replace whole data of document containing _id as specified in save() method.
+	- find() method will display all the documents in a non-structured way.
+	- Apart from find() method, there is findOne() method, that returns only one document.
 	- Projection in Mongodb 
-		db.test.find() ->  like select statement.
-		db.mycol.find({},{"title":1,_id:0}) -> will select all title alone.
-		db.mycol.find({},{"title":1,_id:0}).limit(2) -> Like limit in Hive and pig and top * from RDBMS
-		db.mycol.find({},{"title":1,_id:0}).limit(1).skip(1) -> To skip some records from selection
+		- projection means selecting only the necessary data rather than selecting whole of the data of a document.
+		- If a document has 5 fields and you need to show only 3, then select only 3 fields from them.
+		- MongoDB's find() method, accepts second optional parameter that is list of fields that you want to retrieve.
+		- In MongoDB, when you execute find() method, then it displays all fields of a document. 
+		- To limit this, you need to set a list of fields with value 1 or 0. 
+		- 1 is used to show the field while 0 is used to hide the fields.		
+			db.test.find() ->  like select statement. 
+			db.mycol.find({},{"title":1,_id:0}) -> will select all title alone.
+			db.mycol.find({},{"title":1,_id:0}).limit(2) -> Like limit in Hive and pig and top * from RDBMS
+			db.mycol.find({},{"title":1,_id:0}).limit(1).skip(1) -> To skip some records from selection
 	- db.test.find().pretty() -> to show the select statement in structured way.
 	- Where caluse operations in MongoDB.
 		1) Equality - {<key>:<value>} - db.test.find({"name":"manikandan Jeyabal"}).pretty()
@@ -76,9 +130,13 @@
 		5) Greater Than Equals - {<key>:{$gte:<value>}} - db.collection.find({"salary":{$gte:15000}}).pretty()
 		6) Not Equals - {<key>:{$ne:<value>}} - db.collection.find({"likes":{$ne:50}}).pretty()
 	- AND Clause in MongoDB.
+		- In the find() method, if you pass multiple keys by separating them by ',' then MongoDB treats it as AND condition.
 		1) db.collection.find({$and:[{name:"Mani"}, {Father_Name:"Jeyabal"}]}).pretty()
 	- OR in MongoDB.
+		- To query documents based on the OR condition, you need to use $or keyword. 
 		1) db.collection.find({$or: [{name:"Mani"}, {Father_Name:"Jeyabal"}]}).pretty()
+	- Using AND / OR together:
+		db.mycol.find({"likes": {$gt:10}, $or: [{"by": "tutorials point"}, {"title": "MongoDB Overview"}]}).pretty()
 	- Update and Save methods.
 		1) Update() - normal update like RDBMS.
 			to update single Document -> db.collection.update({'name':'MJ'},{$set:{'name':'Son Of Kalyani'}})
@@ -86,10 +144,13 @@
 		2) Save() - Replace the Existing document with new document(like overwrite.)
 			db.mycol.save({"_id" : ObjectId(5983548781331adf45ec7), "title":"Tutorials Point New Topic","by":"Tutorials Point"})
 	- to remove onely one record a Method. like delete in RDBMS
-		 db.collection.remove({'name':'MAnikandan Jeyabal'})
+		- MongoDB's remove() method is used to remove a document from the collection.
+		- Remove() method accepts two parameters. One is deletion criteria and second is justOne flag.
+			deletion criteria - (Optional) deletion criteria according to documents will be removed.
+			justOne - (Optional) if set to true or 1, then remove only one document.
+		 db.collection.remove({'name':'Manikandan Jeyabal'})
 	- to remove all docs like Delete all or truncate in RDBMS.
 		db.mycol.remove()
-
 	- Sorting Recorde. 1 is used for ascending order while -1 is used for descending order.
 		db.mycol.find({},{"title":1,_id:0}).sort({"title":-1})	
 
@@ -111,6 +172,17 @@
 	- next 3 bytes for machine id, 
 	- next 2 bytes for process id of MongoDB server and 
 	- remaining 3 bytes are simple incremental VALUE.
+	
+Data Modeling:
+- Data in MongoDB has a flexible schema.documents in the same collection. 
+- They do not need to have the same set of fields or structure, and common fields in a collection’s documents may hold different types of data.
+- considerations while designing Schema in MongoDB:
+	- Design your schema according to user requirements.
+	- Combine objects into one document if you will use them together. Otherwise separate them
+	- Duplicate the data (but limited) because disk space is cheap as compare to compute time.
+	- Do joins while write, not on read.
+	- Optimize your schema for most frequent use cases.
+	- Do complex aggregation in the schema.
 
 
 5) Data types in MongodDB:
@@ -125,7 +197,7 @@
 	9) Null - This type is used to store a Null value.
 	10) Symbol - This datatype is used identically to a string; however, it's generally reserved for languages that use a specific symbol type.
 	11) Date - This datatype is used to store the current date or time in UNIX time format. 
-		 - You can specify your own date time by creating object of Date and passing day, month, year into it.
+			 - You can specify your own date time by creating object of Date and passing day, month, year into it.
 	12) Object ID - This datatype is used to store the document’s ID.
 	13) Binary data - This datatype is used to store binary data.
 	14) Code - This datatype is used to store JavaScript code into the document.

@@ -1,4 +1,8 @@
 *****************************************C++ Imp Ref*****************************************
-endl --> which inserts a new-line character after every line.
-<< --> operator is being used to pass multiple values out to the screen.
-sizeof() --> to get size of various data types.
+iostream.h (or) iostream:
+	-  includes the standard input output library functions.
+	- It provides cin and cout methods for reading from input and writing to output respectively.
+
+conio.h (or) conio:
+	- includes the console input output library functions. 
+	- The getch() function is defined in conio.h file.
