@@ -1,0 +1,20 @@
+*********************************Installing Spark in Windows 10************************
+- I assume already hadoop installed in your windows, else follow how to install hadoop in windos 10 in my github and start this
+- set permission to \tmp\hive location using winutils.exe thenstart working with spark
+		winutils.exe chmod 777 \tmp\hive
+		
+Ref:
+for Downloading Spark for windows: https://spark.apache.org/downloads.html
+for installation: https://hernandezpaul.wordpress.com/2016/01/24/apache-spark-installation-on-windows-10/
+
+
+Error:
+	- Exiting from spark-shell using :q or :quit throws Error:
+		ERROR ShutdownHookManager:91 - Exception while deleting Spark temp dir:
+		
+		Fix:	
+			Add the following property in log4j.properties
+				log4j.logger.org.apache.spark.util.ShutdownHookManager=OFF
+				log4j.logger.org.apache.spark.SparkEnv=ERROR
+			Or you can change the tmp path location to windows style
+			From --> winutils.exe chmod 777 /tmp/hive to --> winutils.exe chmod 777 \tmp\hive

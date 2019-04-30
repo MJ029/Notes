@@ -1,0 +1,6 @@
+*****************************************Installing Apache Drill in Windows 10********************************
+1) Download the Apache Drill from the following site: http://www.apache.org/dyn/closer.cgi/drill/drill-1.14.0/apache-drill-1.14.0.tar.gz (This may chage depends up on the llatest version)
+2) run the following command in Command line to start Drill: 
+	sqlline.bat -u "jdbc:drill:zk=local"
+3) to stop drill run the following command:
+	!quit

@@ -1,0 +1,58 @@
+*************************************Impala Imp Questions********************************
+Difference between Impala and RDBMS
+- Impala:
+	- Impala uses an SQL like query language that is similar to HiveQL.
+	- In Impala, you cannot update or delete individual records.
+	- Impala does not support transactions.
+	- Impala does not support indexing.
+	- Impala stores and manages large amounts of data (petabytes).
+- RDBMS:
+	- Relational databases use SQL language.
+	- In relational databases, it is possible to update or delete individual records.
+	- Relational databases support transactions.
+	- Relational databases support indexing.
+	- Relational databases handle smaller amounts of data (terabytes) when compared to Impala.
+	
+Difference between Impala and Drill
+- Impala:
+- Drill:
+
+Guidelines to Design Impala schema
+	- Prefer binary file formats over text-based formats:
+		- To save space and improve memory usage and query performance, use binary file formats for any large or intensively queried tables.
+		- Parquet file format is the most efficient for data warehouse-style analytic queries. 
+		- Avro is the other binary file format that Impala supports
+		- Impala can work with RCFile and Sequence file format too but 
+		Impala does not support INSERT operations for tables with these file formats since it is text based formats
+			- For an efficient and scalable format for large, performance-critical tables, use the Parquet file format.
+			- To deliver intermediate data during the ETL process, in a format that can also be used by other Hadoop components, Avro is a reasonable choice.
+			- For convenient import of raw data, use a text table instead of RCFile or SequenceFile, and convert to Parquet in a later stage of the ETL process.
+	- Use Snappy compression:
+		- it involves low CPU overhead to decompress, while still providing substantial space savings.
+	- Prefer numeric types over strings:
+		- numeric values such as  YEAR, MONTH, and DAY for partition key columns define them as integer type rather that string type
+		- Ex:
+			YEAR can be SMALLINT
+			MONTH and DAY can be TINYINT
+		- Although you might not see any difference in the way partitioned tables or text files are laid out on disk
+		- using numeric types will save space in binary formats.
+	- Partition, but do not over-partition:
+		- Partition is a important spect when it comes to performance tuning.
+		- consider partition columns depends upon usecase.
+	- Always compute stats after loading data:
+		- Always run the COMPUTE STATS statement on a table after loading or replacing data in a table or partition.
+		- because Impala makes extensive use of statistics about data in the overall table and in each column, to help plan resourceintensive 
+		operations such as join queries and inserting into
+		- Having accurate statistics can make the difference between a successful operation, or one that fails due to an outof-memory error or a timeout.
+		-  When you encounter performance or capacity issues, always use the SHOW STATS statement 
+		to check if the statistics are present and up-to-date for all tables in the query
+		- by using stat information Impala consults the statistics for each joined table to determine their relative sizes and 
+		to estimate the number of rows produced in each join stage
+	- Verify sensible execution plans with EXPLAIN and SUMMARY:
+		- Before executing a resource-intensive query, use the EXPLAIN statement to get an overview of how Impala intends 
+		to parallelize the query and distribute the work.
+		-  If you see that the query plan is inefficient, you can take tuning steps such as changing file formats, using 
+		partitioned tables, running the COMPUTE STATS statement, or adding query hints.
+
+		
+			

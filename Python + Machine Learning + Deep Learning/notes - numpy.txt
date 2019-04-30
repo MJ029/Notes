@@ -1,0 +1,383 @@
+***************************************************Numpy Notes***************************************************
+- NumPy’s main object is the homogeneous multidimensional array.
+- It is a table of elements (usually numbers), all of the same type, indexed by a tuple of positive integers.
+- In NumPy dimensions are called axes.
+  Ex:
+	one Axis --> [1, 2, 1] 
+			 --> The coordinates of a point in 3D space.
+			 --> That axis has 3 elements in it, so we say it has a length of 3.
+			 
+	two Axis --> [[ 1., 0., 0.], [ 0., 1., 2.]]
+			 --> The array has 2 axes.
+			 --> The first axis has a length of 2, the second axis has a length of 3.
+- In numpy Arrays are called as ndArray.
+- It is also known by the alias array.
+- Note:
+	- numpy.array is not the same as the Standard Python Library class array.array, which only handles one-dimensional arrays and offers less functionality.
+	- By default, the dtype of the created array is float64.
+	- When arange is used with floating point arguments, it is generally not possible to predict the number of elements obtained, due to the finite floating point precision. (linspace --> alternate for this issue as solution)
+	- Unlike in many matrix languages, the product operator * operates elementwise in NumPy arrays.
+- Attributes of ndArray Object:
+	- ndarray.ndim:
+		- the number of axes (dimensions) of the array.
+	- ndarray.shape:
+		- the dimensions of the array. 
+		- This is a tuple of integers indicating the size of the array in each dimension.
+		- For a matrix with n rows and m columns, shape will be (n,m). 
+		- The length of the shape tuple is therefore the number of axes, ndim.
+	- ndarray.size:
+		- the total number of elements of the array.
+		- This is equal to the product of the elements of shape.
+	- ndarray.dtype:
+		- an object describing the type of the elements in the array.
+		- One can create or specify dtype’s using standard Python types. 
+		- Additionally NumPy provides types of its own. numpy.int32, numpy.int16, and numpy.float64 are some examples.
+	- ndarray.itemsize:
+		- the size in bytes of each element of the array. 
+		Ex:
+			an array of elements of type float64 has itemsize 8 (=64/8)
+			one of type complex32 has itemsize 4 (=32/8).
+			It is equivalent to ndarray.dtype.itemsize.
+	- ndarray.data:
+		- the buffer containing the actual elements of the array.
+		- Normally, we won’t need to use this attribute because we will access the elements in an array using indexing facilities.
+- An Example:
+	import numpy as np
+	a = np.arange(15).reshape(3, 5)
+	a
+	a.shape
+	a.ndim
+	a.dtype.name
+	a.itemsize
+	a.size
+	type(a)
+	b = np.array([6, 7, 8])
+	b
+	type(b)
+	
+- Array Creation:
+	- There are several ways to create arrays.
+	- you can create an array from a regular Python list or tuple using the array function.
+	- The type of the resulting array is deduced from the type of the elements in the sequences.
+	Ex:
+		import numpy as np
+		a = np.array([2,3,4])
+		a
+		a.dtype
+		b = np.array([1.2, 3.5, 5.1])
+		b.dtype
+		
+		a = np.array(1,2,3,4)    # WRONG
+		a = np.array([1,2,3,4])  # RIGHT
+	- array transforms sequences of sequences into two-dimensional arrays
+	- sequences of sequences of sequences into three-dimensional arrays, and so on.
+	Ex:
+		b = np.array([(1.5,2,3), (4,5,6)])
+		b
+		
+	- The type of the array can also be explicitly specified at creation time:
+	Ex:
+		c = np.array( [ [1,2], [3,4] ], dtype=complex )
+		c
+	- Often, the elements of an array are originally unknown, but its size is known.
+	- Hence, NumPy offers several functions to create arrays with initial placeholder content.
+	- These minimize the necessity of growing arrays, an expensive operation.
+	- np.zeros:
+		- The function zeros creates an array full of zeros
+		Ex:
+			np.zeros((3,4))
+	- np.ones:
+		- the function ones creates an array full of ones
+		Ex:
+			np.ones((2,3,4), dtype=np.int16)	# dtype can also be specified
+	- np.empty:
+		- the function empty creates an array whose initial content is random and depends on the state of the memory.
+		Ex:
+			np.empty((2,3))						# uninitialized, output may vary
+	- When arange is used with floating point arguments, it is generally not possible to predict the number of elements obtained, due to the finite floating point precision.
+	- For this reason, it is usually better to use the function linspace that receives as an argument the number of elements that we want, instead of the step.
+	Ex:
+		from numpy import pi
+		np.linspace( 0, 2, 9 )			# 9 numbers from 0 to 2
+		x = np.linspace( 0, 2*pi, 100 )
+		f = np.sin(x)					 # useful to evaluate function at lots of points
+- Printing Arrays:
+	- When you print an array, NumPy displays it in a similar way to nested lists, but with the following layout:
+		- the last axis is printed from left to right,
+		- the second-to-last is printed from top to bottom,
+		- the rest are also printed from top to bottom, with each slice separated from the next by an empty line.
+		Ex:
+			a = np.arange(6)
+			print(a)
+			
+			b = np.arange(12).reshape(4,3)
+			print(b)
+			
+			c = np.arange(24).reshape(2,3,4)
+			print(c)
+- numpy Basic Operations:
+	Ex:
+		a = np.array( [20,30,40,50] )
+		b = np.arange( 4 )
+		c = a-b
+		b**2
+		10*np.sin(a)
+		a<35
+	- Unlike in many matrix languages, the product operator * operates elementwise in NumPy arrays.
+	- The matrix product can be performed using the @ operator (in python >=3.5) or the dot function or method
+	Ex:
+		A = np.array( [[1,1], [0,1]] )
+		B = np.array( [[2,0], [3,4]] )
+		A * B				# elementwise product
+		A @ B				# matrix product
+		A.dot(B) 			# another matrix product
+		
+	- Some operations, such as += and *=, act in place to modify an existing array rather than create a new one.
+	Ex:
+		a = np.ones((2,3), dtype=int)
+		a *= 3
+		b = np.random.random((2,3))
+		b += a
+	- Many unary operations, such as computing the sum of all the elements in the array, are implemented as methods of the ndarray class.
+	Ex:
+		a = np.random.random((2,3))
+		a.sum()
+		a.min()
+		a.max()
+		
+	- By default, these operations apply to the array as though it were a list of numbers, regardless of its shape.
+	- However, by specifying the axis parameter you can apply an operation along the specified axis of an array:
+	Ex:
+		b = np.arange(12).reshape(3,4)
+		b.sum(axis=0)
+		b.min(axis=1) 
+		b.cumsum(axis=1)
+		
+- Universal Functions:
+	- NumPy provides familiar mathematical functions such as sin, cos, and exp.
+	- In NumPy, these are called “universal functions”(ufunc). 
+	- Within NumPy, these functions operate elementwise on an array, producing an array as output.
+	Ex:
+		B = np.arange(3)
+		np.exp(B)
+		np.sqrt(B)
+		C = np.array([2., -1., 4.])
+		np.add(B, C)
+
+		
+	
+- Numpy Functions:
+	- numpy.array(object, dtype=None, copy=True, order='K', subok=False, ndmin=0)
+		- create an array.
+		- object:
+			- An array, any object exposing the array interface, an object whose __array__ method returns an array, or any (nested) sequence.
+		- dtype : data-type, optional:
+			- The desired data-type for the array.
+			- If not given, then the type will be determined as the minimum type required to hold the objects in the sequence.
+			- This argument can only be used to ‘upcast’ the array.
+			- For downcasting, use the .astype(t) method.
+		- copy : bool, optional:
+			- by default it is true.
+			- If true (default), then the object is copied.
+		- order : {‘K’, ‘A’, ‘C’, ‘F’}, optional:
+			- Specify the memory layout of the array.
+			- default = K
+			-  If object is not an array, the newly created array will be in C order (row major) unless ‘F’ is specified, in which case it will be in Fortran order (column major).
+			
+			order	no-copy		copy=True
+			K		unchanged	F & C order preserved, otherwise most similar order
+			A		unchanged	F order if input is F and not C, otherwise C order
+			C		C Order		C Order
+			F		F Order		F Order
+			- when the copy=False and a copy is made for other reasons, the result is the same as if copy=True, with some exceptions for A,
+		- subok : bool, optional:
+			- If True, then sub-classes will be passed-through, otherwise the returned array will be forced to be a base-class array (default).
+		- ndmin : int, optional:
+			- Specifies the minimum number of dimensions that the resulting array should have. 
+			- Ones will be pre-pended to the shape as needed to meet this requirement.
+		
+		- out : ndarray:
+			- An array object satisfying the specified requirements.
+		
+		- Ways to create an array:
+			- Creating an array from sub-classes:
+			Ex:
+				np.array(np.mat('1 2; 3 4'))				# Create array with base-class array (default).
+				np.array(np.mat('1 2; 3 4'), subok=True)	# Create array with provided class format.
+			
+	- numpy.zeros(shape, dtype=float, order='C')
+		- Return a new array of given shape and type, filled with zeros.
+		- shape : int or tuple of ints:
+			- Shape of the new array, e.g., (2, 3) or 2.
+		- dtype : data-type, optional:
+			- The desired data-type for the array, e.g., numpy.int8. 
+			- Default is numpy.float64.
+		- order : {‘C’, ‘F’}, optional, default: ‘C’:
+			- Whether to store multi-dimensional data in row-major (C-style) or column-major (Fortran-style) order in memory.
+		Ex:	
+			np.zeros(5)
+			np.zeros((5,), dtype=int)
+			np.zeros((2, 1))
+			
+			s = (2,2)
+			np.zeros(s)
+	- numpy.zeros_like(a, dtype=None, order='K', subok=True)
+		- Return an array of zeros with the same shape and type as a given array.
+		- a : array_like:
+			- The shape and data-type of a define these same attributes of the returned array.
+		- dtype : data-type, optional:
+			- Overrides the data type of the result.
+		- order : {‘C’, ‘F’, ‘A’, or ‘K’}, optional:
+			- Overrides the memory layout of the result. ‘C’ means C-order, ‘F’ means F-order, ‘A’ means ‘F’ if a is Fortran contiguous, ‘C’ otherwise. 
+			- ‘K’ means match the layout of a as closely as possible.
+		- subok : bool, optional:
+			- If True, then the newly created array will use the sub-class type of ‘a’, otherwise it will be a base-class array. 
+			- Defaults to True.
+		Ex:
+			x = np.arange(6)
+			x = x.reshape((2, 3))
+			x
+			np.zeros_like(x)
+	- numpy.ones(shape, dtype=None, order='C')
+		- Return a new array of given shape and type, filled with ones.
+		Ex:
+			same as numpy.zeros
+	- numpy.ones_like(a, dtype=None, order='K', subok=True)
+		- Return an array of ones with the same shape and type as a given array.
+		Ex:
+			same as numpy.zeros_like
+	- numpy.empty(shape, dtype=float, order='C')
+		- Return a new array of given shape and type, without initializing entries.
+		- empty, unlike zeros, does not set the array values to zero, and may therefore be marginally faster.
+		- On the other hand, it requires the user to manually set all the values in the array, and should be used with caution.
+		Ex:
+			np.empty([2, 2])
+			np.empty([2, 2], dtype=int)
+	- numpy.empty_like(prototype, dtype=None, order='K', subok=True)
+		- Return a new array with the same shape and type as a given array.
+		- This function does not initialize the returned array; to do that use zeros_like or ones_like instead.
+		- It may be marginally faster than the functions that do set the array values.
+		Ex:
+			same as numpy.zeros, numpy.ones
+	- numpy.full(shape, fill_value, dtype=None, order='C')
+		- Return a new array of given shape and type, filled with fill_value.
+		- fill_value : scalar --> fill value.
+		Ex:	
+			np.full((2, 2), np.inf)
+			np.full((2, 2), 10)
+	- numpy.full_like(a, fill_value, dtype=None, order='K', subok=True)
+		- Return a full array with the same shape and type as a given array.
+		Ex:
+			x = np.arange(6, dtype=int)
+			np.full_like(x, 1)
+			np.full_like(x, 0.1)
+			np.full_like(x, 0.1, dtype=np.double)
+			np.full_like(x, np.nan, dtype=np.double)
+	- numpy.arrange([start, ]stop, [step, ]dtype=None)
+		- Return evenly spaced values within a given interval.
+		- Values are generated within the half-open interval [start, stop) (in other words, the interval including start but excluding stop). 
+		- For integer arguments the function is equivalent to the Python built-in range function, but returns an ndarray rather than a list.
+		- When using a non-integer step, such as 0.1, the results will often not be consistent. It is better to use linspace for these cases.
+		- start : number, optional:
+			- Start of interval. 
+			- The interval includes this value. 
+			- The default start value is 0.
+		- stop : number:
+			- End of interval. 
+			- The interval does not include this value, except in some cases where step is not an integer and floating point round-off affects the length of out.
+		- step : number, optional:
+			- Spacing between values. 
+			- For any output out, this is the distance between two adjacent values, out[i+1] - out[i]. 
+			- The default step size is 1. 
+			- If step is specified as a position argument, start must also be given.
+		Ex:
+			np.arange(3)
+			np.arange(3.0)
+			np.arange(3,7)
+			np.arange(3,7,2)
+	- numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
+		- Return evenly spaced numbers over a specified interval.
+		- Returns num evenly spaced samples, calculated over the interval [start, stop].
+		- The endpoint of the interval can optionally be excluded.
+		- start : scalar
+			- The starting value of the sequence.
+		- stop : scalar
+			- The end value of the sequence, unless endpoint is set to False.
+			- In that case, the sequence consists of all but the last of num + 1 evenly spaced samples, so that stop is excluded.
+			- Note that the step size changes when endpoint is False.
+		- num : int, optional
+			- Number of samples to generate. 
+			- Default is 50. 
+			- Must be non-negative.
+		- endpoint : bool, optional
+			- If True, stop is the last sample. 
+			- Otherwise, it is not included. 
+			- Default is True.
+		- retstep : bool, optional
+			- If True, return (samples, step), where step is the spacing between samples.
+		Ex:
+			np.linspace(2.0, 3.0, num=5)
+			np.linspace(2.0, 3.0, num=5, endpoint=False)
+			np.linspace(2.0, 3.0, num=5, retstep=True)
+			
+		Graphical illustration:
+			import matplotlib.pyplot as plt
+			N = 8
+			y = np.zeros(N)
+			x1 = np.linspace(0, 10, N, endpoint=True)
+			x2 = np.linspace(0, 10, N, endpoint=False)
+			plt.plot(x1, y, 'o')
+			plt.plot(x2, y + 0.5, 'o')
+			plt.ylim([-0.5, 1])
+			plt.show()
+	- numpy.ogrid = <numpy.lib.index_tricks.nd_grid object>
+		- nd_grid instance which returns an open multi-dimensional “meshgrid”.
+		- An instance of numpy.lib.index_tricks.nd_grid which returns an open (i.e. not fleshed out) mesh-grid when indexed, so that only one dimension of each returned array is greater than 1.
+		- The dimension and number of the output arrays are equal to the number of indexing dimensions.
+		- If the step length is not a complex number, then the stop is not inclusive.
+		- However, if the step length is a complex number (e.g. 5j), then the integer part of its magnitude is interpreted as specifying the number of points to create between the start and stop values, where the stop value is inclusive.
+		Ex:
+			from numpy import ogrid
+			ogrid[-1:1:5j]
+			ogrid[0:5,0:5]
+	- numpy.mgrid = <numpy.lib.index_tricks.nd_grid object>
+		- nd_grid instance which returns a dense multi-dimensional “meshgrid”.
+		- An instance of numpy.lib.index_tricks.nd_grid which returns an dense (or fleshed out) mesh-grid when indexed, so that each returned argument has the same shape.
+		- The dimensions and number of the output arrays are equal to the number of indexing dimensions.
+		- If the step length is not a complex number, then the stop is not inclusive.
+		- However, if the step length is a complex number (e.g. 5j), then the integer part of its magnitude is interpreted as specifying the number of points to create between the start and stop values, where the stop value is inclusive.
+		Ex:
+			np.mgrid[0:5,0:5]
+			np.mgrid[-1:1:5j]
+	- numpy.random.rand(d0, d1, ..., dn)
+		- Random values in a given shape.
+		- Create an array of the given shape and populate it with random samples from a uniform distribution over [0, 1).
+		- d0, d1, …, dn : int, optional
+			- The dimensions of the returned array, should all be positive.
+			- If no argument is given a single Python float is returned.
+		- This is a convenience function. If you want an interface that takes a shape-tuple as the first argument, refer to np.random.random_sample .
+		Ex:
+			np.random.rand(3,2)
+	- numpy.random.randn(d0, d1, ..., dn)
+		- Return a sample (or samples) from the “standard normal” distribution.
+		- If positive, int_like or int-convertible arguments are provided, randn generates an array of shape (d0, d1, ..., dn), filled with random floats sampled from a univariate “normal” (Gaussian) distribution of mean 0 and variance 1 (if any of the d_i are floats, they are first converted to integers by truncation). 
+		- A single float randomly sampled from the distribution is returned if no argument is provided.
+		Ex:
+			np.random.randn()
+			np.random.randn(2, 4)
+	- numpy.fromfunction(function, shape, **kwargs)
+		- Construct an array by executing a function over each coordinate.
+		- The resulting array therefore has a value fn(x, y, z) at coordinate (x, y, z).
+		- function : callable
+			- The function is called with N parameters, where N is the rank of shape.
+			- Each parameter represents the coordinates of the array varying along a specific axis.
+			- For example, if shape were (2, 2), then the parameters would be array([[0, 0], [1, 1]]) and array([[0, 1], [0, 1]])
+		- shape : (N,) tuple of ints
+			- Shape of the output array, which also determines the shape of the coordinate arrays passed to function.
+		Ex:
+			np.fromfunction(lambda i, j: i == j, (3, 3), dtype=int)
+			np.fromfunction(lambda i, j: i + j, (3, 3), dtype=int)
+	- 
+			
+- Reffer the following file for Numpy Example
+/src/Machine Learning/numpy/

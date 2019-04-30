@@ -1,0 +1,31 @@
+**********************************************Questions******************************************
+1) Formula to Calculate Partition for Each topic.
+	-- Answer
+2) Principle Behind Electing a leader Partition and Follower partition
+3) How Follower partitions Places in Cluster nodes ?
+4) why to have multiple server.properties file for each broker ?
+5) how to hadle Isr Failover ?
+6) how to read same Partition from Consumers in same Group.
+7) how Kafka Distiributing MEssages Evenly in partitions.
+	- Kafka used Round Robbin algorithm to Distribute data evenly in available partitions.
+	
+8) Which one to start first Producer/ Consumer ?
+	- we have to start consumer first
+	
+9) How to retrive old records from Producer/topic 
+10) Commonly used Key and Value Serializer in Kafka
+11) 
+
+
+References:
+1) Complete Intro:
+	https://hackernoon.com/thorough-introduction-to-apache-kafka-6fbf2989bbc1
+2) Kafka End to End:
+	https://www.youtube.com/watch?v=gg-VwXSRnmg&list=PLkz1SCf5iB4enAR00Z46JwY9GGkaS2NON
+3) Kafka Home page:
+	https://kafka.apache.org/intro
+4) Kafka Producer API:
+	https://kafka.apache.org/11/javadoc/org/apache/kafka/clients/producer/KafkaProducer.html
+5) API Oerview
+	https://kafka.apache.org/11/javadoc/overview-summary.html
+	

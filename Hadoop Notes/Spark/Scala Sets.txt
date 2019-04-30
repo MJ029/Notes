@@ -1,0 +1,239 @@
+*****************************************************************Scala Sets*****************************************************************
+- Scala Set is a collection of pairwise different elements of the same type. 
+- In other words, a Set is a collection that contains no duplicate elements. 
+- There are two kinds of Sets, the immutable and the mutable. 
+- The difference between mutable and immutable objects is that when an object is immutable, the object itself can't be changed.
+- By default, Scala uses the immutable Set.
+- If you want to use the mutable Set, you'll have to import scala.collection.mutable.Set class explicitly.
+- If you want to use both mutable and immutable sets in the same collection, then you can continue to refer to the immutable Set as Set but you can refer to the mutable Set as mutable.Set.
+	Ex:
+		// Empty set of integer type
+		var s : Set[Int] = Set()
+		// Set of integer type
+		var s : Set[Int] = Set(1,3,5,7)
+		or 
+		var s = Set(1,3,5,7)
+- Basic Operations in Set
+	Head, Tail, isEmpty 
+
+- Concatenating  sets:
+	- You can use either ++ operator or Set.++() method to concatenate two or more sets, but while adding sets it will remove duplicate elements.
+	Ex:
+		val fruit1 = Set("apples", "oranges", "pears")
+		val fruit2 = Set("mangoes", "banana")
+		// use two or more sets with ++ as operator
+		var fruit = fruit1 ++ fruit2
+		println( "fruit1 ++ fruit2 : " + fruit )
+		// use two sets with ++ as method
+		fruit = fruit1.++(fruit2)
+		println( "fruit1.++(fruit2) : " + fruit )
+
+- Find Max, Min Elements in a Set:
+	- You can use Set.min method to find out the minimum
+	- Set.max method to find out the maximum of the elements available in a set.
+	Ex:
+		val num = Set(5,6,9,20,30,45)
+		// find min and max of the elements
+		println( "Min element in Set(5,6,9,20,30,45) : " + num.min )
+		println( "Max element in Set(5,6,9,20,30,45) : " + num.max )
+
+- Find Common Values Insets (Intersection):
+	You can use either Set.& method or Set.intersect method to find out the common values between two sets.
+	Ex:
+		val num1 = Set(5,6,9,20,30,45)
+		val num2 = Set(50,60,9,20,35,55)
+		// find common elements between two sets
+		println( "num1.&(num2) : " + num1.&(num2) )
+		println( "num1.intersect(num2) : " + num1.intersect(num2) )
+	
+- Sets Methods:
+	
+	var a=Set(1,4,3,4,2)
+	var b=Set(7,9,8,2,8)
+
+	- def +(elem: A): Set[A]
+		This adds an element to the set and returns it.
+		a.+("6")
+	
+	- def -(elem: A): Set[A]
+		This removes the element from the set and then returns it. 
+		Note that this takes an Int instead of a string for our set of Ints.
+		a.-(2)
+		
+	- def contains(elem: A): Boolean
+		If the set contains that element, this returns true; otherwise, false.
+		will cehck on wildcart search basis
+		a.contains(2)
+		
+	- def &(that: Set[A]): Set[A]
+		This returns an intersection of two sets, as we just saw.
+		a.&(b)
+	
+	- def &~(that: Set[A]): Set[A]
+		Returns the difference of this set and another set.
+		 a.&~(b)
+		 
+	- def diff(that: Set[A]): Set[A]
+		This returns the set difference(elements existing in one set, but not in another)
+		a.diff(b)
+		 
+	- def +(elem1: A, elem2: A, elems: A*): Set[A]
+		Creates a new immutable set with additional elements from the passed sets
+		a.+(0,6,7)
+		
+	- def ++(elems: A): Set[A]
+		This concatenates a set with another collection.
+		a.++(List(7,9,8))
+		a.++(b)
+		
+	- def -(elem1: A, elem2: A, elems: A*): Set[A]
+		This removes, each element mentioned from the set.
+		a.-(2,3,6)
+		
+	- def addString(b: StringBuilder): StringBuilder
+		This adds all elements of the set to the String Builder.
+		a.addString(new StringBuilder())
+		
+	- def addString(b: StringBuilder, sep: String): StringBuilder
+		This uses a separator to the above functionality.
+		a.addString(new StringBuilder(),"*")
+		
+	- def apply(elem: A)
+		a.apply(1)
+		
+	- def count(p: (A) => Boolean): Int
+		Counts the number of elements in the immutable set which satisfy a predicate.
+		a.count(x=>{x%2!=0})
+		
+	- def copyToArray(xs: Array[A], start: Int, len: Int): Unit
+		var c=Array(0,0,0,0,0,0,0,0)
+		a.copyToArray(c,3,2)
+		Out --> Array[Int] = Array(0, 0, 0, 1, 4, 0, 0, 0)
+		
+	- def drop(n: Int): Set[A]]
+		This returns all elements except the first n.
+		a.drop(2)
+		
+		
+	- def dropRight(n: Int): Set[A]
+		This Scala set returns all elements except the last n.
+		a.dropRight(2)
+		
+	- def dropWhile(p: (A) => Boolean): Set[A]
+		This drops elements until the first element that doesn’t satisfy the predicate.
+		a.dropWhile(x=>{x%2!=0})
+		
+	- def equals(that: Any): Boolean
+		This set in Scala compares the set to another sequence.
+		a.equals(List(1,4,3,2))
+		
+	- def exists(p: (A) => Boolean): Boolean
+		If the predicate holds true for some elements in the set, this returns true; otherwise, false.
+		a.exists(x=>{x%4==0})
+		
+	- def filter(p: (A) => Boolean): Set[A]
+		This filters such elements
+		a.filter(x=>{x%4==0})
+		
+	- def find(p: (A) => Boolean): Option[A]
+		This Scala set returns the first element that satisfies the predicate.
+		a.find(x=>{x%2==0})
+		
+	- def forall(p: (A) => Boolean): Boolean
+		This returns true if all elements of the set satisfy the predicate; otherwise, false.
+		a.forall(x=>{x%2==0})
+		
+	- def head: A
+		This Scala Set returns the first element from the set.
+		a.head
+
+	- def init: Set[A]
+		This returns all elements from the set, except the last.
+		a.init
+		
+	- def intersect(that: Set[A]): Set[A]
+		This returns the intersection of two sets(elements common to both).
+		a.intersect(b)
+		
+	- def isEmpty: Boolean
+		This set in Scala returns true if the set is empty; otherwise, false.
+		a.isEmpty
+		
+	- def iterator: Iterator[A]
+		This creates a new iterator over the set.
+		a.iterator
+		
+	- def last: A
+		Returns the last element.
+		a.last
+		
+	- def map[B](f: (A) => B): immutable.Set[B]
+		This Scala Set applies the function to all elements of the set and returns
+		a.map(x=>x*2)
+		
+	- def max: A
+		Finds the largest element.
+		a.max
+		
+	- def min: A
+		This returns the lowest element.
+		a.min
+		
+	- def mkString: String
+		This Scala set represents all elements of the set as a String.
+		a.mkString
+		
+	- def mkString(sep: String): String
+		This lets us define a separator for the above method’s functionality.
+		a.mkString("*")
+		
+	- def product: A
+		This returns the algebraic product of all elements in the set.
+		a.product
+		
+	- def size: Int
+		This returns the size of the set.
+		a.size
+		
+	- def splitAt(n: Int): (Set[A], Set[A])
+		This splits the set at the given index and returns the two resulting subsets.
+		a.splitAt(2)
+		a.splitAt(3)
+		
+	- def subsetOf(that: Set[A]): Boolean
+		If the set passed as argument is a subset of this set, this returns true; else, false.
+		Set(3,2).subsetOf(a)
+		Set(2,3).subsetOf(a)
+		Set(1,3,4).subsetOf(a)
+		
+	- def sum: A
+		This returns the sum of all elements of the set.
+		a.sum
+		
+	- def tail: Set[A]
+		This returns all elements of the set except the first.
+		a.tail
+		
+	- def take(n: Int): Set[A]
+		This Scala set returns the first n elements from the set.
+		a.take(3)
+		
+	- def takeRight(n: Int):Set[A]
+		This returns the last n elements.
+		a.takeRight(3)
+		
+	- def toArray: Array[A]
+		This returns an Array holding elements from the set.
+		a.toArray
+		
+	- def toList: List[A]
+		This returns a List from elements of the set.
+		a.toList
+		
+	- def toSeq: Seq[A]
+		This returns a sequence from the set.
+		a.toSeq
+	
+	- def toString(): String
+		This represents the elements of the set as a String.
+		a.toString

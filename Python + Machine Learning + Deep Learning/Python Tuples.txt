@@ -1,0 +1,64 @@
+*******************************************************Python Tuples*******************************************
+- A tuple is a sequence of immutable Python objects.
+- Tuples are sequences, just like lists.
+- The differences between tuples and lists are, the tuples cannot be changed unlike lists and tuples use parentheses, whereas lists use square brackets.
+- Creating a tuple is as simple as putting different comma-separated values. 
+- Optionally you can put these comma-separated values between parentheses also.
+	tup1 = ('physics', 'chemistry', 1997, 2000);
+	tup2 = (1, 2, 3, 4, 5 );
+	tup3 = "a", "b", "c", "d";
+	tup4 = (); --> Empty tuple
+	tup5 = (50,); --> To write a tuple containing a single value you have to include a comma, even though there is only one
+- Like string indices, tuple indices start at 0, and they can be sliced, concatenated, and so on.
+- Accessing Values in Tuples:
+	tup1 = ('physics', 'chemistry', 1997, 2000);
+	tup2 = (1, 2, 3, 4, 5, 6, 7 );
+	print "tup1[0]: ", tup1[0];
+	print "tup2[1:5]: ", tup2[1:5];
+
+- Updating Tuples:
+	- Tuples are immutable which means you cannot update or change the values of tuple elements.
+	- You are able to take portions of existing tuples to create new tuples 
+	Ex:
+		tup1 = (12, 34.56);
+		tup2 = ('abc', 'xyz');
+
+		# Following action is not valid for tuples
+		# tup1[0] = 100;
+
+		# So let's create a new tuple as follows
+		tup3 = tup1 + tup2;
+		print tup3;
+
+- Delete Tuple Elements:
+	- Removing individual tuple elements is not possible. 
+	- There is, of course, nothing wrong with putting together another tuple with the undesired elements discarded.
+	- To explicitly remove an entire tuple, just use the del statement.
+	Ex:
+		tup = ('physics', 'chemistry', 1997, 2000);
+		print tup;
+		del tup;
+		print "After deleting tup : ";
+		print tup;
+
+- Basic Tuples Operations:
+	Python Expression						Results					Description
+	len((1, 2, 3))							3						Length
+	(1, 2, 3) + (4, 5, 6)				(1, 2, 3, 4, 5, 6)			Concatenation
+	('Hi!',) * 4					('Hi!', 'Hi!', 'Hi!', 'Hi!')	Repetition
+	3 in (1, 2, 3)							True					Membership
+	for x in (1, 2, 3): print x,			1 2 3					Iteration
+
+- Indexing, Slicing, and Matrixes:
+	Python Expression				Results				Description
+		L[2]						'SPAM!'				Offsets start at zero
+		L[-2]						'Spam'				Negative: count from the right
+		L[1:]					['Spam', 'SPAM!']		Slicing fetches sections
+
+- Tuple supports functions as follows
+	cmp(tp1, tp2)
+	len(tp)
+	max(tp)
+	min(tp)
+	tuple(seq)
+	

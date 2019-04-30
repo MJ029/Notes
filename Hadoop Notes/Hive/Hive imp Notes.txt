@@ -1,0 +1,108 @@
+*********************************************Hive imp Notes*******************************************
+
+What is a metastore in Hive?
+- Metastore in Hive stores the meta data information using RDBMS and an open source ORM (Object Relational Model) 
+	layer called Data Nucleus which converts the object representation into relational schema and vice versa.
+	
+difference between local and remote metastore?
+Local:
+	- In local metastore configuration, the metastore service runs in the same JVM in which the Hive service is running
+	- and connects to a database running in a separate JVM, either on the same machine or on a remote machine.
+Remote:
+	- In the remote metastore configuration, the metastore service runs on its own separate JVM and not in the Hive service JVM. 
+	- Other processes communicate with the metastore server using Thrift Network APIs. 
+	- You can have one or more metastore servers in this case to provide more availability.
+
+When should we use SORT BY instead of ORDER BY?
+- We should use SORT BY instead of ORDER BY when we have to sort huge datasets.
+- because SORT BY clause sorts the data using multiple reducers.
+- whereas ORDER BY sorts all of the data together using a single reducer.
+- Therefore, using ORDER BY against a large number of inputs will take a lot of time to execute. 
+
+Explain partition in Hive?
+- Hive organizes tables into partitions for grouping similar type of data together based on a column or partition key.
+- Each Table can have one or more partition keys to identify a particular partition. 
+- Physically, a partition is nothing but a sub-directory in the table directory.
+- Partitioning provides granularity in a Hive table and therefore, 
+	reduces the query latency by scanning only relevant partitioned data instead of the whole data set.
+- supports Static and Dynamic partitions
+- dynamic partition:
+	- dynamic partitioning values for partition columns are known in the runtime, i.e. It is known during loading of the data into a Hive table. 
+	- pre requsites:
+		SET hive.exec.dynamic.partition = true;
+		SET hive.exec.dynamic.partition.mode = nonstrict;
+	- addig new partition to existing table:
+		ALTER TABLE partitioned_transaction ADD PARTITION (month=’Dec’) LOCATION  ‘/partitioned_transaction’;
+		
+What is the default maximum dynamic partition that can be created by a mapper/reducer? How can you change it?
+- By default the number of maximum partition that can be created by a mapper or reducer is set to 100. 
+- One can change it by issuing the following command:
+	SET hive.exec.max.dynamic.partitions.pernode = <value>
+	
+Why do we need buckets?
+- There are two main reasons for performing bucketing to a partition:
+	- A map side join requires the data belonging to a unique join key to be present in the same partition. 
+		But what about those cases where your partition key differs from that of join key? 
+		Therefore, in these cases you can perform a map side join by bucketing the table using the join key.
+	- Bucketing makes the sampling process more efficient and therefore, allows us to decrease the query time.
+	
+alternate ways to provide bucket ?
+- The command:  ‘SET hive.enforce.bucketing=true;’ allows one to have the correct number of reducer while using ‘CLUSTER BY’ clause for bucketing a column.
+- In case it’s not done, one may find the number of files that will be generated in the table directory to be not equal to the number of buckets. 
+- As an alternative, one may also set the number of reducer equal to the number of buckets by using set mapred.reduce.task = num_bucket.
+
+ways to perform mapside join:
+- it is Also known as replicated join
+- a map-side join is a special type of join where a smaller table is loaded in memory and join is performed in map phase of MapReduce job.
+- Since there is no reducer involved in the map-side join, it is much faster when compared to regular join.
+- An important point to note is, one table must be small enough to fit into memory.
+- It is recommended to have a proper configuration so that Hive automatically attempt to convert Joins into the map-side join. 
+	set hive.auto.convert.join=true;
+	set hive.auto.convert.join.noconditionaltask=true;
+- or	
+	SELECT /*+ MAPJOIN(emp)*/ emp.id, emp.name FROM dept JOIN emp on (dept.id = emp.id)
+
+Sort-Merge-Bucket (SMB) Map Join:
+- It is another Hive join optimization technique where all the tables need to be bucketed and sorted. 
+- In this case joins are very efficient because they require a simple merge of the presorted tables.
+- Let us create bucketed tables from our existing tables i.e.; emp and dept. Before creating bucketed table, you need to set below properties.
+	set hive.enforce.bucketing=true;
+	set hive.enforce.sorting=true;
+- create the required tables and load data
+- Now the stage is set to perform SMB Map Join to optimize Hive joining. Again, make some changes in properties to perform SMB Map join.
+	set hive.enforce.sortmergebucketmapjoin=false;
+	set hive.auto.convert.sortmerge.join=true;
+	set hive.optimize.bucketmapjoin = true;
+	set hive.optimize.bucketmapjoin.sortedmerge = true;
+	set hive.auto.convert.join=false; // if we do not do this, automatically Map-Side Join will happen
+	
+Hive windowing functions
+	- Windowing allows you to create a window on a set of data further allowing aggregation surrounding that data.
+	- Windowing in Hive is introduced from Hive 0.11.
+	- Lead():
+		- 
+	- Lag():
+	- FIRST_VALUE():
+	- LAST_VALUE():
+	- OVER():
+		- COUNT()
+		- SUM()
+		- MIN() 
+		- MAX()
+		- AVG()
+		- PARTITION BY()
+		
+Hive Analatic Functions:
+	- RANK():
+	- DENSE_RANK():
+	- PERCENT_RANK():
+	- CUME_DIST():
+	- ROW_NUMBER():
+	- NTILE():
+	
+Reference:
+https://acadgild.com/blog/windowing-functions-in-hive
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+WindowingAndAnalytics
+http://shzhangji.com/blog/2017/09/04/hive-window-and-analytical-functions/
+http://dwgeek.com/hadoop-hive-analytic-functions-examples.html/
+http://dwgeek.com/hadoop-hive-conditional-functions-if-case-coalesce-nvl-decode.html/

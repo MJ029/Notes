@@ -1,0 +1,525 @@
+******************************************************************Python Notes***********************************************
+- Python is a general-purpose interpreted, interactive, object-oriented, and high-level programming language. 
+- Interactive Mode Programming: Invoking the interpreter without passing a script file as a parameter
+- Script Mode Programming: Invoking the interpreter with a script parameter begins execution of the script and continues until the script is finished. When the script is finished, the interpreter is no longer active.
+
+- Python Identifiers:
+	- A Python identifier is a name used to identify a variable, function, class, module or other object. 
+	- An identifier starts with a letter A to Z or a to z or an underscore (_) followed by zero or more letters, underscores and digits (0 to 9).
+	- Python does not allow punctuation characters such as @, $, and % within identifiers.
+	- Python is a case sensitive programming language. Thus, Manpower and manpower are two different identifiers in Python.
+	- naming conventions for Python identifiers:
+		- Class names start with an uppercase letter. All other identifiers start with a lowercase letter.
+		- Starting an identifier with a single leading underscore indicates that the identifier is private.
+		- Starting an identifier with two leading underscores indicates a strongly private identifier.
+		- If the identifier also ends with two trailing underscores, the identifier is a language-defined special name.
+	- python has morethatn 30 reserved keywords.
+	- Python provides no braces to indicate blocks of code for class and function definitions or flow control. Blocks of code are denoted by line indentation, which is rigidly enforced.
+	- Multi-Line Statements: 
+		- Statements in Python typically end with a new line. 
+		- Python does, however, allow the use of the line continuation character (\) to denote that the line should continue.
+		- Statements contained within the [], {}, or () brackets do not need to use the line continuation character. 
+	- Quotation in Python:
+		- Python accepts single ('), double (") and triple (''' or """) quotes to denote string literals, as long as the same type of quote starts and ends the string.
+	- Multiple Statements on a Single Line:
+		- The semicolon ( ; ) allows multiple statements on the single line given that neither statement starts a new code block.
+	- Multiple Statement Groups as Suites:
+		- A group of individual statements, which make a single code block are called suites in Python.
+		- Compound or complex statements, such as if, while, def, and class require a header line and a suite.
+		- Header lines begin the statement (with the keyword) and terminate with a colon ( : ) and are followed by one or more lines which make up the suite.
+
+- Python Variables:
+	- Variables are nothing but reserved memory locations to store values.
+	- This means that when you create a variable you reserve some space in memory.
+	- Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory.
+	- Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
+	- Python variables do not need explicit declaration to reserve memory space. 
+	- The declaration happens automatically when you assign a value to a variable.
+	- The equal sign (=) is used to assign values to variables.
+	- Python allows you to assign a single value to several variables simultaneously. (a = b = c = 1 <or> a,b,c = 1,2,"john")
+	
+	- Data Types:
+		- Numbers:
+			- Number data types store numeric values. 
+			- Number objects are created when you assign a value to them.
+			- Assignment: var1 = 1
+			- delete reference: del var <or> del var_a, var_b
+			- Python supports four different numerical types
+				- int (signed integers) 
+				- long (long integers, they can also be represented in octal and hexadecimal)
+				- float (floating point real values)
+				- complex (complex numbers)
+		- String:
+			- Strings in Python are identified as a contiguous set of characters represented in the quotation marks.
+			- Python allows for either pairs of single or double quotes.
+			- Subsets of strings can be taken using the slice operator ([ ] and [:] ) with indexes starting at 0 in the beginning of the string and working their way from -1 at the end.
+			- The plus (+) sign is the string concatenation operator
+			- The asterisk (*) is the repetition operator.
+			- Ex:
+				str = 'Hello World!'
+				print str  			# Prints complete string
+				print str[0]		# Prints first character of the string
+				print str[2:5]		# Prints characters starting from 3rd to 5th
+				print str[2:]       # Prints string starting from 3rd character
+				print str * 2       # Prints string two times
+				print str + "TEST"  # Prints concatenated string
+		- List:
+			- Lists are the most versatile of Python's compound data types.
+			- A list contains items separated by commas and enclosed within square brackets ([]).
+			- To some extent, lists are similar to arrays in C.
+			- One difference between them is that all the items belonging to a list can be of different data type.
+			- The values stored in a list can be accessed using the slice operator ([ ] and [:]) with the similar way of string slicing.
+			- The plus (+) sign is the string concatenation operator
+			- The asterisk (*) is the repetition operator.
+			- Ex:
+				list = [ 'abcd', 786 , 2.23, 'john', 70.2 ]
+				tinylist = [123, 'john']
+				
+				print list          	# Prints complete list
+				print list[0]       	# Prints first element of the list
+				print list[1:3]     	# Prints elements starting from 2nd till 3rd 
+				print list[2:]      	# Prints elements starting from 3rd element
+				print tinylist * 2  	# Prints list two times
+				print list + tinylist 	# Prints concatenated lists
+		- Tuple: 
+			- A tuple is another sequence data type that is similar to the list.
+			- A tuple consists of a number of values separated by commas.
+			- Unlike lists, however, tuples are enclosed within parentheses.
+			- The main differences between lists and tuples are:
+				- Lists are enclosed in brackets ( [ ] ) and their elements and size can be changed, 
+				- while tuples are enclosed in parentheses ( ( ) ) and cannot be updated.
+				- Tuples can be thought of as read-only lists.
+			- Ex:
+				tuple = ( 'abcd', 786 , 2.23, 'john', 70.2  )
+				tinytuple = (123, 'john')
+
+				print tuple           		# Prints complete list
+				print tuple[0]        		# Prints first element of the list
+				print tuple[1:3]      		# Prints elements starting from 2nd till 3rd 
+				print tuple[2:]       		# Prints elements starting from 3rd element
+				print tinytuple * 2   		# Prints list two times
+				print tuple + tinytuple 	# Prints concatenated lists
+		- Dictionary:
+			- Python's dictionaries are kind of hash table type.
+			- They work like associative arrays or hashes found in Perl and consist of key-value pairs.
+			- A dictionary key can be almost any Python type, but are usually numbers or strings. 
+			- Values, on the other hand, can be any arbitrary Python object.
+			- Dictionaries are enclosed by curly braces ({ }) and values can be assigned and accessed using square braces ([]). 
+			- Dictionaries have no concept of order among elements. 
+			- they are simply unordered.
+			- Ex:
+				dict = {}
+				dict['one'] = "This is one"
+				dict[2]     = "This is two"
+				tinydict = {'name': 'john','code':6734, 'dept': 'sales'}
+				
+				print dict['one']       # Prints value for 'one' key
+				print dict[2]           # Prints value for 2 key
+				print tinydict          # Prints complete dictionary
+				print tinydict.keys()   # Prints all the keys
+				print tinydict.values() # Prints all the values
+	
+	- Data Type Conversion:
+		- Sometimes, you may need to perform conversions between the built-in types. 
+		- To convert between types, you simply use the type name as a function.
+			- int(x [,base])
+				Converts x to an integer. base specifies the base if x is a string.
+			- long(x [,base])
+				Converts x to a long integer. base specifies the base if x is a string.
+			- float(x)
+				Converts x to a floating-point number.
+			- complex(real [,imag])
+				Creates a complex number.
+			- str(x)
+				Converts object x to a string representation.
+			- repr(x)
+				Converts object x to an expression string.
+			- eval(str)
+				Evaluates a string and returns an object.
+			- tuple(s)
+				Converts s to a tuple.
+			- list(s)
+				Converts s to a list.
+			- set(s)
+				Converts s to a set.
+			- dict(d)
+				Creates a dictionary. d must be a sequence of (key,value) tuples.
+			- frozenset(s)
+				Converts s to a frozen set.
+			- chr(x)
+				Converts an integer to a character.
+			- unichr(x)	
+				Converts an integer to a Unicode character.
+			- ord(x)
+				Converts a single character to its integer value.
+			- hex(x)
+				Converts an integer to a hexadecimal string.
+			- oct(x)
+				Converts an integer to an octal string.
+	- Operators:
+		- Operators are the constructs which can manipulate the value of opera
+		- Arithmetic Operators:
+			+(Addition), -(Subraction), *(Multiplication), /, %, **, //
+		- Comparison Operators:
+			==, !=, <>, >, <, >=, <=, 
+		- Assignment Operators:
+			=, +=, -=, *=, /=, %=, **=, //=
+		- Bitwise Operators:
+			&, |, ^, ~, <<, >>
+		- Membership Operators:
+			in, not in
+		- Identity Operators:
+			is, is not
+		- Operators Precedence:
+			** --> Exponentiation 
+			~ + - --> Complement, unary plus and minus
+			* / % // --> Multiply, divide, modulo and floor division
+			+ - --> Addition and subtraction
+			>> << --> Right and left bitwise shift
+			& --> Bitwise 'AND'
+			^ | --> Bitwise exclusive `OR' and regular `OR'
+			<= < > >= --> Comparison operators
+			<> == != --> Equality operators
+			= %= /= //= -= += *= **= --> Assignment operators
+			is, is not --> Identity operators
+			in, not in --> Membership operators
+			not or and --> Logical operators
+
+- Decision Making:
+	- Decision making is anticipation of conditions occurring while execution of the program and specifying actions taken according to the conditions.
+	- Decision structures evaluate multiple expressions which produce TRUE or FALSE as outcome.
+	- Python programming language assumes any non-zero and non-null values as TRUE, and if it is either zero or null, then it is assumed as FALSE value.
+	- if Statement:
+		var1 = 100
+		if var1:
+		   print "1 - Got a true expression value"
+		   print var1
+
+		var2 = 0
+		if var2:
+		   print "2 - Got a true expression value"
+		   print var2
+		print "Good bye!"
+		
+	- Python IF...ELIF...ELSE Statements:
+		if var1:
+		   print "1 - Got a true expression value"
+		   print var1
+		else:
+		   print "1 - Got a false expression value"
+		   print var1
+
+		var2 = 0
+		if var2:
+		   print "2 - Got a true expression value"
+		   print var2
+		else:
+		   print "2 - Got a false expression value"
+		   print var2
+
+		print "Good bye!"
+	
+	- Python nested IF statements:
+		var = 100
+		if var < 200:
+		   print "Expression value is less than 200"
+		   if var == 150:
+			  print "Which is 150"
+		   elif var == 100:
+			  print "Which is 100"
+		   elif var == 50:
+			  print "Which is 50"
+		   elif var < 50:
+			  print "Expression value is less than 50"
+		else:
+		   print "Could not find true expression"
+
+		print "Good bye!"
+
+- Python Loops:
+	- In general, statements are executed sequentially
+	- The first statement in a function is executed first, followed by the second, and so on.
+	- A loop statement allows us to execute a statement or group of statements multiple times.
+	- while Loop:
+		- A while loop statement in Python programming language repeatedly executes a target statement as long as a given condition is true.
+		- Here, statement(s) may be a single statement or a block of statements. 
+		- The condition may be any expression, and true is any non-zero value. 
+		- The loop iterates while the condition is true.
+			count = 0
+			while (count < 9):
+			   print 'The count is:', count
+			   count = count + 1
+
+			print "Good bye!"
+
+	- for Loop:
+		- It has the ability to iterate over the items of any sequence, such as a list or a string.
+		- If a sequence contains an expression list, it is evaluated first. 
+		- Then, the first item in the sequence is assigned to the iterating variable iterating_var. 
+		- Next, the statements block is executed.
+			for letter in 'Python':     # First Example
+			   print 'Current Letter :', letter
+
+			fruits = ['banana', 'apple',  'mango']
+			for fruit in fruits:        # Second Example
+			   print 'Current fruit :', fruit
+
+			print "Good bye!"
+		- Iterating by Sequence Index
+			fruits = ['banana', 'apple',  'mango']
+			for index in range(len(fruits)):
+			   print 'Current fruit :', fruits[index]
+
+			print "Good bye!"
+		- else Statement with Loops
+			for num in range(10,20):     #to iterate between 10 to 20
+			   for i in range(2,num):    #to iterate on the factors of the number
+				  if num%i == 0:         #to determine the first factor
+					 j=num/i             #to calculate the second factor
+					 print '%d equals %d * %d' % (num,i,j)
+					 break #to move to the next number, the #first FOR
+				  else:                  # else part of the loop
+					 print num, 'is a prime number'
+	- nested loops:
+		- Python programming language allows to use one loop inside another loop. 
+			i = 2
+			while(i < 100):
+			   j = 2
+			   while(j <= (i/j)):
+				  if not(i%j): break
+				  j = j + 1
+			   if (j > i/j) : print i, " is prime"
+			   i = i + 1
+
+			print "Good bye!"
+			
+	- Loop Control Statements:
+		- Loop control statements change execution from its normal sequence.
+		- When execution leaves a scope, all automatic objects that were created in that scope are destroyed.
+		- break statement:
+			- It terminates the current loop and resumes execution at the next statement, just like the traditional break statement in C.
+			- The most common use for break is when some external condition is triggered requiring a hasty exit from a loop. 
+			- The break statement can be used in both while and for loops.
+				for letter in 'Python':     # First Example
+				   if letter == 'h':
+					  break
+				   print 'Current Letter :', letter
+				  
+				var = 10                    # Second Example
+				while var > 0:              
+				   print 'Current variable value :', var
+				   var = var -1
+				   if var == 5:
+					  break
+
+				print "Good bye!"
+		- continue statement:
+			- It returns the control to the beginning of the while loop..
+			- The continue statement rejects all the remaining statements in the current iteration of the loop and moves the control back to the top of the loop.
+				for letter in 'Python':     # First Example
+				   if letter == 'h':
+					  continue
+				   print 'Current Letter :', letter
+
+				var = 10                    # Second Example
+				while var > 0:              
+				   var = var -1
+				   if var == 5:
+					  continue
+				   print 'Current variable value :', var
+				print "Good bye!"
+		- pass Statement:
+			- It is used when a statement is required syntactically but you do not want any command or code to execute.
+			- The pass statement is a null operation
+			- nothing happens when it executes. 
+			- The pass is also useful in places where your code will eventually go, but has not been written yet 
+				for letter in 'Python': 
+				   if letter == 'h':
+					  pass
+					  print 'This is pass block'
+				   print 'Current Letter :', letter
+
+				print "Good bye!"
+- Numbers:
+	Please reffer Python Numbers.txt
+- Strings:
+	Please reffer Python Stings.txt
+- Lilsts:
+	Please reffer Python Lists.txt
+- Tuples:
+	Please reffer Python Tuples.txt
+- Dictionaries:
+	Please reffer Python Dictionaries.txt
+- Date and Time:
+	Please reffer Python Date and Time.txt
+- Python Functions:
+	- A function is a block of organized, reusable code that is used to perform a single, related action.
+	- Functions provide better modularity for your application and a high degree of code reusing.
+	- As you already know, Python gives you many built-in functions like print(), etc. 
+	- but you can also create your own functions. 
+	- These functions are called user-defined functions.
+	- Rules to defining a Function:
+		- Function blocks begin with the keyword def followed by the function name and parentheses ( ( ) ).
+		- Any input parameters or arguments should be placed within these parentheses.
+		- You can also define parameters inside these parentheses.
+		- The first statement of a function can be an optional statement
+		- The code block within every function starts with a colon (:) and is indented.
+		- The statement return [expression] exits a function, optionally passing back an expression to the caller.
+		- A return statement with no arguments is the same as return None.
+		- Ex:
+			# Function definition is here
+			def printme( str ):
+			   "This prints a passed string into this function"
+			   print str
+			   return;
+
+			# Now you can call printme function
+			printme("I'm first call to user defined function!")
+			printme("Again second call to the same function")
+	- Pass by reference vs value:
+		- All parameters (arguments) in the Python language are passed by reference. 
+		- It means if you change what a parameter refers to within a function, the change also reflects back in the calling function.(pass by reference)
+		- Ex:
+			def changeme( mylist ):
+			   "This changes a passed list into this function"
+			   mylist.append([1,2,3,4]);
+			   print "Values inside the function: ", mylist
+			   return
+
+			# Now you can call changeme function
+			mylist = [10,20,30];
+			changeme( mylist );
+			print "Values outside the function: ", mylist
+		- we are maintaining reference of the passed object and appending values in the same object.
+		- one more example where argument is being passed by reference and the reference is being overwritten inside the called function.(pass by value)
+		- Ex:
+			# Function definition is here
+			def changeme( mylist ):
+			   "This changes a passed list into this function"
+			   mylist = [1,2,3,4]; # This would assig new reference in mylist
+			   print "Values inside the function: ", mylist
+			   return
+
+			# Now you can call changeme function
+			mylist = [10,20,30];
+			changeme( mylist );
+			print "Values outside the function: ", mylist
+	
+	- Function Arguments:
+		- Required arguments:
+			- Required arguments are the arguments passed to a function in correct positional order.
+			- Here, the number of arguments in the function call should match exactly with the function definition.
+			- To call the function printme(), you definitely need to pass one argument, otherwise it gives a syntax error
+			Ex:
+				def printme( str ):
+				   "This prints a passed string into this function"
+				   print str
+				   return;
+
+				# Now you can call printme function
+				printme()
+		- Keyword arguments:
+			- Keyword arguments are related to the function calls.
+			- When you use keyword arguments in a function call, the caller identifies the arguments by the parameter name.
+			- This allows you to skip arguments or place them out of order because the Python interpreter is able to use the keywords provided to match the values with parameters.
+			- You can also make keyword calls to the printme() function in the following 
+			Ex:
+				# Function definition is here
+				def printme( str ):
+				   "This prints a passed string into this function"
+				   print str
+				   return;
+
+				# Now you can call printme function
+				printme( str = "My string")
+		- Default arguments:
+			- A default argument is an argument that assumes a default value if a value is not provided in the function call for that argument.
+			- The following example gives an idea on default arguments, it prints default age if it is not passed
+			Ex:
+				def printinfo( name, age = 35 ):
+				   "This prints a passed info into this function"
+				   print "Name: ", name
+				   print "Age ", age
+				   return;
+
+				# Now you can call printinfo function
+				printinfo( age=50, name="miki" )
+				printinfo( name="miki" )
+		- Variable-length arguments:
+			- You may need to process a function for more arguments than you specified while defining the function.
+			- These arguments are called variable-length arguments and are not named in the function definition, unlike required and default arguments.
+			Ex:
+				# Function definition is here
+				def printinfo( arg1, *vartuple ):
+				   "This prints a variable passed arguments"
+				   print "Output is: "
+				   print arg1
+				   for var in vartuple:
+					  print var
+				   return;
+
+				# Now you can call printinfo function
+				printinfo( 10 )
+				printinfo( 70, 60, 50 )
+	- The Anonymous Functions:
+		- These functions are called anonymous because they are not declared in the standard manner by using the def keyword.
+		- You can use the lambda keyword to create small anonymous functions.
+			- Lambda forms can take any number of arguments but return just one value in the form of an expression. 
+			- They cannot contain commands or multiple expressions.
+			- An anonymous function cannot be a direct call to print because lambda requires an expression
+			- Lambda functions have their own local namespace and cannot access variables other than those in their parameter list and those in the global namespace.
+			- Although it appears that lambda's are a one-line version of a function, they are not equivalent to inline statements in C or C++, whose purpose is by passing function stack allocation during invocation for performance reasons.
+			Ex:
+				# Function definition is here
+				sum = lambda arg1, arg2: arg1 + arg2;
+
+				# Now you can call sum as a function
+				print "Value of total : ", sum( 10, 20 )
+				print "Value of total : ", sum( 20, 20 )
+	- The return Statement:
+		- The statement return [expression] exits a function, optionally passing back an expression to the caller. 
+		- A return statement with no arguments is the same as return None.
+		Ex:
+			def sum( arg1, arg2 ):
+			   # Add both the parameters and return them."
+			   total = arg1 + arg2
+			   print "Inside the function : ", total
+			   return total;
+
+			# Now you can call sum function
+			total = sum( 10, 20 );
+			print "Outside the function : ", total
+	- Scope of Variables:
+		- All variables in a program may not be accessible at all locations in that program. This depends on where you have declared a variable.
+		- The scope of a variable determines the portion of the program where you can access a particular identifier.
+		- Global vs. Local variables:
+			- Variables that are defined inside a function body have a local scope, and those defined outside have a global scope.
+			- This means that local variables can be accessed only inside the function in which they are declared, whereas global variables can be accessed throughout the program body by all functions.
+			- When you call a function, the variables declared inside it are brought into scope.
+		Ex:
+			total = 0; # This is global variable.
+			# Function definition is here
+			def sum( arg1, arg2 ):
+			   # Add both the parameters and return them."
+			   total = arg1 + arg2; # Here total is local variable.
+			   print "Inside the function local total : ", total
+			   return total;
+
+			# Now you can call sum function
+			sum( 10, 20 );
+			print "Outside the function global total : ", total 
+
+- Classes and Objects:
+	pleaes reffer Python classes and objects.txt
+Note:
+1) Python commandline options
+	-d --> to see debug output
+	-o --> generated optimized bytecode (.pyo)
+	-v --> verbos output
+	-c cmd --> run Python script sent in as cmd string
+	file --> run Python script from given file
+	
+2) Python build in Functions:
+	https://docs.python.org/3/library/functions.html#hash
+	
+	

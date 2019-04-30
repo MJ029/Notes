@@ -1,0 +1,312 @@
+**************************************************E2E - Impala Notes**************************************************
+- It is a native analytic database for Apache Hadoop.
+- Impala is a MPP (Massive Parallel Processing) SQL query engine for processing huge volumes of data that is stored in Hadoop cluster.
+- Impala combines the SQL support and multi-user performance of a traditional analytic database with the scalability and flexibility 
+	of Apache Hadoop, by utilizing standard components such as HDFS, HBase, Metastore, YARN, and Sentry.
+- With Impala, users can communicate with HDFS or HBase using SQL queries in a faster way compared to other SQL engines like Hive.
+- Impala can read almost all the file formats such as Parquet, Avro, RCFile used by Hadoop.
+- Impala is not based on MapReduce algorithms.
+- Impala supports in-memory data processin
+- Unlike traditional storage systems, impala is decoupled from its storage engine.
+- It has three main components namely, Impala daemon (Impalad), Impala Statestore, and Impala metadata or metastore.
+
+Overview:
+	- With Impala, you can query data, whether stored in HDFS or Apache HBase – including SELECT, JOIN, and aggregate functions – in real time.
+	- Furthermore, Impala uses the same metadata, SQL syntax (Hive SQL), ODBC driver, and user interface (Hue Beeswax) as Apache Hive
+	- and providing a familiar and unified platform for batch-oriented or real-time queries. 
+	
+Drawbacks:
+	- Impala does not provide any support for Serialization and Deserialization.
+	- Impala can only read text files, not custom binary files.
+	- Whenever new records/files are added to the data directory in HDFS, the table needs to be refreshed.
+	
+Architecture:
+	- Reffer Archi.jpg
+	- It has three main components namely, Impala daemon (Impalad), Impala Statestore, and Impala metadata or metastore.
+	- Impala daemon(Impalad):
+		- It runs on each node where Impala is installed.
+		- It accepts the queries from various interfaces like impala shell, hue browser, etc.… and processes them.
+		- Whenever a query is submitted to an impalad on a particular node, that node serves as a “coordinator node” for that query. 
+		- Multiple queries are served by Impalad running on other nodes as well.
+		- After accepting the query, Impalad reads and writes to data files and parallelizes the queries by distributing the work to the 
+		other Impala nodes in the Impala cluster.
+		- When queries are processing on various Impalad instances, all of them return the result to the central coordinating node.
+		- Depending on the requirement, queries can be submitted to a dedicated Impalad or in a load balanced manner to another Impalad in your cluster.
+	- Impala State Store:
+		- is responsible for checking the health of each Impalad and then relaying each Impala daemon health to the other daemons frequently.
+		- This can run on same node where Impala server or other node within the cluster is running.
+		- it is also called as (State stored)
+		- In the event of a node failure due to any reason, Statestore updates all other nodes about this failure and once such 
+		a notification is available to the other impalad, no other Impala daemon assigns any further queries to the affected node.
+		- If the statestore is not running or becomes unreachable, the Impala daemons continue running and distributing
+		work among themselves as usual.
+		- The cluster just becomes less robust if other Impala daemons fail while the statestore is offline. 
+		- Most considerations for load balancing and high availability apply to the "impalad" daemon.
+	- Impala Metadata & Meta Store:
+		- Impala uses traditional MySQL or PostgreSQL databases to store table definitions.
+		- The important details such as table & column information & table definitions are stored in a centralized database known as a meta store.
+		- Each Impala node caches all of the metadata locally know as (catalogd).
+		- When dealing with an extremely large amount of data and/or many partitions, getting table specific metadata could take a significant amount of time.
+		- So, a locally stored metadata cache helps in providing such information instantly.
+		- When a table definition or table data is updated, other Impala daemons must update their metadata cache 
+		by retrieving the latest metadata before issuing a new query against the table in question.
+	
+Impala Considerations on using File formats:
+	- For an efficient and scalable format for large, performance-critical tables, use the Parquet file format.
+	- To deliver intermediate data during the ETL process, in a format that can also be used by other Hadoop components, Avro is a reasonable choice.
+	- For convenient import of raw data, use a text table instead of RCFile or SequenceFile, and convert to Parquet in a later stage of the ETL process
+
+Impala Shell Command Reference:
+	- general command:
+		- help:
+			- it gives you a list of the commands available in Impala
+		- version:
+			- it gives you the current version of Impala that you are using.
+		- history:
+			- it displays the last 10 commands executed in the shell.
+		- shell (or) !:
+			
+		- connect:
+			- to connect to impala shell 
+		- exit | quit:
+			- to exit from Impala shell 
+	- Query specific options:
+		- Set/unset:
+			
+		- Profile/summary:
+			- it displays the low-level information about the recent query.
+			- it is used for diagnosis and performance tuning of a query. 
+			
+		- Explain:
+			- it returns the execution plan for the given query.
+			- Ex:
+				explain select * from table1;
+				
+	- Table and Database specific options:
+		- Alter:
+			- it is used to change the structure and name of a table in Impala.
+		- describe:	
+			- it gives the metadata of a table.
+			- The describe command has desc as a short cut.
+		- drop:
+			- it is used to remove a construct from Impala, where a construct can be a table, a view, or a database function.
+		- insert:
+			- it is used to for foloowing,
+				Append data (columns) into a table.
+				Override the data of an existing table.
+		- select:
+			- it is used to perform a desired operation on a particular dataset.
+			- It specifies the dataset on which to complete some action. 
+			- You can print or store (in a file) the result of the select statement.
+		- show:
+			- it is used to display the metastore of various constructs such as tables, databases, and tables.
+		- use:
+			- it is used to change the current context to the desired database.
+			
+DataTypes:
+	- TINYINT:
+		- it is used to store 1-byte integer
+		- range between -128 to 127.
+	- SMALLINT:
+		- it is used to store 2-byte integer
+		- range between -32768 to 32767
+	- INT:
+		- it is used to store 4-byte integer
+		- range between -2147483648 to 2147483647.
+	- BIGINT:
+		- it stores numerical values.
+		- range of this data type is -9223372036854775808 to 9223372036854775807.
+	- DECIMAL:
+		- it is used to store decimal values and it is used in create table and alter table statements.
+	- FLOAT:
+		- it is used to store single precision floating value 
+		- range between 1.40129846432481707e-45 .. -3.40282346638528860e+38.
+	- DOUBLE:
+		- is used to store the floating point values
+		- range between 4.94065645841246544e-324d -1.79769313486231570e+308.
+	- BOOLEAN:
+		- it stores only true or false values 
+		- it is used in the column definition of create table statement.
+	- CHAR:
+		- it is a fixed length storage
+		- it is padded with spaces
+		- maximum length upto 255.
+	- VARCHAR:
+		- it is used to store variable length character.
+		- maximum length upto 65,535.
+	- STRING:
+		- This is used to store string values.
+		- superset of Char and varchar
+	- TIMESTAMP:
+		- it is used to represent a point in a time.
+	- ARRAY:
+		- it is a complex data type
+		- it is used to store variable number of ordered elements.
+	- Map:
+		- it is a complex data type
+		- it is used to store variable number of key-value pairs.
+	- Struct:
+		- it is a complex data type
+		- it used to represent multiple fields of a single item.
+Comments:
+	impala supports both single line and multi linec commants.
+	-- single line comment
+	/* */ multi line comments
+	
+DataBase Operations:
+	- Create Database:
+		- ex:
+			CREATE DATABASE IF NOT EXISTS database_name;
+			CREATE DATABASE IF NOT EXISTS database_name LOCATION hdfs_path; 
+		- In order to create a database in HDFS file system, you need to specify the location where the database is to be created.
+		- IF NOT EXISTS is an optional clause.
+	- Show Database:
+		- used to list the list of available databases
+		- ex:
+			SHOW DATABASES
+	- Drop Database:
+		- You cannot delete the “current database” in Impala.
+		- Before deleting the database, it is recommended to remove all the tables from it.
+		- ex:
+			DROP DATABASE IF EXISTS sample_database;
+		- syntax:
+			DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT | CASCADE] [LOCATION hdfs_path];
+		- IF EXISTS is an optional clause.
+		- cascade:
+			- to delete a database, you need to remove all the tables in it manually.
+			- If you use cascade, Impala removes the tables within the specified database before deleting it.
+			- ex:	
+				DROP database sample cascade;
+	- Select DataBase:
+		- ex:
+			USE db_name;
+
+Table/View Operations:
+	- Table create:
+		- The CREATE TABLE Statement is used to create a new table in the required database in Impala.
+		- Creating a basic table involves naming the table and defining its columns and each column's data type.
+		- Ex:
+			CREATE TABLE IF NOT EXISTS my_db.student (name STRING, age INT, contact INT );
+		- show tables:
+			- used to show list of tables in a active Database.
+	- Table insert:
+		- The INSERT Statement of Impala has two clauses − into and overwrite. 
+		- Insert statement with "into" clause is used to add new records into an existing table in a database.
+		- Syntax:
+			insert into table_name (column1, column2, column3,...columnN) values (value1, value2, value3,...valueN);
+			Insert into table_name values (value1, value2, value2);
+		- We can overwrite the records of a table using "overwrite" clause.
+		- The overwritten records will be permanently deleted from the table.
+		- Syntax:
+			Insert overwrite table_name values (value1, value2, value2);
+	- Table select:
+		- SELECT statement is used to fetch the data from one or more tables in a database.
+		- This query returns data in the form of tables.
+		- syntax:
+			SELECT column1, column2, columnN from table_name;
+			SELECT * FROM table_name;
+	- Table Description:
+		- The describe statement in Impala is used to give the description of the table. 
+		- Syntax:
+			Describe table_name;
+	- Table Alter:
+		- The Alter table statement in Impala is used to perform changes on a given table.
+		- Using this statement, we can add, delete, or modify columns in an existing table and we can also rename it
+		- To alter name of the table:
+			ALTER TABLE [old_db_name.]old_table_name RENAME TO [new_db_name.]new_table_name
+		- Adding columns to a table
+			ALTER TABLE tablename ADD COLUMNS (col_spec[, col_spec ...])
+			ALTER TABLE users ADD COLUMNS (account_no BIGINT,  phone_no BIGINT);
+		- Dropping columns from a table
+			ALTER TABLE name DROP [COLUMN] column_name
+			ALTER TABLE users DROP account_no;
+		- Changing the name and type of a column
+			ALTER TABLE name CHANGE column_name new_name new_type;
+			ALTER TABLE users CHANGE phone_no phNo string;
+	- Table Drop:
+		- The Impala drop table statement is used to delete an existing table in Impala.
+		- This statement also deletes the underlying HDFS files for internal tables
+		- Syntax:
+			DROP table database_name.table_name;
+			DROP table if exists my_db.student;
+	- Table Truncate:
+		- The Truncate Table Statement of Impala is used to remove all the records from an existing table.
+		- syntax:
+			TRUNCATE table_name;
+			TRUNCATE customers;
+	- View Create:
+		- A view is nothing more than a statement of Impala query language that is stored in the database with an associated name.
+		- It is a composition of a table in the form of a predefined SQL query.
+		- Syntax:
+			CREATE VIEW IF NOT EXISTS view_name AS SELECT statement...
+			CREATE VIEW IF NOT EXISTS customers_view AS SELECT name, age FROM customers;
+	- Alter View:
+		- The Alter View statement of Impala is used to change a view.
+		- Using this statement, you can change the name of a view, change the database, and the query associated with it.
+		- Since a view is a logical construct, no physical data will be affected by the alter view query.
+		- syntax:
+			ALTER VIEW database_name.view_name as Select statement
+			Alter view customers_view as select id, name, salary from customers;
+	- Drop View:
+		- The Drop View query of Impala is used to delete an existing view.
+		- Since a view is a logical construct, no physical data will be affected by the drop view query.
+		- syntax:
+			DROP VIEW database_name.view_name;
+			DROP view customers_view;
+			
+Impala Clauses:
+	- ORDER BY:
+		- it is used to sort the data in an ascending or descending order, based on one or more columns.
+		- by default it is assending order.
+		- syntax:
+			select * from table_name ORDER BY col_name [ASC|DESC] [NULLS FIRST|NULLS LAST]
+			NULLS FIRST --> all the null values in the table are arranged in the top rows
+			NULLS LAST --> the rows containing null values will be arranged last.
+	- GROUP BY:
+		- it is used in collaboration with the SELECT statement to arrange identical data into groups.
+		- syntax:
+			select data from table_name Group BY col_name;
+			Select name, sum(salary) from customers Group BY name;
+	- HAVING:
+		- it enables you to specify conditions that filter which group results appear in the final results.
+		- in general, Having clause is used along with group by clause
+		- it places conditions on groups created by the GROUP BY clause.
+		- syntax:
+			select * from table_name ORDER BY col_name [ASC|DESC] [NULLS FIRST|NULLS LAST]
+			select max(salary) from customers group by age having max(salary) > 20000;
+	- LIMIT:
+		- it is used to restrict the number of rows of a resultset to a desired number
+		- the resultset of the query does not hold the records beyond the specified limit.
+		- syntax:
+			select * from table_name order by id limit numerical_expression;
+			select * from customers order by id limit 4;\
+	- OFFSET:
+		- In general, the rows in the resultset of a select query starts from 0.
+		- Using the offset clause, we can decide from where the output should be considered.
+		- For example, if we choose the offset as 0, the result will be as usual and if we choose the offset as 5, the result starts from the fifth row.
+		- syntax:
+			select data from table_name Group BY col_name;
+			select * from customers order by id limit 4 offset 0;
+			select * from customers order by id limit 4 offset 5;
+	- UNION:
+		- You can combine the results of two queries using the Union clause
+		- syntax:
+			query1 union query2;
+			select * from customers order by id limit 3 
+				union 
+			select * from employee order by id limit 3;
+	- WITH:
+		- In case a query is way too complex, we can define aliases to complex parts and include them in the query using the with clause
+		- syntax:
+			with x as (select 1), y as (select 2) (select * from x union y);
+		- ex:
+			with t1 as (select * from customers where age>25), t2 as (select * from employee where age>25) 
+			(select * from t1 union select * from t2);
+	- DISTINCT:
+		- The distinct operator in Impala is used to get the unique values by removing duplicates.
+		- syntax:
+			select distinct columns… from table_name;
+			select distinct id, name, age, salary from customers;
+
+Note:
+	- In Impala 2.0 and later, the default Parquet block size is reduced to 256 MB (PARQUET_FILE_SIZE=256MB).

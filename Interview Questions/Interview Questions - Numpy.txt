@@ -1,0 +1,7 @@
+***************************************************Numpy Interview Questions***************************************************
+
+What Is Numpy?
+  - NumPy is a Python extension module that provides efficient operation on arrays of homogeneous data.
+  - It allows python to serve as a high-level language for manipulating numerical data, much like IDL, MATLAB, or Yorick.
+  
+ 

@@ -1,0 +1,226 @@
+*****************************************Regular Expressions in Python*****************************************
+- imported using re package:
+	import re
+- using RegEx we can perform the following in Python
+	- matching the content
+	- modify the content
+	- split the content and etc...
+- in RegEx patterns are compiled into a series of bytecodes.
+- Bytecodes are executed by a matching engine written in C.
+- its always recommended to pay more attention when we are writing the RegEx, we have to write an RegEx which will produce bytecode that will execute faster.
+- Simple Pattern:
+	- in RE Most letters and characters will simply match themselves.
+	- For example, the regular expression test will match the string test exactly.
+	- You can enable a case-insensitive mode that would let this RE match Test or TEST as well.
+	- metacharacters:
+		- metacharacters are know as special characters in RE.
+		- they are Exceptions to Matching character Rule, Basically they dont match themself as normal it needs to be precede with \ (Ex: \[ or \{ etc...).
+		- Instead, they signal that some out-of-the-ordinary thing should be matched, or they affect other portions of the RE by repeating them or changing their meaning.
+		- when writing RE we should be more carefull when we are using the below characters.
+		- metacharacters not active inside Character calss, it will be treated as a noramal character.
+		- list of Metacharacters in RE as follows
+			. ^ $ * + ? { } [ ] \ | ( )
+		- [ ] --> character class
+			- used for specifying a character class, which is a set of characters that you wish to match.
+			- Characters can be listed individually, or a range of characters can be indicated by giving two characters and separating them by a '-'.
+			- ex:
+				- [abc] --> will only match character a, b, c.
+				- [a-z] --> will match complete character set between a to z.
+				- [akm$] --> will match any of the characters 'a', 'k', 'm', or '$'; '$' is usually a metacharacter, but inside a character class it’s stripped of its special nature.
+				- [^5] --> will match any character except '5'
+				- if you need to match a [ or \, you can precede them with a backslash to remove their special meaning: \[ or \\.
+				- \w matches any alphanumeric character. If the regex pattern is expressed in bytes, this is equivalent to the class [a-zA-Z0-9_]. 
+				- If the regex pattern is a string, \w will match all the characters marked as letters in the Unicode database provided by the unicodedata module.
+					https://docs.python.org/3/library/unicodedata.html#module-unicodedata
+				- You can use the more restricted definition of \w in a string pattern by supplying the re.ASCII flag when compiling the regular expression.
+					https://docs.python.org/3/library/re.html#re.ASCII
+				- The following list of special sequences isn’t complete. For a complete list of sequences and expanded class definitions for Unicode string patterns, see the last part of Regular Expression Syntax in the Standard Library reference
+					https://docs.python.org/3/library/re.html#re-syntax
+				- \d --> Matches any decimal digit; this is equivalent to the class [0-9].
+				- \D --> Matches any non-digit character; this is equivalent to the class [^0-9].
+				- \s --> Matches any whitespace character; this is equivalent to the class [ \t\n\r\f\v].
+				- \S --> Matches any non-whitespace character; this is equivalent to the class [^ \t\n\r\f\v].
+				- \w --> Matches any alphanumeric character; this is equivalent to the class [a-zA-Z0-9_].
+				- \W --> Matches any non-alphanumeric character; this is equivalent to the class [^a-zA-Z0-9_].
+				- [\s,.] is a character class that will match any whitespace character, or ',' or '.'.
+	- repeating qualifiers:
+		- Being able to match varying sets of characters is the first thing regular expressions can do that isn’t already possible with the methods available on strings.
+		- RE must be repeated a certain number of times.
+		- there are 4 types of metacharacters available to filter repeated things
+			* --> it specifies that the previous character can be matched zero or more times, instead of exactly once.
+			  --> For example, ca*t will match 'ct' (0 'a' characters), 'cat' (1 'a'), 'caaat' (3 'a' characters), and so forth..  
+			  --> Repetitions such as * are greedy
+			  --> when repeating a RE, the matching engine will try to repeat it as many times as possible. 
+			  --> If later portions of the pattern don’t match, the matching engine will then back up and try again with fewer repetitions.
+			
+			+ --> it specifies that the previous character can be matched one or more times, in other had it Expect atleast one occurance of the pattern.
+			  --> the difference between * and +; * matches zero or more times, while + requires at least one occurrence.
+			
+			? --> matches either once or zero times.
+			  --> best example to check optional value, (you can think of it as marking something as being optional.)
+			  --> For example, home-?brew matches either 'homebrew' or 'home-brew'.
+			  
+			{m,n} --> the most complicated repeated qualifier
+				  --> m and n are decimal integers.
+				  --> This qualifier means there must be at least m repetitions, and at most n.
+				  --> For example, a/{1,3}b will match 'a/b', 'a//b', and 'a///b'. It won’t match 'ab', which has no slashes, or 'a////b', which has four.
+				  --> m or n are optional, in that case, a reasonable value is assumed for the missing value.
+				  --> Omitting m is interpreted as a lower limit of 0
+				  --> Omitting n results in an upper bound of infinity.
+				  --> {0,} is the same as *
+				  --> {1,} is equivalent to +
+				  --> {0,1} is the same as ?
+
+- Compiling Regular Expression:
+	- Regular expressions are compiled into pattern objects
+	- which have methods for various operations such as searching for pattern matches or performing string substitutions.
+	- Ex:
+		import re
+		p = re.compile('ab*')
+		p
+		
+		re.compile('ab*')
+	- https://docs.python.org/3/library/re.html#re.compile
+	- it also accepts an optional flags argument
+	- Ex:
+		p = re.compile('ab*', re.IGNORECASE)
+	- match() --> Determine if the RE matches at the beginning of the string.
+		  --> returns None if not match found
+		  --> https://docs.python.org/3/library/re.html#re.Pattern.match
+		  --> Methods of match object
+			- group() --> Return the string matched by the RE
+			- start() --> Return the starting position of the match
+					  --> Since the match() method only checks if the RE matches at the start of a string, start() will always be zero. 
+					  --> However, the search() method of patterns scans through the string, so the match may not start at zero in that case.
+					  --> m = p.search('::: message'); print(m)
+						  <re.Match object; span=(4, 11), match='message'>
+			- end() --> Return the ending position of the match
+			- span() --> Return a tuple containing the (start, end) positions of the match
+	- search() --> Scan through a string, looking for any location where this RE matches.
+		   --> returns None if not match found
+		   --> https://docs.python.org/3/library/re.html#re.Pattern.search
+		- If they’re successful, a match object instance is returned, containing information about the match: where it starts and ends, the substring it matched, and more.
+		- https://docs.python.org/3/library/re.html#match-objects
+		- # (Module level function)this will cause error like null pointer Exception, coz we are directly applying regex without compiling and '+' requires atleast one occurance
+		example = "ab"
+		matched_obj = re.search(r"(a[bcd]+b)", example)
+		print(matched_obj.group(1))
+
+		# to avoid above Error use the follow Method (Likve Options caluse in Scala)
+		nomatch = re.compile('a[bcd]+b')
+		print("Nomatch: "+ str(nomatch.match("")))
+	- findall() --> Find all substrings where the RE matches, and returns them as a list.
+	- finditer() --> Find all substrings where the RE matches, and returns them as an iterator.
+- Module Level Functions:
+	- They also store the compiled object in a cache, so future calls using the same RE won’t need to parse the pattern again and again.
+- Compilation Flags
+	- Compilation flags let you modify some aspects of how regular expressions work.
+	- Flags are available in the re module under two names, a long name such as IGNORECASE and a short, one-letter form such as I.
+	- If you’re familiar with Perl’s pattern modifiers, the one-letter forms use the same letters; the short form of re.VERBOSE is re.X, for example.
+	-  Multiple flags can be specified by bitwise OR-ing them; re.I | re.M sets both the I and M flags, for example.
+	- ASCII, A --> Makes several escapes like \w, \b, \s and \d match only on ASCII characters with the respective property.
+	- DOTALL, S --> Make . match any character, including newlines.
+	- IGNORECASE, I --> Do case-insensitive matches.
+	- LOCALE, L --> Do a locale-aware match.
+	- MULTILINE, M --> Multi-line matching, affecting ^ and $.
+	- VERBOSE, X (for ‘extended’) --> Enable verbose REs, which can be organized more cleanly and understandably.
+	- IGNORECASE, I:
+		- Perform case-insensitive matching
+		- character class and literal strings will match letters by ignoring case.
+		- For example, [A-Z] will match lowercase letters, too.
+		- Full Unicode matching also works unless the ASCII flag is used to disable non-ASCII matches. 
+		- When the Unicode patterns [a-z] or [A-Z] are used in combination with the IGNORECASE flag, they will match the 52 ASCII letters and 4 additional non-ASCII letters: ‘İ’ (U+0130, Latin capital letter I with dot above), ‘ı’ (U+0131, Latin small letter dotless i), ‘ſ’ (U+017F, Latin small letter long s) and ‘K’ (U+212A, Kelvin sign).
+		- This lowercasing doesn’t take the current locale into account; it will if you also set the LOCALE flag.
+	- LOCALE, L:
+		- Make \w, \W, \b, \B and case-insensitive matching dependent on the current locale instead of the Unicode database.
+		- Locales are a feature of the C library intended to help in writing programs that take account of language differences.
+		- For example, if you’re processing encoded French text, you’d want to be able to write \w+ to match words, but \w only matches the character class [A-Za-z] in bytes patterns
+	- MULTILINE, M:
+		- Usually ^ matches only at the beginning of the string
+		- $ matches only at the end of the string and immediately before the newline (if any) at the end of the string
+		- When this flag is specified, ^ matches at the beginning of the string and at the beginning of each line within the string, immediately following each newline.
+		- Similarly, the $ metacharacter matches either at the end of the string and at the end of each line 
+	- DOTALL, S:
+		- Makes the '.' special character match any character at all, including a newline; without this flag, '.' will match anything except a newline.
+	- ASCII, A:
+		- Make \w, \W, \b, \B, \s and \S perform ASCII-only matching instead of full Unicode matching.
+	- | (or) Operator:
+		- Alternation, or the “or” operator.
+		- f A and B are regular expressions, A|B will match any string that matches either A or B.
+		- | has very low precedence in order to make it work reasonably when you’re alternating multi-character strings.
+		- Crow|Servo will match either 'Crow' or 'Servo', not 'Cro', a 'w' or an 'S', and 'ervo'.
+	- ^ 
+		- Matches at the beginning of lines.
+		- Unless the MULTILINE flag has been set, this will only match at the beginning of the string.
+		- In MULTILINE mode, this also matches immediately after each newline within the string.
+		- To match a literal '^', use \^.
+	- $
+		- Matches at the end of a line, which is defined as either the end of the string, or any location followed by a newline character.
+		- To match a literal '$', use \$ or enclose it inside a character class, as in [$].
+	- \A
+		- Matches only at the start of the string.
+		- When not in MULTILINE mode, \A and ^ are effectively the same.
+		- In MULTILINE mode, they’re different: \A still matches only at the beginning of the string, but ^ may match at any location inside the string that follows a newline character.
+	- \Z
+		- Matches only at the end of the string.
+	- \b
+		- Word boundary. 
+		- This is a zero-width assertion that matches only at the beginning or end of a word. 
+		- A word is defined as a sequence of alphanumeric characters, so the end of a word is indicated by whitespace or a non-alphanumeric character.
+- Grouping
+	- Frequently you need to obtain more information than just whether the RE matched or not. 
+	- Regular expressions are often used to dissect strings by writing a RE divided into several subgroups which match different components of interest.
+	- Groups are marked by the '(', ')' metacharacters. 
+	- '(' and ')' have much the same meaning as they do in mathematical expressions
+	- they group together the expressions contained inside them, and you can repeat the contents of a group with a repeating qualifier, such as *, +, ?, or {m,n}. For example, (ab)* will match zero or more repetitions of ab.
+	- Groups indicated with '(', ')' also capture the starting and ending index of the text that they match; this can be retrieved by passing an argument to group(), start(), end(), and span().
+	- Groups are numbered starting with 0.
+	- Group 0 is always present
+	- Subgroups are numbered from left to right, from 1 upward.
+	- Groups can be nested; to determine the number, just count the opening parenthesis characters, going from left to right.
+	- Ex:
+		p = re.compile('(a(b)c)d')
+		m = p.match('abcd')
+		m.group(0)
+		m.group(1)
+		m.group(2)
+	- group() can be passed multiple group numbers at a time, in which case it will return a tuple containing the corresponding values for those groups.
+		m.group(2,1,2)
+	- The groups() method returns a tuple containing the strings for all the subgroups, from 1 up to however many there are.
+		m.groups()
+- Expressions:
+	- Python supports several of Perl’s extensions and adds an extension syntax to Perl’s extension syntax. 
+	- if the first character after the question mark is a P, you know that it’s an extension that’s specific to Python.
+	- Sometimes you’ll want to use a group to denote a part of a regular expression, but aren’t interested in retrieving the group’s contents.
+	- You can make this fact explicit by using a non-capturing group: (?:...), where you can replace the ... with any other regular expression.
+	- Ex:
+		m = re.match("([abc])+", "abc")
+		m.groups()
+		
+		m = re.match("(?:[abc])+", "abc")
+		m.groups()
+- Lookahead Assertions:
+	- Another zero-width assertion is the lookahead assertion.
+	- Lookahead assertions are available in both positive and negative form, and look like this:
+	- (?=...)
+		- Positive lookahead assertion.
+		- This succeeds if the contained regular expression, represented here by ..., successfully matches at the current location, and fails otherwise.
+		- But, once the contained expression has been tried, the matching engine doesn’t advance at all
+		- the rest of the pattern is tried right where the assertion started.
+	- (?!...)
+		- Negative lookahead assertion. 
+		- This is the opposite of the positive assertion; it succeeds if the contained expression doesn’t match at the current position in the string.
+		- to search all files extension --> .*[.].*$
+		- to filter extension --> .*[.](?!bat$)[^.]*$
+			- The negative lookahead means:
+				- if the expression bat doesn’t match at this point, try the rest of the pattern; if bat$ does match, the whole pattern will fail.
+			- The trailing $ is required to ensure that something like sample.batch, where the extension only starts with bat, will be allowed.
+			- The [^.]* makes sure that the pattern works when there are multiple dots in the filename.
+		- to exclude multiple files:
+			- .*[.](?!bat$|exe$)[^.]*$
+- Modifying strings:
+	- split() 
+		--> Split the string into a list, splitting it wherever the RE matches
+		--> It’s similar to the split() method of strings but provides much more generality in the delimiters that you can split by; string split() only supports splitting by whitespace or by a fixed string.
+	- sub() --> Find all substrings where the RE matches, and replace them with a different string
+	- subn() --> Does the same thing as sub(), but returns the new string and the number of replacements

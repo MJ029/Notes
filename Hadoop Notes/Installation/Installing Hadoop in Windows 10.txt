@@ -1,0 +1,34 @@
+*****************************Installing Hadoop in Windows 10******************************
+- Download Hadoop latest version and JDK latest version from below reference link
+- Configure JDK in Environmental variables for your user and validate the JDK installation using the below command in cmd
+	java -version
+	
+	output:
+	java version "1.8.0_191"
+	Java(TM) SE Runtime Environment (build 1.8.0_191-b12)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.191-b12, mixed mode)
+	
+- Extract Hadoop in to accessable folder.
+- set Hadoop home in Environmental variable and path in Ev.
+	HADOOP_HOME --> path to your hadoop directory
+- do the following configuration changes for hadoop version below 2.x.x
+	https://github.com/MuhammadBilalYar/Hadoop-On-Window/wiki/Step-by-step-Hadoop-2.8.0-installation-on-Window-10
+	
+Ref:
+	Download Hadoop: https://hadoop.apache.org/releases.html
+	Download JDK: http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+	Installation Normal case: https://github.com/MuhammadBilalYar/Hadoop-On-Window/wiki/Step-by-step-Hadoop-2.8.0-installation-on-Window-10
+	Installation Org Machine: http://hadooponwindows10.blogspot.com/2016/07/apache-hadoop-271-installation-on-win10.html
+	
+	
+Erros:
+	- Error starting Resource manager:
+		java.lang.NoClassDefFoundError: org/apache/hadoop/yarn/server/timelineservice/collector/TimelineCollectorManager 
+		
+		Fix:
+			copy "hadoop-yarn-server-timelineservice-x.x.x" from ~\hadoop-x.x.x\share\hadoop\yarn\timelineservice to ~\hadoop-x.x.x\share\hadoop\yarn folder.
+	- Error Formating Name Node:
+		java.net.URISyntaxException: Illegal character in opaque part at index 2
+		
+		Fix:
+			In HDFS Site.xml change "/" from the Namenode and datanode path to "\"

@@ -1,0 +1,8 @@
+*****************************************C++ Imp Ref*****************************************
+iostream.h (or) iostream:
+	-  includes the standard input output library functions.
+	- It provides cin and cout methods for reading from input and writing to output respectively.
+
+conio.h (or) conio:
+	- includes the console input output library functions. 
+	- The getch() function is defined in conio.h file.

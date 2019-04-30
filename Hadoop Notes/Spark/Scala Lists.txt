@@ -1,0 +1,336 @@
+*****************************************************************Scala Lists*****************************************************************
+- Scala Lists are quite similar to arrays which means, all the elements of a list have the same type but there are two important differences.
+- First, lists are immutable, which means elements of a list cannot be changed by assignment. 
+- Second, lists represent a linked list whereas arrays are flat.
+- List is used to store ordered elements.
+- It extends LinearSeq trait.
+- This class is good for last-in-first-out (LIFO), stack-like access patterns.
+- It maintains order of elements and can contain duplicates elements also.
+- Ex:
+	// List of Strings
+	val fruit: List[String] = List("apples", "oranges", "pears")
+
+	// List of Integers
+	val nums: List[Int] = List(1, 2, 3, 4)
+
+	// Empty List.
+	val empty: List[Nothing] = List()
+
+	// Two dimensional list
+	val dim: List[List[Int]] =
+	   List(
+		  List(1, 0, 0),
+		  List(0, 1, 0),
+		  List(0, 0, 1)
+	   )
+	   
+	val x = List.range(1,10)
+	val x = List.range(0,10,2)
+	val x = List.fill(3)("foo")
+	val x = List.tabulate(5)(n => n * n)
+	
+- All lists can be defined using two fundamental building blocks, a tail Nil and ::, which is pronounced cons.
+- Nil also represents the empty list. All the above lists can be defined as follows.
+- Ex:
+	// List of Strings
+	val fruit = "apples" :: ("oranges" :: ("pears" :: Nil))
+
+	// List of Integers
+	val nums = 1 :: (2 :: (3 :: (4 :: Nil)))
+
+	// Empty List.
+	val empty = Nil
+
+	// Two dimensional list
+	val dim = (1 :: (0 :: (0 :: Nil))) ::
+			  (0 :: (1 :: (0 :: Nil))) ::
+			  (0 :: (0 :: (1 :: Nil))) :: Nil
+- Operations on Lists:
+	- head --> This method returns the first element of a list.
+	- tail --> This method returns a list consisting of all elements except the first.
+	- isEmpty --> This method returns true if the list is empty otherwise false.
+	- Concatenating:
+		- You can use either ::: operator or List.:::() method or List.concat() method to add two or more lists.
+		Ex:
+			object Demo {
+			   def main(args: Array[String]) {
+				  val fruit1 = "apples" :: ("oranges" :: ("pears" :: Nil))
+				  val fruit2 = "mangoes" :: ("banana" :: Nil)
+
+				  // use two or more lists with ::: operator
+				  var fruit = fruit1 ::: fruit2
+				  println( "fruit1 ::: fruit2 : " + fruit )
+				  
+				  // use two lists with Set.:::() method --> prepends new list with Existing list
+				  fruit = fruit1.:::(fruit2)
+				  println( "fruit1.:::(fruit2) : " + fruit )
+
+				  // pass two or more lists as arguments
+				  fruit = List.concat(fruit1, fruit2)
+				  println( "List.concat(fruit1, fruit2) : " + fruit  )
+			   }
+			}
+	- Creating Uniform Lists:
+		- You can use List.fill() method creates a list consisting of zero or more copies of the same element.
+		Ex:
+			object Demo {
+			   def main(args: Array[String]) {
+				  val fruit = List.fill(3)("apples") // Repeats apples three times.
+				  println( "fruit : " + fruit  )
+
+				  val num = List.fill(10)(2)         // Repeats 2, 10 times.
+				  println( "num : " + num  )
+			   }
+			}
+	- Tabulating a Function:
+		- You can use a function along with List.tabulate() method to apply on all the elements of the list before tabulating the list.
+		- its arguments are just like those of List.fill: the first argument list gives the dimensions of the list to create, and the second describes the elements of the list.
+		- The only difference is that instead of the elements being fixed, they are computed from a function.
+		Ex:
+			object Demo {
+			   def main(args: Array[String]) {
+				  // Creates 5 elements using the given function.
+				  val squares = List.tabulate(6)(n => n * n)
+				  println( "squares : " + squares  )
+
+				  val mul = List.tabulate( 4,5 )( _ * _ )      
+				  println( "mul : " + mul  )
+			   }
+			}
+	- Reverse List Order:
+		- You can use List.reverse method to reverse all elements of the list.
+		Ex:
+			object Demo {
+			   def main(args: Array[String]) {
+				  val fruit = "apples" :: ("oranges" :: ("pears" :: Nil))
+				  
+				  println( "Before reverse fruit : " + fruit )
+				  println( "After reverse fruit : " + fruit.reverse )
+			   }
+			}
+	- prepend items to a List:
+		val x = List(1,2,3)
+		val y = 0 :: x
+		
+	- Appending and merging Lists:
+		val a = List(1,2,3)
+		val b = List(4,5,6)
+		val c = a ::: b
+	- postpend values to list:
+		val x = List(1,2,3)
+		val y = x + ("2")
+	- append values to string builder:
+		var b=new StringBuilder()
+		a.addString(b)
+	- to fetch selective element from list:
+		a.apply(2)
+	
+	- contains(elem: Any): Boolean
+		Tests whether the list contains a given value as an element.
+		a.contains(2)
+	
+	-  def copyToArray(xs: Array[A], start: Int, len: Int): Unit
+		This copies the elements of a List to an Array. Start decides where to write, and len decides the length of elements to copy.
+		var arr=Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+		 a.copyToArray(arr,2,3)
+		 arr
+	
+	- def distinct: List[A]
+		Distinct returns a new List without duplicates.
+		var j=List(1,1,4,1,3,2,1)
+		j.distinct
+		
+	- def drop(n: Int): List[A]
+		This returns all elements except the first n.
+		j.drop(2)
+	
+	- def dropRight(n: Int): List[A]
+		This returns all elements except the last n.
+		j.dropRight(2)
+	
+	- def dropWhile(p: (A) => Boolean): List[A]
+		This drops the longest prefix of elements that satisfy the predicate.
+		j.dropWhile(x=>{x%2!=0})
+		
+	- def equals(that: Any): Boolean
+		The equals method for arbitrary sequences. Compares this sequence to some other object.
+		j.equals(a)
+		
+	- def endsWith[B](that: Seq[B]): Boolean
+	
+	- def exists(p: (A) => Boolean): Boolean
+		This returns true if a predicate holds true for any value in the List.
+		a.exists(x=>{x%2!=0})
+		
+	- def filter(p: (A) => Boolean): List[A]
+		This returns all such values.
+		a.filter(x=>{x%2!=0})
+		
+	- def forall(p: (A) => Boolean): Boolean
+		Tests whether a predicate holds for all elements of the list.
+		a.forall(x=>{x%2!=0})
+		
+	- def foreach(f: (A) => Unit): Unit
+		Applies a function f to all elements of the list.
+		a.foreach(x => println)
+	
+	- def head: A
+		Selects the first element of the list.
+		a.head
+		
+	- def indexOf(elem: A, from: Int): Int
+		Finds index of first occurrence value in the list, after the index position.
+		a.find("11")
+		
+	- def init: List[A]
+		Returns all elements except the last.
+		a.init
+		
+	- def intersect(that: Seq[A]): List[A]
+		Computes the multiset intersection between the list and another sequence.
+		val low = 1 to 5 toSet
+		val medium = (3 to 7).toSet
+		val i = low.intersect(medium)
+		
+	- union()
+		low.union(medium)
+		
+	- def isEmpty: Boolean
+		Tests whether the list is empty.
+		a.isEmpty
+		
+	- def iterator: Iterator[A]
+		This creates an iterator over the List.
+		a.iterator
+		
+	- def last: A
+		Returns the last element.
+		a.last
+	
+	- def lastIndexOf(elem: A, end: Int): Int
+		Finds index of last occurrence of some value in the list; before or at a given end index.
+		List(1,2,1,2,1).lastIndexOf(2)
+		
+	- def length: Int
+		Returns the length of the list.
+		a.length
+	
+	- def map[B](f: (A) => B): List[B]
+		Builds a new collection by applying a function to all elements of this list.
+		a.map(x=>x*x)
+		
+	- def max: A
+		Finds the largest element.
+		a.max()
+		
+	- def min: A
+		Finds the smallest element.
+		a.min()
+		
+	- def mkString: String
+		Displays all elements of the list in a string.
+		a.mkString
+		
+	- def mkString(sep: String): String
+		Displays all elements of the list in a string using a separator string.
+		a.mkString("*")
+		
+	- def reverse: List[A]
+		Returns new list with elements in reversed order.
+		a.reverse
+		
+	- def sorted[B >: A]: List[A]
+		Sorts the list according to an Ordering.
+		val a = List(10, 5, 8, 1, 7).sorted
+		List(10, 5, 8, 1, 7).sortWith(_ < _)
+		List(10, 5, 8, 1, 7).sortWith(_ > _)
+		
+	- def startsWith[B](that: Seq[B], offset: Int): Boolean
+		Tests whether the list contains the given sequence at a given index.
+		
+	- def sum: A
+		Sums up the elements of this collection.
+		a.sum
+		
+	- def tail: List[A]
+		Returns all elements except the first.
+		a.tail
+		
+	- def take(n: Int): List[A]
+		This returns the first n elements.
+		a.take(2)
+		
+	- def takeRight(n: Int): List[A]
+		Returns last "n" elements.
+		a.takeRight(n)
+
+	- takewhile():
+		val x = List(1,2,3,4,5,6,7,8,9,10)
+		val y = x.takeWhile(a => a < 6)
+		
+	- dropwhile():
+		val x = List(1,2,3,4,5,6,7,8,9,10)
+		val y = x.dropWhile(a => a < 6)
+		
+		
+	- def toArray: Array[A]
+		This returns an Array from a List.
+		a.toArray
+		
+	- def toBuffer[B >: A]: Buffer[B]
+		This returns a Buffer from a List.
+		a.toBuffer
+		
+	- def toMap[T, U]: Map[T, U]
+		Converts this list to a map.
+		
+		val list1 = List(1,2,3)
+		val list2 = List("a","b","c")
+		val map = (list1 zip list2).toMap
+		
+		//a little explanation on how the above code works
+		//the (list1 zip list2) will actually produce a list of tuples, in our case it will be ((1,"a"),(2,"b"),(3,"c"))
+		//and then, the toMap function will convert the list of tuples into Map by using the first value in the tuple as key and second value as value.
+	
+	- def toSeq: Seq[A]
+		Converts the list to a sequence.
+		a.toSeq
+		
+	- def toSet[B >: A]: Set[B]
+		Converts the list to a set.
+		a.toSet
+	
+	- def toString(): String
+		This returns a String from a List.
+		a.toString
+		
+	- foldleft()
+		val inputList: List[Int] = List(1, 3, 5)
+		inputList.foldLeft(0) { (acc, i) => acc + i }
+		<or>
+		inputList.foldLeft(0)(_ + _)
+		
+		Write the foldLeft equivalent of List.length.
+		def len(list: List[Any]): Int = list.foldLeft(0) { (count, _) => count + 1 }
+		
+		Write the foldLeft equivalent of List.last.
+		def last[A](list: List[A]): A = list.foldLeft[A](list.head) { (_, cur) => cur }
+		
+		Reverse the order of a list.
+		def reverse[A](list: List[A]): List[A] = list.foldLeft(List[A]()) { (r,c) => c :: r }
+		
+		Reference: 
+			https://commitlogs.com/2016/09/10/scala-fold-foldleft-and-foldright/
+		
+	- reduceLeft()
+		val a = Array(20, 12, 6, 15, 2, 9)
+		a.reduceLeft(_ + _)
+		a.reduceLeft(_ min _)
+		a.reduceLeft(_ max _)
+		
+		
+		
+- List For Expression
+	val names = List("Bob", "Fred", "Joe", "Julia", "Kim")
+	for (name <- names if name.startsWith("J"))
+     | println(name)

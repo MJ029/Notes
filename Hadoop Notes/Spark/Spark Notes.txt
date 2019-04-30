@@ -1,0 +1,704 @@
+**********************************************************Spark Notes************************************************
+- Apache Spark is a cluster computing platform designed to be fast and general-purpose. 
+- On the speed side, Spark extends the popular MapReduce model to efficiently support more types of computations, including interactive queries and stream processing.
+- Spark is a “computational engine” that is responsible for scheduling, distributing, and monitoring applications consisting of many computational tasks across many worker machines, or a computing cluster.
+- it is lazy so so nothing will be executed unless you call some transformation or action that will trigger job creation and execution.
+- Spark supports both the old and new Hadoop file APIs providing a great amount of flexibility.
+
+******************************Components of Spark***********************************
+1) Spark Core:
+	- Spark Core is the underlying general execution engine for spark platform that all other functionality is built upon. It provides In-Memory computing and referencing datasets in external storage systems.
+	- It provides distributed task processing, scheduling, and basic I/O functionalities.
+	- Responsible for for task scheduling, memory management, fault recovery, interacting with storage systems, and more.
+	
+2) Spark SQL & Shark:
+	- Spark SQL is a component on top of Spark Core that introduces a new data abstraction called SchemaRDD, which provides support for structured and semi-structured data.
+	- Spark SQL represents database tables as Spark RDDs and translates SQL queries into Spark operations.
+	- Spark SQL was added to Spark in version 1.0.
+	- Shark is a project out of UC Berkeley that predates Spark SQL and is being ported to work on top of Spark SQL. Shark provides additional functionality so that Spark can act as drop-in replacement for Apache Hive.
+
+3) Spark Streaming:
+	- Spark Streaming is a Spark component that enables processing live streams of data.
+	- Spark Streaming leverages Spark Core's fast scheduling capability to perform streaming analytics. It ingests data in mini-batches and performs RDD (Resilient Distributed Datasets) transformations on those mini-batches of data.
+	- Spark Streaming provides an API for manipulating data streams that closely matches the Spark Core’s RDD API,
+	- it was designed to provide the same degree of fault tolerance, throughput, and scalability that the Spark Core provides.
+
+4) MLlib (Machine Learning Library):
+	- MLlib is a distributed machine learning framework above Spark.It is done by the MLlib developers against the Alternating Least Squares (ALS) implementations. Spark MLlib is nine times as fast as the Hadoop disk-based version of Apache Mahout (before Mahout gained a Spark interface).
+	- MLlib provides multiple types of machine learning algorithms, including binary classification, regression, clustering and collaborative filtering, as well as supporting functionality such as model evaluation and data import.
+	- All of these methods are designed to scale out across a cluster.
+
+5) GraphX:
+	- GraphX is a distributed graph-processing framework on top of Spark. It provides an API for expressing graph computation that can model the user-defined graphs by using Pregel abstraction API. It also provides an optimized runtime for this abstraction.
+	- library added in Spark 0.9.
+	- provides an API for manipulating graphs and performing graph-parallel computations.
+
+6) Cluster Managers:
+	- To achieve this while maximizing flexibility, Spark can run over a variety of cluster managers, including Hadoop YARN, Apache Mesos, and a simple cluster manager included in Spark itself called the Standalone Scheduler
+
+**************************RDD-> Resilient Distributed Datasets***************************
+- fundamental data structure of Spark
+- immutable collection of objects divided into logical partitions and it computed on different nodes on the cluster.
+- on the other hand it represent a collection of items distributed across many compute nodes that can be manipulated in parallel.
+- it is a read-only partitioned collection of records.
+- can contain objects like Python,Java,Scala and user defined classes.
+- fault tolerant and parall execution or processing.
+- can be created in two ways: 
+	1) reffering dataset in External Storage System.
+	2) by applying Transformations.
+	3) parallelizing a collection in your driver program.
+- RDDs can never be modified once created.
+- RDDs are by default recomputed each time you run an action on them.
+- RDDs can be reused in-memory for multiple actions by persisting them.
+- Persisting RDDs on disk instead of memory is also possible.
+- lineage graph -> Spark keeps track of the set of dependencies between different RDDs.
+
+*****RDD Opertors:*****
+The main diff between transformation and Action is 
+	- Transformation -> returns RDD.(Narrow Transformations and Wide Transformations
+	- Action -> returns datatype.
+
+*******************************************Transformations*******************************************
+- returns pointer to new RDD and allows you to create dependencies between RDDs.
+- in simple ransformations construct a new RDD from a previous one.
+- Each RDD in dependency chain (String of Dependencies) has a function for calculating its data and has a pointer (dependency) to its parent RDD.
+- Many transformations are element-wise, that is they work on one element at a time, but this is not true for all transformations.
+- Transformations on RDDs are lazily evaluated
+
+1) map(fn) -> It is useful to note that the return type of the map does not have to be the same as the input type,
+	Es:	val input = sc.parallelize(List(1, 2, 3, 4))
+		val result = input.map(x => x * x)
+		println(result.collect().mkString(","))
+
+2) filter(fn) ->  filters the line containing word "Python" and store it to new RDD
+	Ex: val pythonLines = lines.filter(line => line.contains("Python"))
+
+3) flatMap(fn) -> Like with map, the function we provide to flat Map is called individually for each element in our input RDD. Instead of returning a single element, we return an iterator with our return values.
+	Ex:	val lines = sc.parallelize(List("hello world", "hi"))
+		val words = lines.flatMap(line => line.split(" "))
+		words.first()
+		words.take(10).foreach(println)
+		
+4) mapPartition(fn)
+5) mapPArtitionWithIndex(fn)
+6) sample(with replacement,fraction, seed)
+7) union(other Dataset) -> operates on two RDDs instead of one.Transformations can actually operate on any number of input RDDs.
+	Ex: 	errorsRDD = inputRDD.filter(lambda x: "error" in x)
+		warningsRDD = inputRDD.filter(lambda x: "warning" in x)
+		badLinesRDD = errorsRDD.union(warningsRDD)
+
+8) intersection(other Dataset)
+	Rdd1.intersection(Rdd2)
+	Ex:	val RDD1 = sc.parallelize(List("coffee","coffee","panda","monkey","tea"))
+		RDD1.take(10).foreach(println)
+		val RDD2 = sc.parallelize(List("coffee","monkey","kitty"))
+		RDD2.take(10).foreach(println)
+		val RDD_inter = RDD1.intersection(RDD2)
+		RDD_inter.take(10).foreach(println)
+9) distinct ([numTask])
+	Ex: RDD1.Distinct()
+		val RDD1_Dist = RDD1.distinct()
+		RDD1_Dist.take(10).foreach(println)
+	
+10) groupByKey([numTask])
+11) reduceByKey(fn,[numTask])
+	Ex: 
+		val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+		val kv_data10 = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+		val kv_sum = kv_data10.reduceByKey((x,y)=>x+y)
+		kv_sum.collect().foreach(println)
+
+12) aggregateByKey(zeroValue),(sqeOp,comnOp,[numTask])
+13) sortByKey([assending],[numTask])
+14) join(otherDataset,[numTask])
+	leftOuterJoin
+	rightOuterJoin
+15) cogroup(otherDataset,[numTask])
+16) cartesian(otherDataset) -> to get cartesian product between 2 RDD's(Like cartesian join)
+	RDD1.Cartesian(RDD2)
+	Ex:	val RDD_cart = RDD1.cartesian(RDD2)
+		RDD_cart.collect()
+
+17) pipe(command,[envVars])
+18) coalesce(numPartitions)
+19) repartition(numPartitions)
+20) repartitionAndSortWithinPartition(partitioner)
+	
+22) subtract(fn) ->to get mismatched output from 2 RDD's(Like Left outer join)
+	RDD1.subtract(RDD2)
+	Ex:	val RDD_sub = RDD1.subtract(RDD2)
+		RDD_sub.take(10).foreach(println)
+
+23) combineByKey:
+	Ex: 
+		val input = sc.parallelize(List(("coffee", 10) , ("coffee", 20) , ("panda", 4)))
+		val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+		val input = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+		val result = input.combineByKey((v) => (v, 1),(acc: (Int, Int), v) => (acc._1 + v, acc._2 + 1),(acc1: (Int, Int), acc2: (Int, Int)) => (acc1._1 + acc2._1, acc1._2 + acc2._2)).map{ case (key, value) => (key, value._1 / value._2.toFloat) }
+		result.collectAsMap().map(println(_))			
+
+****************************************************Actions************************************************************
+- Actions, on the other hand, compute a result based on an RDD, and either return it to the driver program or save it to an external storage system.
+
+1) reduce(fn) -> Reduce takes in a function which operates on two elements of the same type of your RDD and returns a new element of the same type.
+	Ex: val sum = rdd.reduce((x, y) => x + y)
+		val ip = sc.parallelize(List(1,2,3,4,5,6,7,8,9,10))
+		val red_ip = ip.reduce((x,y)=>x+y)
+		red_ip.collect()	
+
+2) collect() -> to retrieve the entire RDD.Keep in mind that your entire dataset must fit in memory on a single machine to use collect() on it, so collect() shouldn’t be used on large datasets.
+	Ex: RDD1.collect().foreach(println)
+
+3) count() -> to perform Count operation in the RDD.
+	Ex: lines.count()
+
+4) first() -> to retrive the first line from RDD
+	Ex: lines.first()
+
+5) take(n) -> we used take() to retrieve a small number of elements in the RDD at the driver program.
+	Ex: println("Input had " + badLinesRDD.count() + " concerning lines")
+	    println("Here are 10 examples:")
+	    badLinesRDD.take(10).foreach(println)
+
+6) takeSample(withReplacement,num,[seed])
+7) takeOrdered(n,[ordering])
+8) saveAsTextFile(path)
+9) saveAsSequenceFile(path)(java and scala)
+10) saveAsObjectFile(path)v
+11) countByKey()
+12) foreach(fn)
+	Ex: RDD1.collect().foreach(println)
+
+13) fold(fn) -> Similar to reduce is fold which also takes a function with the same signature as needed for reduce, but also takes a “zero value” to be used for the initial call on each partition.
+	Ex: 	val ip = sc.parallelize(List(1,2,3,4,5,6,7,8,9,10))
+		val red_fp = ip.fold(0)((x,y)=>x+y)
+		red_fp.collect()
+
+14) Aggregate(fn)
+	Ex: 	val result = input.aggregate((0, 0))(
+		(x, y) => (x._1 + y, x._2 + 1),
+		(x, y) => (x._1 + y._1, x._2 + y._2))
+		val avg = result._1 / result._2.toDouble
+
+15) foldByKey(fn)
+	Ex: 	val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+		val kv_data10 = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+		val kv_sum = kv_data10.foldByKey(0)((x,y)=>x+y)
+		kv_sum.collect().foreach(println)
+
+Note: RDD Commands:
+	1) to create a new RDD.
+		ip = sc.textFile("/home/mj/dataset/wordcount.txt")
+		val lines = sc.parallelize(List("pandas", "i like pandas"))
+	2) to persist RDD.
+		ip.persisit()
+
+**************************Core Concept of Spark:*************************
+1) Driver Program:
+	- it launches various parallel operations on a cluster.
+	- it contains your application’s main function and defines distributed datasets on the cluster, then applies operation(Transformation and Action) on it.
+	- it access Spark through SparkContext object.(represents a connection to a computing cluster.)
+	- Spark context is used to build RDD(resilient Distributed dataset).
+	- To run various operation on driver program it manages a number of nodes called EXECUTORS
+
+2) Spark Context:
+	- which represents the connection to the computing cluster.
+	- it automatically initialized(by default created) for in spark-shell.
+	- through API call or IDE we need to initialize it manually by using the following.
+		in Scala:
+			import org.apache.spark.SparkConf
+			import org.apache.spark.SparkContext
+			import org.apache.spark.SparkContext._
+			
+			val conf = new SparkConf().setMaster("local").setAppName("My App")
+			val sc = new SparkContext("local", "My App")
+		in Java:
+			import org.apache.spark.SparkConf;
+			import org.apache.spark.api.java.JavaSparkContext;
+			
+			SparkConf conf = new SparkConf().setMaster("local").setAppName("My App");
+			JavaSparkContext sc = new JavaSparkContext(conf);
+
+3) Executors:
+	- worker nodes on cluster to perform the task allocated by the Driver Program.
+	- similar to Datanode in HDFS.
+***********************************************************
+
+
+Spark Submit:
+	spark-submit [options] <app jar | python file> [app arguments]
+$SPARK_HOME/bin/spark-submit --class YourClass \
+ --master yarn \
+ --deploy-mode cluster \
+ --driver-memory ${driver_memory} \
+ --executor-memory ${executor_memory} \
+ --executor-cores $executor_cores --num-executors $num_executors  --queue $queue  --conf "spark.driver.cores=$spark_driver_cores"  
+ --conf "spark.sql.shuffle.partitions=$spark_sql_shuffle_partitions" \
+ --name "SDM.${src_type}.SPARK.${src}.${cntry}.${busDate}" \
+ --conf "spark.default.parallelism=$spark_default_parallelism" \
+ --conf "spark.shuffle.service.index.cache.entries=$spark_shuffle_service_index_cache_entries"  \
+ --conf "spark.file.transferTo=$spark_file_transferTo"  \
+ --conf "spark.shuffle.file.buffer=$spark_shuffle_file_buffer"  \
+ --conf "spark.io.compression.snappy.blockSize=$spark_io_compression_snappy_blockSize"  \
+ --conf "spark.shuffle.unsafe.file.output.buffer=$spark_shuffle_unsafe_file_output_buffer"  \
+ --conf "spark.sql.broadcastTimeout=$spark_sql_broadcastTimeout" \
+ --conf spark.rpc.connect.threads=$spark_rpc_connect_threads \
+ --conf "spark.shuffle.consolidateFiles=$spark_shuffle_consolidateFiles" \
+ --conf "spark.shuffle.spill=$spark_shuffle_spill" \
+ --conf spark.scheduler.allocation.file=fairscheduler.xml \
+ --conf "spark.scheduler.mode=$spark_scheduler_mode" \
+ --conf spark.yarn.scheduler.heartbeat.interval-ms=$spark_yarn_scheduler_heartbeat_interval_ms \
+ --conf spark.network.timeout=$spark_network_timeout \
+ --conf spark.yarn.driver.memoryOverhead=$spark_yarn_driver_memoryOverhead \
+ --conf spark.yarn.executor.memoryOverhead=$spark_yarn_executor_memoryOverhead \
+ --conf spark.sql.hive.convertMetastoreOrc=$spark_sql_hive_convertMetastoreOrc \
+ --conf spark.sql.orc.enabled=$spark_sql_orc_enabled \
+ --conf spark.sql.orc.filterPushdown=$spark_sql_orc_filterPushdown \
+ --conf spark.sql.statistics.fallBackToHdfs=$spark_sql_statistics_fallBackToHdfs \
+ --conf spark.shuffle.io.numConnectionsPerPeer=$spark_shuffle_io_numConnectionsPerPeer \
+ --conf spark.locality.wait=$spark_locality_wait \
+ --conf spark.sql.files.maxPartitionBytes=$spark_sql_files_maxPartitionBytes \
+ --conf spark.files.openCostInBytes=$spark_files_openCostInBytes \
+ --conf spark.kryo.unsafe=$spark_kryo_unsafe \
+ --conf spark.kryoserializer.buffer.max=$spark_kryoserializer_buffer_max \
+ --conf spark.kryoserializer.buffer=$spark_kryoserializer_buffer \
+ --conf spark.shuffle.service.enable=$spark_shuffle_service_enable \
+ --conf spark.rpc.io.serverThreads=$spark_rpc_io_serverThreads   \
+ --conf spark.rpc.io.clientThreads=$spark_rpc_io_clientThreads \
+ --conf spark.driver.extraJavaOptions="-XX:ReservedCodeCacheSize=100M -XX:MaxMetaspaceSize=256m -XX:CompressedClassSpaceSize=256m -Dhdp.version=2.6.4.25-1" \
+ --conf spark.executor.extraJavaOptions="-XX:ReservedCodeCacheSize=100M -XX:MaxMetaspaceSize=256m -XX:CompressedClassSpaceSize=256m -Dhdp.version=2.6.4.25-1" \
+ --conf spark.yarn.am.extraJavaOptions="-Dhdp.version=2.6.4.25-1" \
+ --conf spark.hadoop.yarn.client.failover-proxy-provider=org.apache.hadoop.yarn.client.ConfiguredRMFailoverProxyProvider \
+ --conf spark.files=$SPARK_HOME/conf/hive-site.xml,/scripts/fairscheduler.xml  \
+ /path/to/yout/jar.jar "$@
+ 
+	
+1) --master -> spark://host:port,local,yarn
+2) --deploy-mode -> Whether to launch the driver program locally ("client") or on one of the worker machines inside the cluster ("cluster") (Default: client).
+3) --class -> Your application's main class (for Java / Scala apps).
+4) --name -> A name of your application.
+5) --jars -> Comma-separated list of local jars to include on the driver and executor classpaths.
+6) --packages -> Comma-separated list of maven coordinates of jars to include on the driver and executor classpaths.
+7) --repositories -> Comma-separated list of additional remote repositories to search for the maven coordinates given with --packages.
+8) --py-files -> Comma-separated list of .zip, .egg, or .py files to place on the PYTHON PATH for Python apps.
+9) --files -> Comma-separated list of files to be placed in the working directory of each executor.
+10) --conf (prop=val) -> Arbitrary Spark configuration property.
+11) --properties-file -> Path to a file from which to load extra properties. If not specified, this will look for conf/spark-defaults.
+12) --driver-memory -> Memory for driver (e.g. 1000M, 2G) (Default: 512M).
+13) --driver-java-options -> Extra Java options to pass to the driver.
+14) --driver-library-path -> Extra library path entries to pass to the driver.
+15) --driver-class-path -> Extra class path entries to pass to the driver.
+			    Note: that jars added with --jars are automatically included in the classpath.
+16) --executor-memory ->Memory per executor (e.g. 1000M, 2G) (Default: 1G).
+17) --proxy-user -> User to impersonate when submitting the application.
+18) --help, -h -> Show this help message and exit.
+19) --verbose, -v -> Print additional debug output.
+20) --version ->Print the version of current Spark.
+21) --driver-cores NUM -> Cores for driver (Default: 1).
+22) --supervise -> If given, restarts the driver on failure.
+23) --kill -> If given, kills the driver specified.
+24) --status -> If given, requests the status of the driver specified.
+25) --total-executor-cores -> Total cores for all executors.
+26) --executor-cores -> Number of cores per executor. (Default: 1 in YARN mode, or all available cores on the worker in standalone mode)
+
+Broadcast Variables: sharing the data in inmemory across all nodes with a common variable instead storing it to all nodes.
+	Ex: val broadcastVar = sc.broadcast(Array(1, 2, 3))
+
+Accumulators: similar to counters in MapReduce
+	Ex: val accum = sc.accumulator(0)
+	    sc.parallelize(Array(1, 2, 3, 4)).foreach(x => accum += x)
+	    accum.value
+
+Numeric RDD Operatiors:
+1) Count()
+	Ex: lines.count()
+2) Mean()
+3) Sum()
+4) Max()
+5) Min()
+6) Variance()
+7) Stdev()
+
+***********working with Key-value Pairs*****************
+
+- which are a common data type required for many operations in Spark .
+- Key-value RDDs expose new operations such as aggregating data items by key (e.g., counting up reviews for each product),grouping together data with the same key, and grouping together two different RDDs.
+- Spark provides special operations on RDDs containing key-value pairs. These RDDs are called Pair RDDs.
+- For example, pair RDDs have a reduceByKey method that can aggregate data separately for each key, and a join method that can merge two RDDs together by grouping elements with the same key.
+
+
+1)  Creating RDD Pairs:
+	- Ex: 	val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+		val kv_data10 = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+	- When creating a Pair RDD from an in memory collection in Scala and Python we only need to make sure the types of our data are correct, and call parallelize.
+	- To create a Pair RDD in Java from an in memory collection we need to make sure our collection consists of tuples and also call SparkContext.parallelizePairs instead of SparkCon text.parallelize.
+
+2)  Transformation on RDD pairs:
+	- Pair RDDs are allowed to use all the transformations available to standard RDDs.
+	- Since Pair RDDs contain tuples, we need to pass functions that operate on tuples rather than on individual elements.
+	- In Java and Scala when we run a map or filter or similar over a Pair RDDs.
+	- Ex: val kv_filter = kv_data10.filter{case (x,y)=> x.contains("avil")} -> to filte ravil records for our key value pait RDD
+	- Ex: val vk_sum_cnt = kv_data10.mapValues(x=>(x,1))
+
+3) Aggregation:
+	- When datasets are described in terms of key-value pairs, it is common to want to aggregate statistics across all elements with the same key.
+	- similar per-key transformations exist on Pair RDDs such as fold(foldByKey),combine,reduce(reduceByKey) etc...
+
+	a) reduceByKey:
+		- reduceByKey is quite similar to reduce, both take a function and use it to combine values.
+		- reduceByKey runs several parallel reduce operations, one for each key in the dataset, where each operation combines values together which have the same key.
+		- reduceByKey is not implemented as an action that returns a value back to the user program. Instead, it returns a new RDD consisting of each key and the reduced value for that key.
+		- Ex: 
+			val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+			val kv_data10 = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+			val kv_sum = kv_data10.reduceByKey((x,y)=>x+y)
+			kv_sum.collect().foreach(println)
+	
+	b) foldByKey:
+		- foldByKey is quite similar to fold, both use a zero value of the same type of the data in our RDD and combination function. Like with fold the provided zero value for fold ByKey should have no impact when added with your combination function to another element.
+		- We can use reduceByKey along with mapValues to compute the per-key average in a very similar manner to how we used fold and map compute the entire RDD average.
+		- Ex: 
+			val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+			val kv_data10 = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+			val kv_sum = kv_data10.foldByKey(0)((x,y)=>x+y)
+			kv_sum.collect().foreach(println)
+	
+	c) combineByKey:
+		- it is the most general of the per-key aggregation functions and provides flexibility in how the values associated with each key are combined.
+		- Most of the other per-key combiners are implemented using it.
+		- Like aggregate, combineByKey allows the user to return values which are not the same type as our input data.
+		- The first required function is called createCombiner 
+			which should take a single element in the source RDD and return an element of the desired type in the resulting RDD.
+		- createCombiner could return a list containing the element it was passed in.
+		- The second required function is mergeValue 
+			which takes the current accumulated value for the key and the new value and returns a new accumulated value for the key.
+		- If we wanted to make a list of elements we might have mergeValue simply append the new element to the current list.
+		- The final required function you need to provide to combineByKey is mergeCombiners
+			Since we don’t run through the elements linearly, we can have multiple accumulators for each key. mergeCombiners must take two accumulators (of the type returned by createCombiner) and return a merged result.
+		- Ex:
+			val input = sc.parallelize(List(("coffee", 10) , ("coffee", 20) , ("panda", 4)))
+			val ip_data = sc.textFile("/home/mj/dataset/datagen_10.txt")
+			val input = ip_data.map(x=>(x.split(",")(2),x.split(",")(4).toInt))
+			val result = input.combineByKey(
+				(v) => (v, 1),
+				(acc: (Int, Int), v) => (acc._1 + v, acc._2 + 1),
+				(acc1: (Int, Int), acc2: (Int, Int)) => (acc1._1 + acc2._1, acc1._2 + acc2._2))
+			    .map{ case (key, value) => (key, value._1 / value._2.toFloat) }
+			result.collectAsMap().map(println(_))
+
+	Note:
+	- We can disable map side aggregation in combineByKey if we know that our data won’t benefit from it.
+	- For example groupByKey disables map side aggregation as the aggregation function (appending to a list) does not save any data.
+	- if we want to disable map side combines we need to specify the partitioner, and for now you can just use the partitioner on the source rdd at rdd.partitioner.
+		
+	d) Grouping Data:
+		1) groupByKey
+		- With keyed data a common use case is grouping our data together by key, say joining all of a customers orders together.
+		- If our data is already keyed in the way which we are interested groupByKey will group our data together using the key in our RDD. On an RDD consisting of keys of type K and values of type V we get back an RDD of type [K, Iterable[V]].
+		
+		2) cogroup
+		- cogroup gives us the power to group together data from multiple RDDs.
+		- we can group together data sharing the same key from multiple RDDs using a function called cogroup.
+		- cogroup over two RDDs sharing the same key type K with the respective value types V and W gives us back RDD[(K, Tuple(Iterable[V], Iterable[W]))].
+		- If one of the RDDs doesn’t have an elements for a given key that is present in the other RDD the corresponding Iterable is simply empty.
+	e) JOINS:
+		- Joining data together is probably one of the most common operations on a Pair RDD, and we have a full range of options including right and left outer joins, cross joins, inner joins.
+		- The simple join operator is an inner join. Only keys which are present in both Pair RDDs are output.
+		- Ex: Inner Join, Left Outer Join, Right Outer Join
+			storeAddress = {(Store("Ritual"), "1026 Valencia St"), 
+					(Store("Philz"), "748 Van Ness Ave"),
+					(Store("Philz"), "3101 24th St"), 
+					(Store("Starbucks"), "Seattle")}
+			
+			storeRating = {(Store("Ritual"), 4.9), 
+					(Store("Philz"), 4.8))}
+
+			storeAddress.join(storeRating) = {(Store("Ritual"), ("1026 Valencia St", 4.9)),
+							  (Store("Philz"), ("748 Van Ness Ave", 4.8)),
+							  (Store("Philz"), ("3101 24th St", 4.8))}
+
+			storeAddress.leftOuterJoin(storeRating) ={(Store("Ritual"),("1026 Valencia St",Some(4.9))),
+								  (Store("Starbucks"),("Seattle",None)),
+								  (Store("Philz"),("748 Van Ness Ave",Some(4.8))),
+								  (Store("Philz"),("3101 24th St",Some(4.8)))}
+			
+			storeAddress.rightOuterJoin(storeRating) ={(Store("Ritual"),(Some("1026 Valencia St"),4.9)),
+								   (Store("Philz"),(Some("748 Van Ness Ave"),4.8)),
+								   (Store("Philz"), (Some("3101 24th St"),4.8))}
+	f) sorting Data:
+		- Having sorted data is quite useful in many cases, especially when producing downstream output.
+
+	g) data partitioning:
+		- In a distributed program, communication is very expensive, so laying out data to minimize network traffic can greatly improve performance.
+		- Spark programs can choose to control their RDDs’ partitioning to reduce communication.
+		- It is only useful when a dataset is reused multiple times in key-oriented operations such as joins.
+		- Although Spark does not give explicit control of which worker node each key goes to (partly because the system is designed to work even if specific nodes fail), it lets the program ensure that a set of keys will appear together on some node.
+		- partitionBy is a transformation, so it always returns a new RDD.
+		- For example, one might choose to
+			1) Hash partition an RDD into 100 partitions so that keys that have the same hash value modulo 100 appear on the same node.
+				Ex: 
+					val userdata = sc.sequenceFile[UserID, UserInfo]("hdfs://...").partitionBy(new HashPartitioner(100)).persist()
+					def processNewLogs(logFileName: String) {
+						val events = sc.sequenceFile[UserID, LinkInfo](logFileName)
+						val joined = userData.join(events)// RDD of (UserID, (UserInfo, LinkInfo)) pairs
+						val offTopicVisits = joined.filter {
+						case (userId, (userInfo, linkInfo)) => // Expand the tuple into its components
+						!userInfo.topics.contains(linkInfo.topic)
+						}.count()
+						  println("Number of visits to non-subscribed topics: " + offTopicVisits)
+					}
+			2) Range Partition the RDD into sorted ranges of keys so that elements with keys in the same range appear on the same node.
+			3) Custom partition
+		- sortByKey and groupByKey will result in range-partitioned and hash-partitioned RDDs, respectively.
+		- operations like map cause the new RDD to forget the parent’s partitioning information, because such operations could theoretically modify the key of each record.
+		- Operations that Benefit from Partitioning:
+			cogroup,groupWith,join,leftOuterJoin,rightOuterJoin,groupByKey,reduceByKey,combineByKey and lookup.
+		- Operations that Affect Partitioning:
+			map, filter and mapValues.
+
+*******************Loading and Saving Your Data*******************
+
+1) Choosing a Format
+	Format 			Spilitable	structured 
+	Text Files -> 			yes		no
+	JSON ->				yes		semi
+	CSV ->				yes		yes
+	Sequence Files ->		yes		yes
+	Protocol Buffers ->		yes		yes
+	Object Files ->			yes 		yes
+
+	1) Text File:
+	- Text files are very simple to load from and save to with Spark.
+	- When we load a single text file as an RDD each input line becomes an element in the RDD.
+	- We can also load multiple whole text files at the same time into a Pair RDD with the key being the name and the value being the contents of each file.
+	- Ex: 
+		val input = sc.textFile("file:///home/holden/repos/spark/README.md")
+		val input = sc.wholeTextFiles("file://home/holden/happypanda")
+		val result = input.mapValues{y =>
+			val nums = y.split(" ").map(x => x.toDouble)
+			nums.sum / nums.size.toDouble}
+	- The method saveAsTextFile takes a path and will output the contents of the RDD to that file.
+	- The path is treated as a directory and Spark will output multiple files underneath that directory.
+	- Ex: 
+		result.saveAsTextFile(outputFile)
+	2) JSON:
+	- JSON is a popular semi-structured data format.
+	- Java and Scala we will use Jackson library.
+	- The simplest way to load JSON data is by loading the data as a text file and then mapping over the values with a JSON parser.
+	- Loading the data as a text file and then parsing the JSON data is an approach that we can use in all of the supported languages
+	- Ex: 
+		val result = input.flatMap(record => {
+				try {
+				Some(mapper.readValue(record, classOf[Person]))
+				} catch {
+				case e: Exception => None
+				}})
+	- To store JSON data
+	- Ex:
+		result.filter(_.lovesPandas).map(mapper.writeValueAsString(_)).saveAsTextFile(outputFile)
+	
+	3) CSV (Comma Separated Values) / TSV (Tab Separated Values):
+	- CSV files are supposed to contain a fixed number of fields per-line - Structured.
+	- the fields are most commonly separated by comma or tab.
+	- Records are often stored one per line, but this is not always the case as records can sometimes span lines.
+	- sometimes be inconsistent, most frequently in respect to handling newlines, escaping, non-ASCII characters, non-integer numbers.
+	- CSVs cannot handle nested field types.
+	- both Scala and Java we use opencsv library.
+	- Ex:
+		val input = sc.textFile(inputFile)
+			val result = input.map{ line =>
+			val reader = new CSVReader(new StringReader(line));
+			reader.readNext();
+			}
+	- Write Operaion Ex:
+		pandaLovers.map(person => List(person.name, person.favoriteAnimal).toArray)
+				.mapPartitions{people =>
+				val stringWriter = new StringWriter();
+				val csvWriter = new CSVWriter(stringWriter);
+				csvWriter.writeAll(people.toList)
+				Iterator(stringWriter.toString)
+				}.saveAsTextFile(outFile)
+
+	4) Sequence Files:
+	- Sequence files are a popular Hadoop format comprised of flat files with key-value pairs and are supported in Spark’s Java and Scala APIs.
+	- Sequence files have sync markers that allow Spark to seek to a point in the file and then resychronize with the record boundaries.
+	- This allows Spark to efficiently read Sequence files in from multiple nodes and in to many partitions.
+	- Ex: 
+		val data = sc.sequenceFile(inFile, classOf[Text], classOf[IntWritable]).map{case (x, y) => (x.toString, y.get())}
+	- we need a PairRDD with types that our sequence file can write out.
+	- Ex: 
+		val data = sc.parallelize(List(("Panda", 3), ("Kay", 6), ("Snail", 2)))
+		data.saveAsSequenceFile(outputFile)
+
+	5) Object Files:
+	- Object files are a deceptively simple wrapper around sequence files which allows us to save our RDDs containing just values. Unlike with Sequence files, the values are written out using Java Serialization.
+	- Reading an object file back is also quite simple, the function objectFile on the SparkContext takes in a path and returns an RDD.
+	- Saving an object file is as simple as calling saveAsObjectFile on an RDD.
+
+	6) Protocol Buffers:
+	- R & D
+***************Hadoop Input and Output Formats*******************
+- To read in a file using the new Hadoop API we need to tell spark a few things. The newAPIHadoopFile takes a path, and three classes.
+- The first class is the “format” class The first class is the “format” class
+- The next class is the class for our key.
+- the final class is the class of our value.
+- Ex:
+	val input = sc.hadoopFile[Text, Text, KeyValueTextInputFormat](inputFile).map{
+				case (x, y) => (x.toString, y.toString)}
+
+*******************************File Systems************************
+1) Local File System:
+	- While Spark supports loading files from the local file system
+	- it doesn’t require any setup, it requires that the files are available on all the nodes in your cluster.
+	- Ex: val rdd = sc.textFile("file:///home/holden/happypandas.gz")
+2) Amazon S3:
+	- S3 is an increasingly popular option for storing large amount of data.
+	- S3 is especially fast when our compute nodes are located inside of EC2.
+	- but can easily have much worse performance if we have to go over the public internet
+	- Spark will check the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables for your S3 credentials.
+3) HDFS:
+	- Spark and HDFS can be collocated on the same machines and Spark can take advantage of this data locality to avoid network overhead.
+	- Using Spark with HDFS is as simple as specifying hdfs://master:port/path for your input and output.
+
+******************************Compression*****************************
+- As we have already seen, Spark’s native input formats (textFile and SequenceFile) can automatically handle some types of compression for us.
+- When reading in compressed data, there are some compression codecs which can be used to automatically guess the compression type.
+- Compression Formats:
+	1) gzip:
+	- not splittable.
+	- compression speed is fast.
+	- effectiveness on text is high.
+	- access through org.apache.hadoop.io.compress.GzipCodec
+	- pure java(Native) based.
+	2) lzo:
+	- splittable.
+	- compression speed is very fast.
+	- effectiveness on text is medium.
+	- access through com.hadoop.compression.lzo.LzoCodec
+	- pure java(Native) based.
+	- LZO require installation on every worker node.
+	3) bzip2:
+	- splittable.
+	- compression speed is slow.
+	- effectiveness on text is very high 
+	- access through org.apache.hadoop.io.compress.BZip2Codec
+	- pure java(Native) based.
+	- Uses pure Java for splittable version.
+	4) zlib:
+	- Not splittable.
+	- compression speed is slow.
+	- effectiveness on text is medium.
+	- access through org.apache.hadoop.io.compress.DefaultCodec
+	- pure java(Native) based.
+	- Default compression codec for Hadoop
+	5) Snappy:
+	- Not splittable.
+	- compression speed is very fast.
+	- effectiveness on text is low.
+	- access through org.apache.hadoop.io.compress.SnappyCodec
+	- not pure java(Native) based.
+	- There is a pure java port of Snappy but it is not currently available in Spark/Haddop.
+
+******************Spark SQL************************
+1) Hive:
+	- To connect Spark SQL to an existing Hive installation, you need to provide a Hiveconfiguration.
+	- This is done by copying your hive-site.xml to Spark’s conf/ directory.
+	- Ex:
+		val hiveCtx = new org.apache.spark.sql.hive.HiveContext(sc)
+		val rows = hiveCtx.hql("SELECT key, value FROM src")
+		val keys = input.map(row => row.getInt(0))
+	- When loading data from Hive, Spark SQL supports any Hive-supported storage format, including text files, RCFiles, ORC, Parquet, Avro and Protocol Buffers.
+
+2) Parquet:
+	- Without a Hive installation, Spark SQL can also directly load data from Parquet files.
+	- Ex Loading:
+		rows = sqlCtx.parquetFile(parquetFile)
+		names = rows.map(lambda row: row.name)
+		print "Everyone"
+		print names.collect()
+	- We can also register a Parquet file as a Spark SQL table and write queries against Parquet data like with Hive.
+	- Ex:
+		tbl = rows.registerAsTable("people")
+		pandaFriends = sqlCtx.sql("SELECT name FROM people WHERE favouriteAnimal = \"panda\"")
+		print "Panda friends"
+		print pandaFriends.map(lambda row: row.name).collect()
+
+**********************Databases**************************
+1) Elasticsearch:
+	- Spark can both read and write data from Elasticsearch using ElasticSearch-Hadoop.
+	- Elasticsearch is a new open source Lucene based search system.
+	- Most of the connectors we have looked at so far have written out to files, this connector instead wraps RPCs to the Elasticsearch cluster.
+	- Scala Elastic Search Output Example
+		val jobConf = new JobConf(sc.hadoopConfiguration)
+		jobConf.set("mapred.output.format.class", "org.elasticsearch.hadoop.mr.EsOutputFormat")
+		jobConf.setOutputCommitter(classOf[FileOutputCommitter])
+		jobConf.set(ConfigurationOptions.ES_RESOURCE_WRITE, "twitter/tweets")
+		jobConf.set(ConfigurationOptions.ES_NODES, "localhost")
+		FileOutputFormat.setOutputPath(jobConf, new Path("-"))
+		output.saveAsHadoopDataset(jobConf)
+	- Scala Elastic Search Input Example
+		def mapWritableToInput(in: MapWritable): Map[String, String] = {
+		in.map{case (k, v) => (k.toString, v.toString)}.toMap
+		}
+
+		val jobConf = new JobConf(sc.hadoopConfiguration)
+		jobConf.set("mapred.output.format.class",
+		"org.elasticsearch.hadoop.mr.EsOutputFormat")
+		jobConf.set(ConfigurationOptions.ES_RESOURCE_READ, args(1))
+		jobConf.set(ConfigurationOptions.ES_NODES, args(2))
+		val currentTweets = sc.hadoopRDD(jobConf,
+		classOf[EsInputFormat[Object, MapWritable]], classOf[Object],
+		classOf[MapWritable])
+		// Extract only the map
+		// Convert the MapWritable[Text, Text] to Map[String, String]
+		val tweets = currentTweets.map{ case (key, value) => mapWritableToInput(value) }
+2) Mongo:
+	- 
+
+3) Java Database Connectivity (JDBC):
+	- In addition to using Hadoop input formats, you can create RDDs from JDBC queries.
+	- Unlike the other methods of loading data, rather than calling a method on the Spark Context we instead create an instance of org.apache.spark.rdd.JdbcRDD and provide it with our SparkContext and the other input data it requires.
+	- Scala JdbcRDD Example
+		def createConnection() = {
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		DriverManager.getConnection("jdbc:mysql://localhost/test?user=holden");
+		}
+		
+		def extractValues(r: ResultSet) = {
+		(r.getInt(1), r.getString(2))
+		}
+		val data = new JdbcRDD(sc,
+		createConnection, "SELECT * FROM panda WHERE ? <= id AND ID <= ?",
+		lowerBound = 1, upperBound = 3, numPartitions = 2, mapRow = extractValues)
+		println(data.collect().toList	
+
+4) HBase:
+	-
+
+5) Cassandra:
+	- Spark’s Cassandra support has improved greatly with the introduction of the open source Spark Cassandra connector from DataStax
+	- Since the connector is not currently part of Spark, you will need to add some additional dependencies to your build file.
+	- sbt requirements
+		"com.datastax.spark" %% "spark-cassandra-connector" % "1.0.0-rc5",
+		"com.datastax.spark" %% "spark-cassandra-connector-java" % "1.0.0-rc5"
+	- Maven requirements
+		<dependency> <!-- Cassandra -->
+			<groupId>com.datastax.spark</groupId>
+			<artifactId>spark-cassandra-connector</artifactId>
+			<version>1.0.0-rc5</version>
+		</dependency>
+		<dependency> <!-- Cassandra -->
+			<groupId>com.datastax.spark</groupId>
+			<artifactId>spark-cassandra-connector-java</artifactId>
+			<version>1.0.0-rc5</version>
+		</dependency>
+	- Much like with Elastic Search, the Cassandra connector reads a job property to determine which cluster to connect to.
+	- Scala set Cassandra property
+		val conf = new SparkConf(true).set("spark.cassandra.connection.host", "hostname")
+		val sc = new SparkContext(conf)
+		
+		val data = sc.cassandraTable("test" , "kv")
+		data.map(row => row.getInt("value")).stats()
+	- Scala save to Cassandra example
+		val rdd = sc.parallelize(List(Seq("moremagic", 1)))
+		rdd.saveToCassandra("test" , "kv", SomeColumns("key", "value"))

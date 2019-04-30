@@ -1,0 +1,39 @@
+*****************************************************************Scala Maps*****************************************************************
+- Scala map is a collection of key/value pairs. Any value can be retrieved based on its key
+- Keys are unique in the Map, but values need not be unique. 
+- Maps are also called Hash tables.
+- There are two kinds of Maps, the immutable and the mutable. 
+- The difference between mutable and immutable objects is that when an object is immutable, the object itself can't be changed.
+- By default, Scala uses the immutable Map.
+- If you want to use the mutable Map, you'll have to import scala.collection.mutable.Map class explicitly.
+- If you want to use both mutable and immutable Maps in the same, then you can continue to refer to the immutable Map as Map but you can refer to the mutable set as mutable.Map.
+Ex:
+	// Empty hash table whose keys are strings and values are integers:
+	var A:Map[Char,Int] = Map()
+
+	// A map with keys and values.
+	val colors = Map("red" -> "#FF0000", "azure" -> "#F0FFFF")
+	A + = ('I' -> 1)
+	A + = ('J' -> 5)
+	A + = ('K' -> 10)
+	A + = ('L' -> 100)
+
+- Operations on MAP
+	- Keys --> This method returns an iterable containing each key in the map.
+	- values --> This method returns an iterable containing each value in the map.
+	- isEmpty --> This method returns true if the map is empty otherwise false.
+
+- Concatenating Maps:
+	- You can use either ++ operator or Map.++() method to concatenate two or more Maps, but while adding Maps it will remove duplicate keys.
+	Ex:
+		val colors1 = Map("red" -> "#FF0000", "azure" -> "#F0FFFF", "peru" -> "#CD853F")
+		val colors2 = Map("blue" -> "#0033FF", "yellow" -> "#FFFF00", "red" -> "#FF0000")
+		// use two or more Maps with ++ as operator
+		var colors = colors1 ++ colors2
+		println( "colors1 ++ colors2 : " + colors )
+		// use two maps with ++ as method
+		colors = colors1.++(colors2)
+		println( "colors1.++(colors2)) : " + colors )
+
+- Map Methods:
+	

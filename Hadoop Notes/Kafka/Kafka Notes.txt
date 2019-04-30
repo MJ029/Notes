@@ -1,0 +1,184 @@
+**************************KAFKA NOTES**********************************
+
+- it is a distributed streaming platform.
+- Key capabilities
+	- Publish and subscribe to streams of records, similar to a message queue or enterprise messaging system.
+	- Store streams of records in a fault-tolerant durable way.
+	- Process streams of records as they occur.
+- Classes of Applications
+	- Building real-time streaming data pipelines that reliably get data between systems or applications
+	- Building real-time streaming applications that transform or react to the streams of data
+- Basic Concepts
+	- Kafka is run as a cluster on one or more servers that can span multiple datacenters.
+	- The Kafka cluster stores streams of records in categories called topics.
+	- Each record consists of a key, a value, and a timestamp.
+- four core APIs
+	- The Producer API allows an application to publish a stream of records to one or more Kafka topics. (producer to topic is one to many, one to one)
+	- The Consumer API allows an application to subscribe to one or more topics and process the stream of records produced to them. (Consumer to topic is Many to one, one to one)
+	- The Streams API allows an application to act as a stream processor, consuming an input stream from one or more topics and producing an output stream to one or more output topics, effectively transforming the input streams to output streams.
+	- The Connector API allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems. For example, a connector to a relational database might capture every change to a table.
+- Additional Features
+	- In Kafka the communication between the clients and the servers is done with a simple, high-performance, language agnostic TCP protocol. 
+	- backwards compatibility with older version. 
+
+Topics and Logs:
+	- Topics are also known as the core abstraction of Kafka.
+	- it is a category or feed name to which records are published.
+	- they are always multi-subscriber, means a topic can have zero, one, or many consumers that subscribe to the data written to it.
+	- For each topic, the Kafka cluster maintains a partitioned log and Each partition is an ordered, immutable sequence of records that is continually appended to—a structured commit log.
+	- The records in the partitions are each assigned a sequential id number called the offset that uniquely identifies each record within the partition.
+	- The Kafka cluster durably persists all published records—whether or not they have been consumed—using a configurable retention period.
+	- For example, if the retention policy is set to two days, then for the two days after a record is published, it is available for consumption, after which it will be discarded to free up space.
+	- Kafka's performance is effectively constant with respect to data size so storing data for a long time is not a problem.
+	- Kafka will create topic if not Exist.(It is configurable)
+
+Distribution
+	- The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. 
+	- Each partition is replicated across a configurable number of servers for fault tolerance.
+	- Each partition has one server which acts as the "leader" and zero or more servers which act as "followers".
+	- The leader handles all read and write requests for the partition while the followers passively replicate the leader. 
+	- If the leader fails, one of the followers will automatically become the new leader.
+	- Each server acts as a leader for some of its partitions and a follower for others so load is well balanced within the cluster.
+	
+Geo-Replication
+	- Kafka MirrorMaker provides geo-replication support for your clusters.
+	- With MirrorMaker, messages are replicated across multiple datacenters or cloud regions.
+	- You can use this in active/passive scenarios for backup and recovery
+	- or in active/active scenarios to place data closer to your users, or support data locality requirements.
+	
+Producers
+	- Producers publish data to the topics of their choice.
+	- The producer is responsible for choosing which record to assign to which partition within the topic.
+	- This can be done in a round-robin fashion simply to balance load or it can be done according to some semantic partition function (say based on some key in the record).
+
+Consumers
+	- Consumers label themselves with a consumer group name, and each record published to a topic is delivered to one consumer instance within each subscribing consumer group. 
+	- Consumer instances can be in separate processes or on separate machines.
+	- If all the consumer instances have the same consumer group, then the records will effectively be load balanced over the consumer instances.
+	- If all the consumer instances have different consumer groups, then each record will be broadcast to all the consumer processes.
+	- To Locate a message consumer needs to know the following 3 things --> TopicName, PartitionNumber & Offset Number
+	- Max number of Consumer in the Group = Total number of Partitions in the topic
+	- to avaid double reading of records Kafka wont allow multiple consumer to read the same partition.
+	Ex: 
+		- A two server Kafka cluster hosting four partitions (P0-P3) with two consumer groups. Consumer group A has two consumer instances and group B has four.
+		- More commonly, however, we have found that topics have a small number of consumer groups, one for each "logical subscriber". 
+		- Each group is composed of many consumer instances for scalability and fault tolerance
+		- This is nothing more than publish-subscribe semantics where the subscriber is a cluster of consumers instead of a single process.
+		- The way consumption is implemented in Kafka is by dividing up the partitions in the log over the consumer instances so that each instance is the exclusive consumer of a "fair share" of partitions at any point in time. 
+		- This process of maintaining membership in the group is handled by the Kafka protocol dynamically. 
+		- If new instances join the group they will take over some partitions from other members of the group; if an instance dies, its partitions will be distributed to the remaining instances.
+		- Kafka only provides a total order over records within a partition, not between different partitions in a topic. 
+		
+Multi-tenancy
+	- You can deploy Kafka as a multi-tenant solution.
+	- Multi-tenancy is enabled by configuring which topics can produce or consume data. 
+	- There is also operations support for quotas. 
+
+Guarantees
+	- Messages sent by a producer to a particular topic partition will be appended in the order they are sent. 
+	Ex: That is, if a record M1 is sent by the same producer as a record M2, and M1 is sent first, then M1 will have a lower offset than M2 and appear earlier in the log.
+	- A consumer instance sees records in the order they are stored in the log.
+	- For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any records committed to the log.
+	
+Kafka as a Messaging System
+	- Messaging traditionally has two models: queuing and publish-subscribe.
+	- Queuing: In a queue, a pool of consumers may read from a server and each record goes to one of them
+	- publish/subscribe: in publish-subscribe the record is broadcast to all consumers. 
+	- Each of these two models has a strength and a weakness. 
+	- The strength of queuing is that it allows you to divide up the processing of data over multiple consumer instances, which lets you scale your processing. Unfortunately, queues aren't multi-subscriber—once one process reads the data it's gone. 
+	- Publish-subscribe allows you broadcast data to multiple processes, but has no way of scaling processing since every message goes to every subscriber.
+	
+	- The consumer group concept in Kafka generalizes these two concepts.
+	- As with a queue the consumer group allows you to divide up processing over a collection of processes (the members of the consumer group).
+	- As with publish-subscribe, Kafka allows you to broadcast messages to multiple consumer groups.
+	
+	- The advantage of Kafka's model is that every topic has both these properties—it can scale processing and is also multi-subscriber—there is no need to choose one or the other.
+	
+	- Kafka has stronger ordering guarantees than a traditional messaging system, too.
+
+Kafka as a Storage System
+	- Any message queue that allows publishing messages decoupled from consuming them is effectively acting as a storage system for the in-flight messages. 
+	- What is different about Kafka is that it is a very good storage system.
+	- Data written to Kafka is written to disk and replicated for fault-tolerance. Kafka allows producers to wait on acknowledgement so that a write isn't considered complete until it is fully replicated and guaranteed to persist even if the server written to fails.
+	- The disk structures Kafka uses scale well—Kafka will perform the same whether you have 50 KB or 50 TB of persistent data on the server.
+
+Kafka for Stream Processing
+	- It isn't enough to just read, write, and store streams of data, the purpose is to enable real-time processing of streams.
+	- In Kafka a stream processor is anything that takes continual streams of data from input topics, performs some processing on this input, and produces continual streams of data to output topics.
+	- It is possible to do simple processing directly using the producer and consumer APIs. However for more complex transformations Kafka provides a fully integrated Streams API. This allows building applications that do non-trivial processing that compute aggregations off of streams or join streams together.
+	- This facility helps solve the hard problems this type of application faces: handling out-of-order data, reprocessing input as code changes, performing stateful computations, etc.
+	- The streams API builds on the core primitives Kafka provides: it uses the producer and consumer APIs for input, uses Kafka for stateful storage, and uses the same group mechanism for fault tolerance among the stream processor instances
+	
+
+Kafka UseCases:
+	- Messaging
+	- Website Activity Tacking
+	- Metrics
+	- Log Aggrigation
+	- Stream Processing
+	- Event Sourcing
+	- Commit Log's
+
+	
+Notes:
+1) to check the list of running topics in Kafka cluster	
+	bin/kafka-topics.sh --list --zookeeper localhost:2181
+2) to create a topic
+	kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+3) to create a producer
+	kafka-console-producer.bat --broker-list localhost:9092 --topic test
+4) to start a consumer
+	kafka-console-consumer.bat --zookeeper localhost:2181 --topic test
+5) Setting up a multi-broker cluster
+	cp config/server.properties config/server-1.properties
+	Ex:
+	config/server-1.properties:
+    broker.id=1
+    listeners=PLAINTEXT://:9093
+    log.dir=/tmp/kafka-logs-1
+	
+	cp config/server.properties config/server-2.properties
+	Ex:
+	config/server-2.properties:
+    broker.id=2
+    listeners=PLAINTEXT://:9094
+    log.dir=/tmp/kafka-logs-2
+	
+	- The broker.id property is the unique and permanent name of each node in the cluster.
+	- We have to override the port and log directory only because we are running these all on the same machine and we want to keep the brokers from all trying to register on the same port or overwrite each other's data.
+	- just need to start the two new nodes
+		bin/kafka-server-start.sh config/server-1.properties &
+		bin/kafka-server-start.sh config/server-2.properties &
+	- create a new topic with replication factor - 3
+		 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 3 --partitions 1 --topic my-replicated-topic
+	- Okay but now that we have a cluster how can we know which broker is doing what?
+		bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic
+			Topic:my-replicated-topic   PartitionCount:1    ReplicationFactor:3 Configs:
+			Topic: my-replicated-topic  Partition: 0    Leader: 1   Replicas: 1,2,0 Isr: 1,2,0
+	- "leader" is the node responsible for all reads and writes for the given partition. Each node will be the leader for a randomly selected portion of the partitions.
+	- "replicas" is the list of nodes that replicate the log for this partition regardless of whether they are the leader or even if they are currently alive.
+	- "isr" is the set of "in-sync" replicas. This is the subset of the replicas list that is currently alive and caught-up to the leader.
+	- publish a few messages to our new topic
+		bin/kafka-console-producer.sh --broker-list localhost:9092 --topic my-replicated-topic
+	- consume these messages
+		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
+	- Now let's test out fault-tolerance. Broker 1 was acting as the leader so let's kill it
+		Linux:
+			ps aux | grep server-1.properties
+			kill -9 7564
+		Windows:
+			 wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
+			 taskkill /pid 6016 /f
+	- Leadership has switched to one of the slaves and node 1 is no longer in the in-sync replica set
+		bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic my-replicated-topic
+			Topic:my-replicated-topic   PartitionCount:1    ReplicationFactor:3 Configs:
+			Topic: my-replicated-topic  Partition: 0    Leader: 2   Replicas: 1,2,0 Isr: 2,0
+	- But the messages are still available for consumption even though the leader that took the writes originally is down
+		bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --from-beginning --topic my-replicated-topic
+	- to subscribe all the topics using Consumer API
+		consumer.subscribe(Pattern.compile("test.*"));
+	- Kafka Avro Producer 
+		https://www.youtube.com/watch?v=_6HTHH1NCK0&feature=youtu.be
+		
+		
+	

@@ -1,0 +1,168 @@
+****************************************************Kafka Configurations*******************************************
+- Kafka uses key-value pairs in the property file format for configuration. 
+- These values can be supplied either from a file or programmatically.
+
+- Broker Configs:
+	- The essential configurations are the following:
+			- broker.id
+			- log.dirs
+			- zookeeper.connect
+			- broker port should be different in case of same machine, if it is in different machine no need to change.
+		- more info can be found at: kafka.server.KafkaConfig
+		- From Kafka version 1.1 onwards, some of the broker configs can be updated without restarting the broker. See the Dynamic Update Mode column in Broker Configs for the update mode of each broker config.
+			- read-only: Requires a broker restart for update
+			- per-broker: May be updated dynamically for each broker
+			- cluster-wide: May be updated dynamically as a cluster-wide default. May also be updated as a per-broker value for testing.
+		- Ex To alter the current broker configs for broker id 0 (for example, the number of log cleaner threads):
+			bin/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-name 0 --alter --add-config log.cleaner.threads=2
+		- Ex To describe the current dynamic broker configs for broker id 0:
+			bin/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-name 0 --describe
+		- To delete a config override and revert to the statically configured or default value for broker id 0 (for example, the number of log cleaner threads):
+			bin/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-name 0 --alter --delete-config log.cleaner.threads
+		-  For example, to update log cleaner threads on all brokers (Some configs may be configured as a cluster-wide default to maintain consistent values across the whole cluster. All brokers in the cluster will process the cluster default update).
+			bin/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-default --alter --add-config log.cleaner.threads=2
+		- To describe the currently configured dynamic cluster-wide default configs:
+			bin/kafka-configs.sh --bootstrap-server localhost:9092 --entity-type brokers --entity-default --describe
+	- Updating Password Configs Dynamically
+		- Password config values that are dynamically updated are encrypted before storing in ZooKeeper.
+		- The broker config password.encoder.secret must be configured in server.properties to enable dynamic update of password configs.
+		- The secret may be different on different brokers.
+		- The secret used for password encoding may be rotated with a rolling restart of brokers.
+		- The old secret used for encoding passwords currently in ZooKeeper must be provided in the static broker config password.encoder.old.secret and the new secret must be provided in password.encoder.secret
+		- All dynamic password configs stored in ZooKeeper will be re-encoded with the new secret when the broker starts up.
+		- In Kafka 1.1.x, all dynamically updated password configs must be provided in every alter request when updating configs using kafka-configs.sh even if the password config is not being altered. This constraint will be removed in a future release.
+		
+	- Updating SSL Keystore of an Existing Listener
+		- Brokers may be configured with SSL keystores with short validity periods to reduce the risk of compromised certificates. 
+		- Keystores may be updated dynamically without restarting the broker.
+		- The config name must be prefixed with the listener prefix listener.name.{listenerName}.
+		- so that only the keystore config of a specific listener is updated. 
+		- The following configs may be updated in a single alter request at per-broker level:
+			- ssl.keystore.type
+			- ssl.keystore.location
+			- ssl.keystore.password
+			- ssl.key.password
+		- If the listener is the inter-broker listener, the update is allowed only if the new keystore is trusted by the truststore configured for that listener. 
+		- For other listeners, no trust validation is performed on the keystore by the broker. 
+		- Certificates must be signed by the same certificate authority that signed the old certificate to avoid any client authentication failures.
+
+	- Updating Default Topic Configuration
+		- Default topic configuration options used by brokers may be updated without broker restart.
+		- The configs are applied to topics without a topic config override for the equivalent per-topic config.
+		- One or more of these configs may be overridden at cluster-default level used by all brokers.
+			log.segment.bytes
+			log.roll.ms
+			log.roll.hours
+			log.roll.jitter.ms
+			log.roll.jitter.hours
+			log.index.size.max.bytes
+			log.flush.interval.messages
+			log.flush.interval.ms
+			log.retention.bytes
+			log.retention.ms
+			log.retention.minutes
+			log.retention.hours
+			log.index.interval.bytes
+			log.cleaner.delete.retention.ms
+			log.cleaner.min.compaction.lag.ms
+			log.cleaner.min.cleanable.ratio
+			log.cleanup.policy
+			log.segment.delete.delay.ms
+			unclean.leader.election.enable
+			min.insync.replicas
+			max.message.bytes
+			compression.type
+			log.preallocate
+			log.message.timestamp.type
+			log.message.timestamp.difference.max.ms
+		- In Kafka version 1.1.x, changes to unclean.leader.election.enable take effect only when a new controller is elected. Controller re-election may be forced by running: 
+			bin/zookeeper-shell.sh localhost
+			rmr /controller
+
+	- Updating Log Cleaner Configs
+		- Log cleaner configs may be updated dynamically at cluster-default level used by all brokers. 
+		- The changes take effect on the next iteration of log cleaning.
+		- One or more of these configs may be updated:
+			log.cleaner.threads
+			log.cleaner.io.max.bytes.per.second
+			log.cleaner.dedupe.buffer.size
+			log.cleaner.io.buffer.size
+			log.cleaner.io.buffer.load.factor
+			log.cleaner.backoff.ms
+
+	- Updating Thread Configs
+		- The size of various thread pools used by the broker may be updated dynamically at cluster-default level used by all brokers.
+		- Updates are restricted to the range currentSize / 2 to currentSize * 2 to ensure that config updates are handled gracefully.
+			num.network.threads
+			num.io.threads
+			num.replica.fetchers
+			num.recovery.threads.per.data.dir
+			log.cleaner.threads
+			background.threads
+
+	- Adding and Removing Listeners
+		- Listeners may be added or removed dynamically.
+		- When a new listener is added, security configs of the listener must be provided as listener configs with the listener prefix listener.name.{listenerName}.
+		- If the new listener uses SASL, the JAAS configuration of the listener must be provided using the JAAS configuration property sasl.jaas.config with the listener and mechanism prefix.
+		
+		- In Kafka version 1.1.x, the listener used by the inter-broker listener may not be updated dynamically. 
+		- To update the inter-broker listener to a new listener, the new listener may be added on all brokers without restarting the broker. 
+		- A rolling restart is then required to update 
+			inter.broker.listener.name.
+		- In addition to all the security configs of new listeners, the following configs may be updated dynamically at per-broker level:
+			listeners
+			advertised.listeners
+			listener.security.protocol.map
+		- Inter-broker listener must be configured using the static broker configuration 
+			inter.broker.listener.name 
+			or 
+			inter.broker.security.protocol
+			
+	- Important Configurations from Learning Jounal Youtube blog
+		broker.id
+		port
+		log.dirs
+		zookeeper.connect
+		delete.topic.enable --> Not recommended in PRD
+		auto.create.topics.enable --> Not recommended in PRD
+		default.replication.factor --> Effective when Auto crete topic is enabled / or creatin topic without specifying the property.
+		num.partitions --> Effective when Auto crete topic is enabled / or creatin topic without specifying the property.
+		log.retention.ms --> how long a data should keept in Server (Default 7 Days)
+		log.retention.bytes --> how max i can keep data(applicable by partition level/ Not Topic level)
+	
+- Topic-Level Configs
+	- Configurations pertinent to topics have both a server default as well an optional per-topic override.
+	- If no per-topic configuration is given the server default is used. 
+	- The override can be set at topic creation time by giving one or more --config options. 
+	- Ex: creates a topic named my-topic with a custom max message size and flush rate
+		bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic my-topic --partitions 1 --replication-factor 1 --config max.message.bytes=64000 --config flush.messages=1
+	- Overrides can also be changed or set later using the alter configs command. 
+	- Ex: updates the max message size for my-topic
+		bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type topics --entity-name my-topic --alter --add-config max.message.bytes=128000
+	- To describe the topic Information
+		bin/kafka-configs.sh --zookeeper localhost:2181 --entity-type topics --entity-name my-topic --describe
+	- To remove an override
+		bin/kafka-configs.sh --zookeeper localhost:2181  --entity-type topics --entity-name my-topic --alter --delete-config max.message.bytes
+	- The server's default configuration for this property is given under the Server Default Property heading.
+	- A given server default config value only applies to a topic if it does not have an explicit topic config override.
+
+- Producer Configs 
+	- Excel
+
+- Consumer Configs 
+	- In 0.9.0.0 we introduced the new Java consumer as a replacement for the older Scala-based simple and high-level consumers. 
+	- The configs for both new and old consumers are described below.
+	- Old Consumer Configs:
+		- group.id
+		- zookeeper.connect
+	- More details about consumer configuration can be found in the scala class kafka.consumer.ConsumerConfig
+
+- Kafka Connect Configs
+	- Excel
+	
+- Kafka Streams Configs
+	- Excel
+
+- AdminClient Configs
+	- Excel
+	

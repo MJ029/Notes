@@ -1,0 +1,63 @@
+****************************SQOOP*******************************
+1) A tool used to perform Bulk data upload from Relational database to Hadoop Ecosystem.
+2) incremental data loading is also possible sing Sqoop.
+3) and also transfer data from Hadoop ecosystem to relational database too.
+4) developed by cludeodera.
+5) internally uses MR to transfer data.
+6) Sqoop is purely a map only job.
+7) can integrate with Hive and Hbase.
+8) sqoop import and export
+	Import: sqoop import \ --connect jdbs:sqlserver://ip_address:port\Database --table <table_name> --username <User_Name> --password <password> -m <number of mappers to run> --target-dir <target directory>.
+	Export:  
+9) File formats:
+	1) Delimited.
+		default file format, explicitly as --as-textfile.
+		default delimiter are comma(,) for fields and (\n) for new line.
+	2) Sequence File.
+		specify as --as-sequencefile
+10) Export cannot be done using HBase.
+******************************Configuration*****************************
+1) Include the following in .bashrc filw an compile it.
+	export SQOOP_HOME=/home/mj/sqoop-
+2) Include the HDFS path in conf file.
+	export HADOO_HOME=/home/mj/hadoop-1.2.1
+3) Download the needed connector jars for the Vendors and deploy it in the following folder.
+	SQOOP_HOME/lib
+
+**************************Commands********************************
+some important used commands.
+1) create-hive-table -> to import the ta ble definition from Relational data abse to Hive.
+	bin/sqoop import --connect jdbs:mysql://master1/hivemetastore --username root --password iamadmin --tbale TBLS --hive-table hive_table1 --create-hive-table --hive-import -m 1
+2) hbase-createtable -> to create the table definition from RDBMS to HDFS.
+	bin/sqoop import --connect jdbc:mysql://master1/hivemetastore --username root --password iamadmin --table TBLS --hbase-table HBAse_table1 --column-family cf1 --hbase-row-key col1 --hbase-createtable -m 1
+2) Eval -> to run the fiven SQL statement and display the result.
+	1) Mysql
+		bin/sqoop eval --connect jdbc:mysql://master1/hivemetastore -username root -password iamadmin --query"select * from TBLS"
+	2) sql server
+		
+	3) Oracle
+
+3) import -> imports table from RDBMS to HDFS.
+	bin/sqoop import --connect jdbc:mysql://master1/hivemetastore --username root --password iamadmin --table TBLS -m 1
+	bin/sqoop import --connect jdbc:mysql://master1/hivemetastore --username root --password iamadmin --table TBLS --split-by column name(tableid) -m 2
+	bin/sqoop import --connect jdbc:mysql://master1/hivemetastore --username root --password iamadmin --table TBLS --target-dir /User/Output -m 1
+	bin/sqoop import --connect jdbc:mysql://master1/hivemetastore --username root --password iamadmin --query 'select * from table1 where status = "M"' -m 2 --target-dir '/target-dir'
+4) Import-all-tables -> imports all tables from RDBMS to HDFS.
+	bin/sqoop import-all-tbales --connect jdbs:mysql://master1/hivemetastore -username root -password iamadmin -m 1
+5) export -> exports data from HDFS to a RDBMS database.
+from HDFS:	bin/sqoop export --connect jdbs:mysql://master1/hivemetastore --username root --password iamadmin --tbale TBLS --export-dir /output1/tbl1
+from Hive: 	bin/sqoop export --connect jdbc:mysql://master1/hivemetastore --table table1 --export-dir /user/hive/output1 --username root --password iamadmin -m 1
+6) list-databases -> to list all the databases in RDBMS	
+	bin/sqoop list-databases --connect jdbc:mysql://master1/information_schema -username root -password iamadmin
+7) list-tables -> to list all tables in RDBMS.
+	bin/sqoop list-tables --connect jdbc:mysql://master1/information_schema -username root -password iamadmin		
+
+
+Some extra commands:
+1) To prepare java code of the current statement:
+	bin/sqoop codegen --connect jdbc:mysql://master1/hivemetastore --table TBLS --username root --password iamadmin --output-dir '/home/mj/code_output' --bin-dir '/home/mj/code_output'
+2) To prepare JAR File:
+	bin/sqoop codegen --connect jdbc:mysql://master1/hovemetastore --table TBLS --username root --password iamadmin --output-dir '/home/mj/codegen_jar' --bin-dir '/home/mj/codegen_jar' --package-name org.Sqoop.Test_table_1
+	
+3) option 
+	bin/sqoop --options-file '/home/mj/options' --target-dir '/home/mj/out' --where column15="AC";

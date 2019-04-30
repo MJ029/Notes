@@ -1,0 +1,151 @@
+*******************************************************Python Lists*******************************************
+- The most basic data structure in Python is the sequence.
+- Each element of a sequence is assigned a number - its position or index.
+- The first index is zero, the second index is one, and so forth.
+- Python has six built-in types of sequences, but the most common ones are lists and tuples, which we would see in this tutorial.(str, unicode, list, tuple, buffer, xrange)
+- There are certain things you can do with all sequence types.
+- These operations include indexing, slicing, adding, multiplying, and checking for membership.
+- In addition, Python has built-in functions for finding the length of a sequence and for finding its largest and smallest elements.
+- The list is a most versatile datatype available in Python which can be written as a list of comma-separated values (items) between square brackets. 
+- Important thing about a list is that items in a list need not be of the same type.
+- Creating a list is as simple as putting different comma-separated values between square brackets.
+	Ex:
+		list1 = ['physics', 'chemistry', 1997, 2000];
+		list2 = [1, 2, 3, 4, 5 ];
+		list3 = ["a", "b", "c", "d"]
+- Accessing Values in Lists:
+	- To access values in lists, use the square brackets for slicing along with the index or indices to obtain value available at that index. 
+	Ex:
+		list1 = ['physics', 'chemistry', 1997, 2000];
+		list2 = [1, 2, 3, 4, 5, 6, 7 ];
+		print "list1[0]: ", list1[0]
+		print "list2[1:5]: ", list2[1:5]
+- Updating Lists:
+	- You can update single or multiple elements of lists by giving the slice on the left-hand side of the assignment operator, and you can add to elements in a list with the append() method.
+	Ex:
+		list = ['physics', 'chemistry', 1997, 2000];
+		print "Value available at index 2 : "
+		print list[2]
+		list[2] = 2001;
+		print "New value available at index 2 : "
+		print list[2]
+- Delete List Elements:
+	- To remove a list element, you can use either the del statement if you know exactly which element(s) you are deleting or the remove() method if you do not know.
+	Ex:
+		list1 = ['physics', 'chemistry', 1997, 2000];
+		print list1
+		del list1[2];
+		print "After deleting value at index 2 : "
+		print list1
+- Basic List Operations:
+	Lists respond to the + and * operators much like strings; they mean concatenation and repetition here too, except that the result is a new list, not a string.
+	Python Expression					Results								Description
+	len([1, 2, 3])						3									Length
+	[1, 2, 3] + [4, 5, 6]				[1, 2, 3, 4, 5, 6]					Concatenation
+	['Hi!'] * 4							['Hi!', 'Hi!', 'Hi!', 'Hi!']		Repetition
+	3 in [1, 2, 3]						True								Membership
+	for x in [1, 2, 3]: print x,		1 2 3								Iteration
+- Indexing, Slicing, and Matrixes:
+	Python Expression				Results				Description
+		L[2]						'SPAM!'				Offsets start at zero
+		L[-2]						'Spam'				Negative: count from the right
+		L[1:]					['Spam', 'SPAM!']		Slicing fetches sections
+- List Functions & Methods:
+	- cmp(list1, list2):
+		- The method cmp() compares elements of two lists.
+		- If elements are of the same type, perform the compare and return the result. 
+		- If elements are different types, check to see if they are numbers.
+			- If numbers, perform numeric coercion if necessary and compare.
+			- If either element is a number, then the other element is "larger" (numbers are "smallest").
+			- Otherwise, types are sorted alphabetically by name.
+		- If we reached the end of one of the lists, the longer list is "larger."
+		- If we exhaust both lists and share the same data, the result is a tie, meaning that 0 is returned.
+		Ex:
+			list1, list2 = [123, 'xyz'], [456, 'abc']
+			print cmp(list1, list2)
+			print cmp(list2, list1)
+			list3 = list2 + [786];
+			print cmp(list2, list3)
+	- len(list):
+		The method len() returns the number of elements in the list.
+		Ex:
+			list1, list2 = [123, 'xyz', 'zara'], [456, 'abc']
+			print "First list length : ", len(list1)
+			print "Second list length : ", len(list2)
+	- max(list):
+		The method max returns the elements from the list with maximum value.
+		Ex:
+			list1, list2 = [123, 'xyz', 'zara', 'abc'], [456, 700, 200]
+			print "Max value element : ", max(list1)
+			print "Max value element : ", max(list2)
+	- min(list):
+		The method min() returns the elements from the list with minimum value.
+		Ex:
+			list1, list2 = [123, 'xyz', 'zara', 'abc'], [456, 700, 200]
+			print "min value element : ", min(list1)
+			print "min value element : ", min(list2)
+	- list():
+		- The method list() takes sequence types and converts them to lists. 
+		- This is used to convert a given tuple into list.
+		- Tuple are very similar to lists with only difference that element values of a tuple can not be changed and tuple elements are put between parentheses instead of square bracket.
+		Ex:
+			aTuple = (123, 'xyz', 'zara', 'abc');
+			aList = list(aTuple)
+			print "List elements : ", aList
+	- append(obj):
+		The method append() appends a passed obj into the existing list.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc'];
+			aList.append( 2009 );
+			print "Updated List : ", aList
+	- remove(obj):
+		This is the object to be removed from the list.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc', 'xyz'];
+			aList.remove('xyz');
+			print "List : ", aList
+			aList.remove('abc');
+			print "List : ", aList
+	- insert(seq, obj):
+		The method insert() inserts object obj into list at offset index.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc']
+			aList.insert( 3, 2009)
+			print "Final List : ", aList
+	- pop(index):
+		The method pop() removes and returns last object or obj from the list.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc'];
+			print "A List : ", aList.pop()
+			print "B List : ", aList.pop(2)
+	- index(obj):
+		The method index() returns the lowest index in list that obj appears.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc'];
+			print "Index for xyz : ", aList.index( 'xyz' ) 
+			print "Index for zara : ", aList.index( 'zara' ) 
+	- Count(list):
+		The method count() returns count of how many times obj occurs in list.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc', 123];
+			print "Count for 123 : ", aList.count(123)
+			print "Count for zara : ", aList.count('zara')
+	- extend(seq):
+		The method extend() appends the contents of seq to list.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc', 123];
+			bList = [2009, 'manni'];
+			aList.extend(bList)
+			print "Extended List : ", aList 
+	- reverse():	
+		The method reverse() reverses objects of list in place.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc', 'xyz'];
+			aList.reverse();
+			print "List : ", aList
+	- sort():
+		The method sort() sorts objects of list, use compare func if given.
+		Ex:
+			aList = [123, 'xyz', 'zara', 'abc', 'xyz'];
+			aList.sort();
+			print "List : ", aList

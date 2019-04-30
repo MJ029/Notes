@@ -1,0 +1,30 @@
+***********************************Installing Maven in Windows 10*************************************
+- Download the Required packges for the following
+	- JDK 1.8 or latest
+	- Maven 3.6 or latest
+- Install/Unzip Java and Maven under Accessble Directory
+- Add JAVA_HOME and MAVEN_HOME in to Environmental Variable for your account
+- add the following in path in Environmental Variable for your account
+	- %JAVA_HOME%\bin
+	- %MAVEN_HOME%\bin
+- Verify JAVA installation in cmd using following
+	java -version
+	
+	output:
+	java version "1.8.0_191"
+	Java(TM) SE Runtime Environment (build 1.8.0_191-b12)
+	Java HotSpot(TM) 64-Bit Server VM (build 25.191-b12, mixed mode)
+	
+- Verify maven installation using the following
+	mvn -version
+	
+	Output:
+	Apache Maven 3.3.9 (xxxxx; 2015-11-10T22:11:47+05:30)
+	Maven home: C:\Users\mj\Documents\Environment\maven
+	Java version: 1.8.0_112, vendor: Oracle Corporation
+	Java home: C:\Users\mj\Documents\Environment\jdk1.8.0_112\jre
+	Default locale: en_US, platform encoding: Cp1252
+	OS name: "windows 10", version: "10.0", arch: "amd64", family: "dos"
+	
+Ref:
+	https://www.mkyong.com/maven/how-to-install-maven-in-windows/

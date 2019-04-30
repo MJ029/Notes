@@ -1,0 +1,41 @@
+**********************************************************Notes*****************************************************
+- Approximate computing:
+	- Approximate computing is a computation technique which returns a possibly inaccurate result rather than a guaranteed accurate result, and can be used for applications where an approximate result is sufficient for its purpose.
+	- Examples: 
+		- In simple Approximate computing has been used in a variety of domains where the applications are error-tolerant
+			- Search Engine: In Search Engine there is no exact answer may exist for a certain search query and hence, many answers may be acceptable.
+			- Multimedia Processing: occasional dropping of some frames in a video application can go undetected due to perceptual limitations of humans. 
+	- Approximate computing is based on the observation that in many scenarios, although performing exact computation requires large amount of resources, allowing bounded approximation can provide disproportionate gains in performance and energy, while still achieving acceptable result accuracy.
+	- Ex:
+		- k-means clustering algorithm, allowing only 5% loss in classification accuracy can provide 50 times energy saving compared to the fully accurate classification.
+	- Software-level approximation:
+		- There are several ways to approximate at software level.
+			- Memoization can be applied. 
+			- Some iterations of loops can be skipped (termed as loop perforation) to achieve a result faster.
+			- Some tasks can also be skipped [example: when a run-time condition suggests that those tasks are not going to be useful]
+	- Application Areas:
+		- Approximate computing has been used in a variety of domains where the applications are error-tolerant, such as multimedia processing, machine learning, signal processing, scientific computing, etc. Google is using this approach in their Tensor processing units (TPU, a custom ASIC).
+	- Drawbacks:
+		- The main issue in approximate computing is the identification of the section of the application that can be approximated.
+		- In the case of large scale applications, it is very common to find people holding the expertise on approximate computing techniques not having enough expertise on the application domain
+		- In order to solve this problem, programming paradigms[13][14] have been proposed.
+		- They all have in common the clear role separation between application programmer and application domain expert. 
+		- These approaches allow the spread of the most common optimizations and approximate computing techniques.
+		
+- Memoization:
+	- In computing, memoization or memoisation is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again.
+	- Memoization has also been used in other contexts (and for purposes other than speed gains), such as in simple mutually recursive descent parsing
+	- Although related to caching, memoization refers to a specific case of this optimization, distinguishing it from forms of caching such as buffering or page replacement.
+	- In Simple Terms Memoization is known as "The result of a computation with a given set of inputs is stored in memory so it can be reused next time, skipping actual execution"
+	- In the context of some logic programming languages, memoization is also known as "tabling" and "lookup table"
+	
+	- A memoized function "remembers" the results corresponding to some set of specific inputs. Subsequent calls with remembered inputs return the remembered result rather than recalculating it, thus eliminating the primary cost of a call with given parameters from all but the first call made to the function with those parameters.
+	- The set of remembered associations may be a fixed-size set controlled by a replacement algorithm or a fixed set, depending on the nature of the function and its use.
+	- A function can only be memoized if it is referentially transparent; that is, only if calling the function has exactly the same effect as replacing that function call with its return value
+	- While related to lookup tables, since memoization often uses such tables in its implementation, memoization populates its cache of results transparently on the fly, as needed, rather than in advance.
+	
+	- Memoization is a way to lower a function's time cost in exchange for space cost; that is, memoized functions become optimized for speed in exchange for a higher use of computer memory space. 
+	- The time/space "cost" of algorithms has a specific name in computing: computational complexity. 
+	- All functions have a computational complexity in time (i.e. they take time to execute) and in space.
+	- memoization is a run-time rather than compile-time optimization.
+	- 

@@ -1,0 +1,4 @@
+*******************************************Anaconda Command line Options******************************
+1) to install openCV in Anaconda
+	conda install -c menpo opencv
+	

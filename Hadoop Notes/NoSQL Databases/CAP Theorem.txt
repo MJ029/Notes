@@ -1,0 +1,49 @@
+*******************************************************CAP Theorem*******************************************************
+- The CAP theorem is a tool used to makes system designers aware of the trade-offs while designing networked shared-data systems.
+- CAP has influenced the design of many distributed data systems.
+- It made designers aware of a wide range of tradeoffs to consider while designing distributed data systems.
+- What is CAP Theorem:
+	The CAP theorem applies to distributed systems that store state. 
+- Eric Brewer, at the 2000 Symposium on Principles of Distributed Computing (PODC), conjectured that in any networked shared-data system there is a fundamental trade-off between consistency, availability, and partition tolerance.
+- In 2002, Seth Gilbert and Nancy Lynch of MIT published a formal proof of Brewer's conjecture.
+- The theorem states that networked shared-data systems can only guarantee/strongly support two of the following three properties:
+	Consistency:
+		- A guarantee that every node in a distributed cluster returns the same, most recent, successful write.
+		- Consistency refers to every client having the same view of the data. 
+		- There are various types of consistency models. Consistency in CAP (used to prove the theorem) refers to linearizability or sequential consistency, a very strong form of consistency.
+	Availability:
+		- Every non-failing node returns a response for all read and write requests in a reasonable amount of time. 
+		- The key word here is every. To be available, every node on (either side of a network partition) must be able to respond in a reasonable amount of time.
+	Partition Tolerant:
+		- The system continues to function and upholds its consistency guarantees in spite of network partitions. 
+		- Network partitions are a fact of life. 
+		- Distributed systems guaranteeing partition tolerance can gracefully recover from partitions once the partition heals.
+Note:
+	- The C and A in ACID represent different concepts than C and in A in the CAP theorem.
+
+- in simple terms
+	Availability:
+		Each User can always Read and Write
+	Consistency:
+		All users always have same view of data
+	Partition Tolerant:
+		The system continues to operate despite an arbitary number of messages beging dropped
+
+- The CAP theorem categorizes systems into three categories:
+	CP (Consistent and Partition Tolerant):
+		here --> Availability is achieved by replicating the data across different machines.
+		DataBases in Realtime:
+			HBase, MongoDB, Redis, MamcacheDB, Big-Table like Systems
+		
+	CA (Consistent and Available):
+		here --> Total partitioning, meaning failure of part of the system is rare. However, we could look at a delay, a latency, of the update between nodes, as a temporary partitioning. 
+		DataBases in Realtime:
+			Traditional  Relational databases like PostgreSQL, MySQL and etc...
+			
+	AP (Available and Partition Tolerant):
+		here --> Consistency is achieved by updating several nodes before allowing further reads 
+		DataBases in Realtime:
+			Voldemort, Riak, Cassandra, CouchDB, Dynamo-like systems
+			
+Reference:
+	CAP Theoram.png

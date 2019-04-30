@@ -1,0 +1,37 @@
+******************************************************************Python Date and Time***********************************************
+- A Python program can handle date and time in several ways.
+- Converting between date formats is a common chore for computers. 
+- Python's time and calendar modules help track dates and times.
+- Time intervals are floating-point numbers in units of seconds.
+- Particular instants in time are expressed in seconds since 12:00am, January 1, 1970(epoch).
+- There is a popular time module available in Python which provides functions for working with times, and for converting between representations.
+- The function time.time() returns the current system time in ticks since 12:00am, January 1, 1970(epoch).
+- Ex:
+	import time;  # This is required to include time module.
+	ticks = time.time()
+	print "Number of ticks since 12:00am, January 1, 1970:", ticks
+- What is TimeTuple?
+	attribute		Index	Field					Values
+	tm_year			0		4-digit year			2008
+	tm_mon			1		Month					1 to 12
+	tm_mday			2		Day						1 to 31
+	tm_hour			3		Hour					0 to 23
+	tm_min			4		Minute					0 to 59
+	tm_sec			5		Second					0 to 61 (60 or 61 are leap-seconds)
+	tm_wday			6		Day of Week				0 to 6 (0 is Monday)
+	tm_yday			7		Day of year				1 to 366 (Julian day)
+	tm_isdst		8		Daylight savings		-1, 0, 1, -1 means library determines DST
+- Getting current time:
+	import time;
+	localtime = time.localtime(time.time())
+	print "Local current time :", localtime
+- Getting formatted time:
+	import time;
+	localtime = time.asctime( time.localtime(time.time()) )
+	print "Local current time :", localtime
+- Getting calendar for a month
+	import calendar
+	cal = calendar.month(2008, 1)
+	print "Here is the calendar:"
+	print cal
+- 

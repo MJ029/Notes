@@ -1,0 +1,277 @@
+*******************************************************Python Numbers*******************************************
+- Number data types store numeric values. 
+- They are immutable data types, means that changing the value of a number data type results in a newly allocated object.
+- Number objects are created when you assign a value to them.
+- Ex:
+	var1 = 1
+	var2 = 10
+- You can also delete the reference to a number object by using the del statement.
+	del var
+	del var_a, var_b
+- Python supports four different numerical types:
+	- int (signed integers): 
+		- They are often called just integers or ints, are positive or negative whole numbers with no decimal point.
+	- long (long integers):
+		- Also called longs, they are integers of unlimited size, written like integers and followed by an uppercase or lowercase L.
+	- float (floating point real values):
+		- Also called floats, they represent real numbers and are written with a decimal point dividing the integer and fractional parts.
+		- Floats may also be in scientific notation, with E or e indicating the power of 10 (2.5e2 = 2.5 x 102 = 250).
+	- complex (complex numbers):
+		- are of the form a + bJ, where a and b are floats and J (or j) represents the square root of -1 (which is an imaginary number).
+		- The real part of the number is a, and the imaginary part is b. Complex numbers are not used much in Python programming.
+- Python converts numbers internally in an expression containing mixed types to a common type for evaluation. 
+	- int(x) to convert x to a plain integer.
+	- long(x) to convert x to a long integer.
+	- float(x) to convert x to a floating-point number.
+	- complex(x) to convert x to a complex number with real part x and imaginary part zero.
+	- complex(x, y) to convert x and y to a complex number with real part x and imaginary part y. x and y are numeric expressions
+- Mathematical Functions
+	- abs(x):
+		The absolute value of x: the (positive) distance between x and zero.
+		Ex:
+			print "abs(-45) : ", abs(-45)
+			print "abs(100.12) : ", abs(100.12)
+			print "abs(119L) : ", abs(119L)		
+	- ceil(x):
+		The method ceil() returns ceiling value of x - the smallest integer not less than x.
+		Ex:
+			import math   # This will import math module
+			print "math.ceil(-45.17) : ", math.ceil(-45.17)
+			print "math.ceil(100.12) : ", math.ceil(100.12)
+			print "math.ceil(100.72) : ", math.ceil(100.72)
+			print "math.ceil(119L) : ", math.ceil(119L)
+			print "math.ceil(math.pi) : ", math.ceil(math.pi)
+	- cmp(x, y):
+		The method cmp() returns the sign of the difference of two numbers.
+		-1 if x < y, 0 if x == y, or 1 if x > y.
+		Ex:
+			print "cmp(80, 100) : ", cmp(80, 100)
+			print "cmp(180, 100) : ", cmp(180, 100)
+			print "cmp(-80, 100) : ", cmp(-80, 100)
+			print "cmp(80, -100) : ", cmp(80, -100)
+	- exp(x)
+		The method exp() returns returns exponential of x: ex.
+		Ex:
+			print "math.exp(-45.17) : ", math.exp(-45.17)
+			print "math.exp(100.12) : ", math.exp(100.12)
+			print "math.exp(100.72) : ", math.exp(100.72)
+			print "math.exp(119L) : ", math.exp(119L)
+			print "math.exp(math.pi) : ", math.exp(math.pi)
+	- fabs(x):
+		The method fabs() returns the absolute value of x.
+		Ex:
+			print "math.fabs(-45.17) : ", math.fabs(-45.17)
+			print "math.fabs(100.12) : ", math.fabs(100.12)
+			print "math.fabs(100.72) : ", math.fabs(100.72)
+			print "math.fabs(119L) : ", math.fabs(119L)
+			print "math.fabs(math.pi) : ", math.fabs(math.pi)
+	- floor(x):
+		The method floor() returns floor of x - the largest integer not greater than x.
+		Ex:
+			import math   # This will import math module
+			print "math.floor(-45.17) : ", math.floor(-45.17)
+			print "math.floor(100.12) : ", math.floor(100.12)
+			print "math.floor(100.72) : ", math.floor(100.72)
+			print "math.floor(119L) : ", math.floor(119L)
+			print "math.floor(math.pi) : ", math.floor(math.pi)
+	- log(x):
+		The method log() returns natural logarithm of x, for x > 0.
+		Ex:
+			import math   # This will import math module
+			print "math.log(100.12) : ", math.log(100.12)
+			print "math.log(100.72) : ", math.log(100.72)
+			print "math.log(119L) : ", math.log(119L)
+			print "math.log(math.pi) : ", math.log(math.pi)
+	- log10(x):
+		The method log10() returns base-10 logarithm of x for x > 0.
+		Ex:
+			import math   # This will import math module
+			print "math.log10(100.12) : ", math.log10(100.12)
+			print "math.log10(100.72) : ", math.log10(100.72)
+			print "math.log10(119L) : ", math.log10(119L)
+			print "math.log10(math.pi) : ", math.log10(math.pi)
+	- max(arguments):
+		- The method max() returns the largest of its arguments: the value closest to positive infinity.
+		- can be applied on list.
+		Ex:
+			print "max(80, 100, 1000) : ", max(80, 100, 1000)
+			print "max(-20, 100, 400) : ", max(-20, 100, 400)
+			print "max(-80, -20, -10) : ", max(-80, -20, -10)
+			print "max(0, 100, -400) : ", max(0, 100, -400)
+	- modf(x):
+		The method modf() returns the fractional and integer parts of x in a two-item tuple.
+		Both parts have the same sign as x. The integer part is returned as a float.
+		Ex:
+			import math   # This will import math module
+			print "math.modf(100.12) : ", math.modf(100.12)
+			print "math.modf(100.72) : ", math.modf(100.72)
+			print "math.modf(119L) : ", math.modf(119L)
+			print "math.modf(math.pi) : ", math.modf(math.pi)
+	- pow(x):
+		This method returns value of xy.
+		Ex:
+			import math   # This will import math module
+			print "math.pow(100, 2) : ", math.pow(100, 2)
+			print "math.pow(100, -2) : ", math.pow(100, -2)
+			print "math.pow(2, 4) : ", math.pow(2, 4)
+			print "math.pow(3, 0) : ", math.pow(3, 0)
+	- round(x):
+		The method round() returns x rounded to n digits from the decimal point.
+		Ex:
+			print "round(80.23456, 2) : ", round(80.23456, 2)
+			print "round(100.000056, 3) : ", round(100.000056, 3)
+			print "round(-100.000056, 3) : ", round(-100.000056, 3)
+	- The method sqrt() returns the square root of x for x > 0.
+		The method sqrt() returns the square root of x for x > 0.
+		Ex:
+			import math   # This will import math module
+			print "math.sqrt(100) : ", math.sqrt(100)
+			print "math.sqrt(7) : ", math.sqrt(7)
+			print "math.sqrt(math.pi) : ", math.sqrt(math.pi)
+
+- Random Number Functions:
+	- Random numbers are used for games, simulations, testing, security, and privacy applications.
+	- Python includes following functions that are commonly used.
+	- Choice(Seq):
+		The method choice() returns a random item from a list, tuple, or string.
+		Ex:
+			import random
+			print "choice([1, 2, 3, 5, 9]) : ", random.choice([1, 2, 3, 5, 9])
+			print "choice('A String') : ", random.choice('A String')
+	- randrange(start, stop, step)
+		The method randrange() returns a randomly selected element from range(start, stop, step).
+		Ex:
+			import random
+			# Select an even number in 100 <= number < 1000
+			print "randrange(100, 1000, 2) : ", random.randrange(100, 1000, 2)
+			# Select another number in 100 <= number < 1000
+			print "randrange(100, 1000, 3) : ", random.randrange(100, 1000, 3)
+	- random():
+		The method random() returns a random float r, such that 0 is less than or equal to r and r is less than 1.
+		Ex:
+			import random
+			# First random number
+			print "random() : ", random.random()
+			# Second random number
+			print "random() : ", random.random()
+	- seed(x):
+		- The method seed() sets the integer starting value used in generating random numbers. 
+		- Call this function before calling any other random module function.
+		Ex:
+			random.seed( 10 )
+			print "Random number with seed 10 : ", random.random()
+			# It will generate same random number
+			random.seed( 10 )
+			print "Random number with seed 10 : ", random.random()
+			# It will generate same random number
+			random.seed( 10 )
+			print "Random number with seed 10 : ", random.random()
+	- shuffle(lst):
+		The method shuffle() randomizes the items of a list in place.
+		Ex:
+			import random
+			list = [20, 16, 10, 5];
+			random.shuffle(list)
+			print "Reshuffled list : ",  list
+			random.shuffle(list)
+			print "Reshuffled list : ",  list
+	- uniform(x, y):
+		The method uniform() returns a random float r, such that x is less than or equal to r and r is less than y.
+		Ex:
+			import random
+			print "Random Float uniform(5, 10) : ",  random.uniform(5, 10)
+			print "Random Float uniform(7, 14) : ",  random.uniform(7, 14)
+		
+- Trigonometric Functions:
+	- acos(x):
+		The method acos() returns the arc cosine of x, in radians.
+		Ex:
+			import math
+			print "acos(0.64) : ",  math.acos(0.64)
+			print "acos(0) : ",  math.acos(0)
+			print "acos(-1) : ",  math.acos(-1)
+			print "acos(1) : ",  math.acos(1)
+	- asin(x):
+		The method asin() returns the arc sine of x, in radians.
+		Ex:
+			import math
+			print "asin(0.64) : ",  math.asin(0.64)
+			print "asin(0) : ",  math.asin(0)
+			print "asin(-1) : ",  math.asin(-1)
+			print "asin(1) : ",  math.asin(1)
+	- atan(x):
+		The method atan() returns the arc tangent of x, in radians.
+		Ex:
+			import math
+			print "atan(0.64) : ",  math.atan(0.64)
+			print "atan(0) : ",  math.atan(0)
+			print "atan(10) : ",  math.atan(10)
+			print "atan(-1) : ",  math.atan(-1)
+			print "atan(1) : ",  math.atan(1)
+	- atanw(y, x):
+		The method atan2() returns atan(y / x), in radians.
+		Ex:
+			import math
+			print "atan2(-0.50,-0.50) : ",  math.atan2(-0.50,-0.50)
+			print "atan2(0.50,0.50) : ",  math.atan2(0.50,0.50)
+			print "atan2(5,5) : ",  math.atan2(5,5)
+			print "atan2(-10,10) : ",  math.atan2(-10,10)
+			print "atan2(10,20) : ",  math.atan2(10,20)
+	- cos(x):
+		The method cos() returns the cosine of x radians.
+		Ex:
+			import math
+			print "cos(3) : ",  math.cos(3)
+			print "cos(-3) : ",  math.cos(-3)
+			print "cos(0) : ",  math.cos(0)
+			print "cos(math.pi) : ",  math.cos(math.pi)
+			print "cos(2*math.pi) : ",  math.cos(2*math.pi)
+	- hypot(x, y):
+		The method hypot() return the Euclidean norm, sqrt(x*x + y*y).
+		Ex:
+			import math
+			print "hypot(3, 2) : ",  math.hypot(3, 2)
+			print "hypot(-3, 3) : ",  math.hypot(-3, 3)
+			print "hypot(0, 2) : ",  math.hypot(0, 2)
+	- sin(x):
+		The method sin() returns the sine of x, in radians.
+		Ex:
+			import math
+			print "sin(3) : ",  math.sin(3)
+			print "sin(-3) : ",  math.sin(-3)
+			print "sin(0) : ",  math.sin(0)
+			print "sin(math.pi) : ",  math.sin(math.pi)
+			print "sin(math.pi/2) : ",  math.sin(math.pi/2)
+	- tan(x):
+		The method tan() returns the tangent of x radians.
+		Ex:
+			import math
+			print "tan(3) : ",  math.tan(3)
+			print "tan(-3) : ",  math.tan(-3)
+			print "tan(0) : ",  math.tan(0)
+			print "tan(math.pi) : ",  math.tan(math.pi)
+			print "tan(math.pi/2) : ",  math.tan(math.pi/2)
+			print "tan(math.pi/4) : ",  math.tan(math.pi/4)
+	- degree(x):
+		The method degrees() converts angle x from radians to degrees.
+		Ex:
+			import math
+			print "degrees(3) : ",  math.degrees(3)
+			print "degrees(-3) : ",  math.degrees(-3)
+			print "degrees(0) : ",  math.degrees(0)
+			print "degrees(math.pi) : ",  math.degrees(math.pi)
+			print "degrees(math.pi/2) : ",  math.degrees(math.pi/2)
+			print "degrees(math.pi/4) : ",  math.degrees(math.pi/4)
+	- radians(x):
+		The method radians() converts angle x from degrees to radians.
+		Ex;
+			import math
+			print "radians(3) : ",  math.radians(3)
+			print "radians(-3) : ",  math.radians(-3)
+			print "radians(0) : ",  math.radians(0)
+			print "radians(math.pi) : ",  math.radians(math.pi)
+			print "radians(math.pi/2) : ",  math.radians(math.pi/2)
+			print "radians(math.pi/4) : ",  math.radians(math.pi/4)
+- Mathematical Constants:
+	- pi: The mathematical constant pi.
+	- e: The mathematical constant e.
