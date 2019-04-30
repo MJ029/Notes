@@ -1,0 +1,53 @@
+***********************R&D**************************
+1) What is Bayes’ Theorem? How is it useful in a machine learning context?
+2) What’s a Fourier transform?
+
+
+
+Scala:
+Remove element from list (or) listbuffer --> 
+https://alvinalexander.com/scala/how-to-delete-elements-from-list-listbuffer-scala-cookbook
+deleting element from list scala --> 
+https://www.oreilly.com/library/view/scala-cookbook/9781449340292/ch11s05.html
+removing element from scala list -->
+https://stackoverflow.com/questions/5636717/what-is-an-idiomatic-scala-way-to-remove-one-element-from-an-immutable-list
+Appending element to end of list in scala -->
+https://stackoverflow.com/questions/7794063/appending-an-element-to-the-end-of-a-list-in-scala
+removing item from scala list having only index (by value) -->
+https://stackoverflow.com/questions/18847249/how-to-remove-an-item-from-a-list-in-scala-having-only-its-index
+Scala control structures (list comprehensions) -->
+https://docs.scala-lang.org/style/control-structures.html
+Scala convert array/list/seq to mkstrin -->
+https://alvinalexander.com/scala/scala-convert-array-to-string-mkstring
+Scala insert element to specific position in list -->
+https://stackoverflow.com/questions/31037384/scala-insert-a-new-element-in-a-specified-position-of-a-list/31038845
+Unwrapping a list or map as function arguments in Scala -->
+https://stackoverflow.com/questions/20731069/unwrapping-a-list-or-map-as-function-arguments-in-scala
+
+
+Python:
+*args and **kargs explained -->
+https://pythontips.com/2013/08/04/args-and-kwargs-in-python-explained/
+Python build in functions -->
+https://docs.python.org/3/library/functions.html#hash
+Python Data model -->
+https://docs.python.org/3/reference/datamodel.html#object.__hash__
+Python Tuple -->
+https://www.pythonlearn.com/html-008/cfbook011.html
+Python tuples with Dynamic variables -->
+https://stackoverflow.com/questions/46794115/passing-a-tuple-in-args
+Python RegEx -->
+http://www.thelearningpoint.net/computer-science/learning-python-programming-and-data-structures/learning-python-programming-and-data-structures--tutorial-13--regular-expression-matching
+https://developers.google.com/edu/python/regular-expressions
+
+
+CANADA PR and IELTS:
+http://ieltsliz.com/ielts-band-scores/
+
+
+Python RegEx:
+https://docs.python.org/3/howto/regex.html
+https://docs.python.org/3.4/library/re.html
+https://www.tutorialspoint.com/python3/python_reg_expressions.htm
+http://www.thelearningpoint.net/computer-science/learning-python-programming-and-data-structures/learning-python-programming-and-data-structures--tutorial-13--regular-expression-matching
+

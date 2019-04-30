@@ -1,0 +1,12 @@
+- git checkout master 
+- git pull
+- git merge <Yourbranch name>
+- git reset origin/master
+- git add . --all
+- git commit -m "Your Message"
+- git push origin master:master
+
+
+#To Delete Remote Branch
+git push --delete <remote_name> <branch_name>
+git branch -d <branch_name>

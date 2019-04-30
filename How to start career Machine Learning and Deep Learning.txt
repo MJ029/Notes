@@ -1,0 +1,27 @@
+1) Download Python Tutorials for this Site and start Learning the Python course
+https://www.tutorialspoint.com/python3/
+
+2) Create an account in Hacker rank and start Subscribe for 30 day coding challenge in Python 
+<This is optional if you want to get string coding Understanding in Python, else you can simple see the fundamentals 
+from the tutorial and can move on to Actual machine learning course>
+https://www.hackerrank.com/
+
+3) Udemy Course for Machine Learning and Data science:
+<In this course no need to look into R Language part just focus on Python part> I preffer this is a basic foundation course to step into Machine learning
+https://www.udemy.com/machinelearning/learn/v4/overview
+
+4) This udemy course will give you the headsup about Deep Learning:
+https://www.udemy.com/deeplearning/learn/v4/overview
+
+5) This 2 courses will give you the Headsup on AI and Reinforcement Learning
+https://www.udemy.com/artificial-intelligence-az/learn/v4/overview
+https://www.udemy.com/deep-reinforcement-learning-in-python/learn/v4/content
+
+6) To Work with Chatbots and NLP one of the Basic course to start
+https://www.udemy.com/chatbot/
+
+7) For Datascience Realtime practices
+https://www.udemy.com/datascience/
+
+Moreover Just looking into videos will not help you out to scale up yourself, as i used to say the more you dig the you get.
+google it for more relevent Examples or current Examples and technologies
