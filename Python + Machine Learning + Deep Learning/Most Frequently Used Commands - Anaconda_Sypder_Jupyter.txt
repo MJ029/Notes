@@ -1,0 +1,71 @@
+****************************************Most frequently used commands - Anaconda/Spyder/Jupyter****************************************
+********************************Anaconda********************************
+- Create Environment
+	Creates Environment:
+		conda create --name myenv
+	
+	Creates environment with specified library and version
+		conda create -n myenv python=3.6
+	
+	Creates environment from yml file
+		conda env create -f environment.yml
+		
+	Creates environment on secific path
+		conda create --prefix ./envs python=3.6
+	and activate usig below command
+		conda activate ./envs
+		
+- Activate/Deactivate environment
+	Activate:
+		conda activate myenv
+	Deactivate:
+		conda deactivate
+
+- Conda List Environments
+	conda env list (or) conda info --envs
+	
+- Conda list packages in environment 
+	conda list -n myenv
+	
+- Conda check specific package installed in environment
+	conda list -n myenv scipy
+	
+- Conda clone Environment 
+	conda create --name myclone --clone myenv
+	
+- Conda Create Identical environment
+	- conda list --explicit > spec-file.txt (create this spec list as a file in the current working directory)
+	- conda create --name myenv --file spec-file.txt (use the spec file to create an identical environment on the same machine or another machine)
+	- conda install --name myenv --file spec-file.txt (use the spec file to install its listed packages into an existing environment)
+	
+- Conda Create yml file of existing environment
+	conda env export > environment.yml
+	
+- Conda create env file(Manually)
+	- Create a environment.yml file and paste the below code.
+	ex:
+		name: myenv
+		dependencies:
+			- numpy <= 3.6
+			- pandas 
+			- numpy=1.9.*
+			- pip:
+				- Flask-Testing
+				
+- Conda Restore environment
+	- conda list --revisions
+	- conda install --revision=REVNUM (or) conda install --rev REVNUM
+	
+- Conda remove environment
+	conda remove --name myenv --all
+	
+- Conda install rewuired libraries
+	- conda install python
+	- conda install -c anaconda scikit-learn
+	- conda install -c anaconda pandas
+	- conda install -c conda-forge matplotlib
+********************************Spyder********************************
+ 
+- to find jupyter notebook password
+	/home/ubuntu/.jupyter/jupyter_notebook_config.json
+	
