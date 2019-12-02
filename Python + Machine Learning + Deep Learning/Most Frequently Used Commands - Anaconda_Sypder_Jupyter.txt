@@ -63,7 +63,13 @@
 	- conda install python
 	- conda install -c anaconda scikit-learn
 	- conda install -c anaconda pandas
+	- conda install spyder-kernels=0.* # This used when create a new Environment and using spyder IDE
+	- conda install -c anaconda xlrd
 	- conda install -c conda-forge matplotlib
+	
+	- conda install -c conda-forge lxml
+	- conda install -c anaconda openpyxl
+	- conda install -c anaconda statsmodels
 ********************************Spyder********************************
  
 - to find jupyter notebook password
