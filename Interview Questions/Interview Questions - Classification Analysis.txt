@@ -53,3 +53,8 @@ What is Baaging Tree ?
 What is Boosting tree ?
 	- In boosting trees, individual weak learners are independent of each other
 	- Its the method for improving the performance by aggregating the results of weak learners
+
+Why is naive Bayes so ‘naive’ ?
+	- naive Bayes is so ‘naive’ because it assumes that all of the features in a data set are equally important and independent. 
+	- As we know, these assumption are rarely true in real world scenario.
+

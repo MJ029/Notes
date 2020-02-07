@@ -59,7 +59,24 @@ Explain cross-validation ?
 
 What is collaborative filtering?
 	- Most recommender systems use this filtering process to find patterns and information by collaborating perspectives, numerous data sources, and several agents.
+
+What is the Box-Cox transformation used for?
+	- The Box-Cox transformation is a generalized "power transformation" that transforms data to make the distribution more normal.
+	- For example, when its lambda parameter is 0, it's equivalent to the log-transformation.
+	- It's used to stabilize the variance (eliminate heteroskedasticity) and normalize the distribution.
 	
-What is Boosting tree ?
-	- In boosting trees, individual weak learners are independent of each other
-	- Its the method for improving the performance by aggregating the results of weak learners
+Explain Latent Dirichlet Allocation (LDA).
+	- Latent Dirichlet Allocation (LDA) is a common method of topic modeling, or classifying documents by subject matter.
+	- 
+
+Explain Principle Component Analysis (PCA).
+	- PCA is a method for transforming features in a dataset by combining them into uncorrelated linear combinations.
+	- These new features, or principal components, sequentially maximize the variance represented
+	- As a result, PCA is useful for dimensionality reduction because you can set an arbitrary variance cutoff.
+	
+Is rotation necessary in PCA? If yes, Why? What will happen if you don’t rotate the components?
+	- Yes, rotation (orthogonal) is necessary because it maximizes the difference between variance captured by the component.
+	- This makes the components easier to interpret.
+	- Not to forget, that’s the motive of doing PCA where, we aim to select fewer components (than features) which can explain the maximum variance in the data set. 
+	- By doing rotation, the relative location of the components doesn’t change, it only changes the actual coordinates of the points.
+	

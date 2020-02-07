@@ -289,3 +289,14 @@ Which graphs are suggested to be observed before model fitting ?
 What is Maximum Likelihood estimate (MLE) ?
 	- 
 	
+What is the difference between stochastic gradient descent (SGD) and gradient descent (GD)?
+	- Both algorithms are methods for finding a set of parameters that minimize a loss function by evaluating parameters against data and then making adjustments.
+	- In standard gradient descent, you'll evaluate all training samples for each set of parameters.
+	- In stochastic gradient descent, you'll evaluate only 1 training sample for the set of parameters before updating them. 
+	
+When to use GD and SGD ?
+	- GD theoretically minimizes the error function better than SGD.
+	- However, SGD converges much faster once the dataset becomes large.
+	- That means GD is preferable for small datasets while SGD is preferable for larger ones.
+	- however, SGD is used for most applications because it minimizes the error function well enough while being much faster and more memory efficient for large datasets.
+	
