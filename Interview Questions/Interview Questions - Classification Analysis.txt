@@ -1,0 +1,55 @@
+************************************Classification Analysis Important points************************************
+Hint:
+	- Random Forest and Gradient Boosting ensemble methods can be used for Regression/Classification analysis.
+	- “max_depth” hyperparameter in Gradient Boosting
+		- Lower is better parameter in case of same validation accuracy
+		- Increase the value of max_depth may underfit the data
+	- Both algorithms(Random Forest and Gradient Boosting) can handle real valued attributes by discretizing them
+	- Low bias machine learning algorithms - Decision Trees, k-NN and SVM
+	- Hight bias machine learning algorithms - Liear Regression, Logistic Regression
+
+How to calculate accuracy, precision, recall using confusion matrix ?
+	- Accuracy = (True Positive + True Negative) / Total Observations
+	- Precision = (True positive) / (True Positive + False Positive)
+	- Recall Rate = (True Positive) / (Total Positive + False Negative)
+
+Explain the process of building Decision tree ?
+- ID3:
+	- Find Entropy of target variable
+	- Find Entropy of each input attribute
+	- Find information Gain of each input attribute
+	- Consider the attribute with Highest Information gain(loweest Entropy value) as root element
+	- devide dataset to branches
+		- If entropy = 0 --> Leaf node
+		- If entropy != 0 --> go to step 2 and repeat the same 
+- C4.5:
+	- find entropy of target variable
+	- find information gain and split info of each input attribute
+	- find gain raito of each input attribute
+	- Consider the attribute with Highest Gain ratio as root element
+	- devide dataset to branches
+		- If Entropy = 0 --> Leaf Node
+		- IF Entropy != 0 --> go to Step - 2 and repeat the same
+		
+- CART:
+	- find Gini Index of each input attribute
+	- Calculate Weighted Gini Index  of each input attribute
+	- Consider the input attribute with loweest Gini index as root element
+	- devide the dataset into sub branches
+		- If Gini = 0 --> Leaf node
+		- If Gini != 0 --> go to step 2 and repeat the same
+
+You are given a dataset on cancer detection. You have built a classification model and achieved an accuracy of 96 percent. Why shouldn't you be happy with your model performance? What can you do about it?
+	- Cancer detection results in imbalanced data. In an imbalanced dataset, accuracy should not be based as a measure of performance.
+	- It is important to focus on the remaining four percent, which represents the patients who were wrongly diagnosed.
+	- Early diagnosis is crucial when it comes to cancer detection, and can greatly improve a patient’s prognosis.
+	- Hence, to evaluate model performance, we should use
+		- Sensitivity (True Positive Rate), Specificity (True Negative Rate), F measure to determine the class wise performance of the classifier.
+		
+What is Baaging Tree ?
+	- In bagging trees, individual trees are independent of each other
+	- Bagging is the method for improving the performance by aggregating the results of weak learners
+	
+What is Boosting tree ?
+	- In boosting trees, individual weak learners are independent of each other
+	- Its the method for improving the performance by aggregating the results of weak learners

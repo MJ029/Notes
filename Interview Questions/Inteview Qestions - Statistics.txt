@@ -1,0 +1,65 @@
+************************************Statistics Important points************************************
+Hints:
+	- We use the elbow method to select k for k-means clustering.
+	- We can use K-NN (k-nearest neighbor), for inputting missing values of both categorical and continuous variablesWhat is the significance of p-value?
+	- When P <= 0.05
+		This indicates strong evidence against the null hypothesis; so you reject the null hypothesis.
+	- Whn P >= 0.05
+		This indicates weak evidence against the null hypothesis, so you accept the null hypothesis. 
+	- When P = 0.05
+		This is considered to be marginal, meaning it could go either way.
+		
+What is F-test ?
+	- The F-test is designed to test if two population variances are equal.
+	- It does this by comparing the ratio of two variances.
+	- So, if the variances are equal, the ratio of the variances will be 1. 
+	- If the null hypothesis is true, then the F test-statistic given above can be simplified 
+	
+Difference between F-Test and T-test ?
+	- t-test is used to test if two sample have the same mean. 
+	- The assumptions are that they are samples from normal distribution.
+	- f-test is used to test if two sample have the same variance.
+	
+What is the goal of A/B Testing?
+	- This is statistical hypothesis testing for randomized experiments with two variables, A and B. 
+	- The objective of A/B testing is to detect any changes to a web page to maximize or increase the outcome of a strategy.
+	
+What are the confounding variables?
+	- These are extraneous variables in a statistical model that correlates directly or inversely with both the dependent and the independent variable.
+	- The estimate fails to account for the confounding factor.
+	
+What are eigenvalue and eigenvector?
+	- Eigenvalues are the directions along which a particular linear transformation acts by flipping, compressing, or stretching.
+	- Eigenvectors are for understanding linear transformations.
+	- In data analysis, we usually calculate the eigenvectors for a correlation or covariance matrix. 
+	
+What are the types of biases that can occur during sampling?
+	- Selection bias
+	- Undercoverage bias
+	- Survivorship bias
+	
+What is selection bias?
+	- Selection bias, in general, is a problematic situation in which error is introduced due to a non-random population sample.
+	
+What is survivorship bias?
+	- Survivorship bias is the logical error of focusing aspects that support surviving a process and casually overlooking those that did not because of their lack of prominence. 
+	- This can lead to wrong conclusions in numerous ways.
+		
+How can a time-series data be declared as stationary?
+	- It is stationary when the variance and mean of the series are constant with time. 
+	
+Which of the following machine learning algorithms can be used for inputting missing values of both categorical and continuous variables?
+	- The K nearest neighbor algorithm can be used because it can compute the nearest neighbor and if it doesn't have a value, it just computes the nearest neighbor based on all the other features. 
+	- When you're dealing with K-means clustering or linear regression, you need to do that in your pre-processing, otherwise, they'll crash. Decision trees also have the same problem, although there is some variance. 
+	
+Explain cross-validation ?
+	- Cross-validation is a model validation technique for evaluating how the outcomes of a statistical analysis will generalize to an independent data set.
+	- It is mainly used in backgrounds where the objective is to forecast and one wants to estimate how accurately a model will accomplish in practice. 
+	- The goal of cross-validation is to term a data set to test the model in the training phase to limit problems like overfitting and gain insight into how the model will generalize to an independent data set.
+
+What is collaborative filtering?
+	- Most recommender systems use this filtering process to find patterns and information by collaborating perspectives, numerous data sources, and several agents.
+	
+What is Boosting tree ?
+	- In boosting trees, individual weak learners are independent of each other
+	- Its the method for improving the performance by aggregating the results of weak learners
