@@ -1,5 +1,6 @@
 ************************************Classification Analysis Important points************************************
 Hint:
+	- We need to fit n model in n-class classification problem.
 	- Random Forest and Gradient Boosting ensemble methods can be used for Regression/Classification analysis.
 	- “max_depth” hyperparameter in Gradient Boosting
 		- Lower is better parameter in case of same validation accuracy

@@ -24,6 +24,15 @@ What is the goal of A/B Testing?
 	- This is statistical hypothesis testing for randomized experiments with two variables, A and B. 
 	- The objective of A/B testing is to detect any changes to a web page to maximize or increase the outcome of a strategy.
 	
+What is Q-Q plot and how it works ?
+	-  In statistics, a Q–Q plot is a probability plot, which is a graphical method for comparing two probability distributions by plotting 
+	their quantiles against each other.
+	-  If both sets of quantiles came from the same distribution, we should see the points forming a 45-degree reference line that's roughly straight.
+
+What is the importance of the F-test in a linear model?
+	-  it tests the goodness of the model by entails the variance of the model.
+	- When you reiterate the model to improve the accuracy with the changes, the F-test proves its utility in understanding the effect of the overall regression.
+	
 What are the confounding variables?
 	- These are extraneous variables in a statistical model that correlates directly or inversely with both the dependent and the independent variable.
 	- The estimate fails to account for the confounding factor.
@@ -67,7 +76,6 @@ What is the Box-Cox transformation used for?
 	
 Explain Latent Dirichlet Allocation (LDA).
 	- Latent Dirichlet Allocation (LDA) is a common method of topic modeling, or classifying documents by subject matter.
-	- 
 
 Explain Principle Component Analysis (PCA).
 	- PCA is a method for transforming features in a dataset by combining them into uncorrelated linear combinations.
@@ -79,4 +87,19 @@ Is rotation necessary in PCA? If yes, Why? What will happen if you don’t rotat
 	- This makes the components easier to interpret.
 	- Not to forget, that’s the motive of doing PCA where, we aim to select fewer components (than features) which can explain the maximum variance in the data set. 
 	- By doing rotation, the relative location of the components doesn’t change, it only changes the actual coordinates of the points.
+	
+Explain prior probability, likelihood and marginal likelihood in context of naiveBayes algorithm?
+	- Prior probability is nothing but, the proportion of dependent (binary) variable in the data set. 
+	- It is the closest guess you can make about a class, without any further information. 
+	- For example:
+		- In a data set, the dependent variable is binary (1 and 0). 
+		- The proportion of 1 (spam) is 70% and 0 (not spam) is 30%.
+		- Hence, we can estimate that there are 70% chances that any new email would  be classified as spam.
+		
+	- Likelihood is the probability of classifying a given observation as 1 in presence of some other variable.
+	- For example: The probability that the word ‘FREE’ is used in previous spam message is likelihood. 
+	- Marginal likelihood is, the probability that the word ‘FREE’ is used in any message.
+
+What is Maximum Likelihood estimate (MLE) ?
+	- 
 	
