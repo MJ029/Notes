@@ -39,51 +39,11 @@ What is the difference between supervised and unsupervised machine learning?
 			- Anomaly detection
 			- Hebbian Learning
 			-  Latent variable models such as (Expectation–maximization algorithm,  Method of moments and etc...)
-			
-How is KNN different from k-means clustering?
-	- K-Nearest Neighbors is a supervised classification algorithm
-	- in order for K-Nearest Neighbors to work, you need labeled data you want to classify an unlabeled point into (thus the nearest neighbor part). 
-	- KNN use the Euclidean distance and a value of k neighbors.
 	
-	- K-means clustering is an unsupervised clustering algorithm. 
-	- K-means clustering requires only a set of unlabeled points and a threshold: the algorithm will take unlabeled points and gradually learn how to cluster them into groups by computing the mean of the distance between different points.
-	- K-means belongs to the family of moving centroid algorithms
-	
-	Note: The critical difference here is that KNN needs labeled points and is thus supervised learning, while k-means doesn’t — and is thus unsupervised learning.
-	
-Explain how a ROC curve works. (Receiver operating characteristic)
-	- The ROC curve is a graphical representation of the contrast between true positive rates and the false positive rate at various thresholds.
-	- It’s often used as a proxy for the trade-off between the sensitivity of the model (true positives) vs the fall-out or the probability it will trigger a false alarm (false positives).
-	- The true-positive rate is also known as sensitivity, recall or probability of detection in machine learning. 
-	- The false-positive rate is also known as the fall-out or probability of false alarm and can be calculated as (1 − specificity).
-	
-Define precision and recall.
-	- Recall is also known as the true positive rate: the amount of positives your model claims compared to the actual number of positives there are throughout the data. 
-	- Precision is also known as the positive predictive value, and it is a measure of the amount of accurate positives your model claims compared to the number of positives it actually claims.
-	- Suppose a computer program for recognizing dogs in photographs identifies 8 dogs in a picture containing 12 dogs and some cats. 
-	- Of the 8 dogs identified, 5 actually are dogs (true positives), while the rest are cats (false positives).
-	- The program's precision is 5/8 while its recall is 5/12.
-	
-What is Bayes’ Theorem? How is it useful in a machine learning context?
-	- 
-	
-Why is “Naive” Bayes naive?
-	- 
-	
-Explain the difference between L1 and L2 regularization.
-	- L2 regularization tends to spread error among all the terms, while L1 is more binary/sparse, with many variables either being assigned a 1 or 0 in weighting.
-	- L1 corresponds to setting a Laplacean prior on the terms, while L2 corresponds to a Gaussian prior.
 
-What’s the difference between Type I and Type II error?
-	- Type I error is a false positive, while Type II error is a false negative. 
-	- Type I error means claiming something has happened when it hasn’t.
-	- Type II error means that you claim nothing is happening when in fact something is.
-	- In statistical hypothesis testing, a type I error is the rejection of a true null hypothesis (also known as a "false positive" finding),while a type II error is retaining a false null hypothesis (also known as a "false negative" finding)
-	- More simply stated, a type I error is to falsely infer the existence of something that is not there, while a type II error is to falsely infer the absence of something that is.
-	Note: In statistics, a null hypothesis is a statement that one seeks to nullify with evidence to the contrary.
 	
 What’s a Fourier transform?
-	- - A Fourier transform is a generic method to decompose generic functions into a superposition of symmetric functions. 
+	- A Fourier transform is a generic method to decompose generic functions into a superposition of symmetric functions. 
 	- The Fourier transform finds the set of cycle speeds, amplitudes and phases to match any time signal. 
 	- A Fourier transform converts a signal from time to frequency domain — it’s a very common way to extract features from audio signals or other time series such as sensor data.
 	
@@ -119,6 +79,3 @@ What is deep learning, and how does it contrast with other machine learning algo
 	- In that sense, deep learning represents an unsupervised learning algorithm that learns representations of data through the use of neural nets.
 	- Deep learning (also known as deep structured learning or hierarchical learning) is part of a broader family of machine learning methods based on learning data representations, as opposed to task-specific algorithms. Learning can be supervised, semi-supervised or unsupervised.
 	- Deep learning architectures such as deep neural networks, deep belief networks and recurrent neural networks have been applied to fields including computer vision, speech recognition, natural language processing, audio recognition, social network filtering, machine translation, bioinformatics and drug design, where they have produced results comparable to and in some cases superior to human experts.
-	
-What’s the difference between a generative and discriminative model?
-	- 

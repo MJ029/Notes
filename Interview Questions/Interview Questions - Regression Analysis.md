@@ -31,7 +31,7 @@
 - The generalized linear model is the derivative of the ordinary linear regression model.  
 - GLM is more flexible in terms of residuals and can be used where linear regression does not seem appropriate.  
 - GLM allows the distribution of residuals to be other than a normal distribution.  
-- It generalizes the linear regression by allowing the linear model to link to the target variable using the   linking function.  
+- It generalizes the linear regression by allowing the linear model to link to the target variable using the linking function.  
 - Model estimation is done using the method of maximum likelihood estimation.  
 	
 **What is Diff between R2 and Adj-R2 ?**  
@@ -59,12 +59,12 @@
 	
 **Explain L1 and L2 Regularization ?**  
 - L1 Regularization:
-	- It is known as L1 or LASSO regularization.  
-	- Here, the absolute values of the coefficients are added to the cost function.   
-	- This regularization technique gives sparse results, which lead to feature selection as well.  
+	- It is known as L1 or *LASSO* regularization.  
+	- Here, the *absolute values of the coefficients* are added to the cost function.   
+	- This regularization technique gives sparse results, which lead to *feature selection* as well.  
 - L2 Regularization:
-	- It is known as L2 or Ridge regularization.  
-	- Here, the squares of the coefficients are added to the cost function.  
+	- It is known as L2 or *Ridge* regularization.  
+	- Here, the *squares of the coefficients* are added to the cost function.  
 	- When lambda is 0, model works like linear regression model.  
 	- When lambda goes to infinity, we get very, very small coefficients approaching 0.  
 
@@ -85,6 +85,7 @@
 
 **What is Generalization error ?**  
 - Generalization error in statistics is generally the out-of-sample error which is the measure of how accurately a model can predict values for previously unseen data.  
+- In simpe, The error rate in test set is known as generalization error. when you are training your model in training set and testig it using test set.
 
 **How does multicollinearity affect the linear regression ?**  
 - Multicollinearity occurs when some of the independent variables are highly correlated (positively or negatively) with each other.  
@@ -160,13 +161,13 @@ which can then be plugged into the VIF formula.
 - The most common problem that can be found when training the model over a large range of a data-set is heteroscedasticity  
 - The presence of heteroscedasticity can be easily seen by plotting the residual vs fitted value curve.  
 
-**What is Outliners ?**  
-- An Outliners is an observation point distant from other observations.  
+**What is Outlier ?**  
+- An Outlier is an observation point distant from other observations.  
 - It might be due to a variance in the measurement.   
 - It can also indicate an experimental error.  
 - Under such circumstances, you need to exclude the same from the data set.  
 
-**How to handle Outliners in data-set ?**  
+**How to handle Outlier in data-set ?**  
 - There is no strict mathematical calculation of how to determine an outliner.   
 - Deciding whether an observation is an outlier or not, is itself a subjective exercise.  
 - However, you can detect outliers through various methods.   
@@ -178,10 +179,10 @@ which can then be plugged into the VIF formula.
 	
 **How to improve performance of a Regression models**  
 - The Outliner Treatment:  
-	- Outliners have great significance in linear regression because regression is very sensitive to outliners.  
-	- Therefore, it becomes critical to treat outliners with appropriate values.  
+	- Outlier have great significance in linear regression because regression is very sensitive to Outlier.  
+	- Therefore, it becomes critical to treat Outlier with appropriate values.  
 	- It can also prove useful if you replace the values with MEAN, MEDIAN, MODE (or) PERCENTILE depends on distribution.  
-	- Some of the methods of eliminating outliners are the "Z-Score" and the "IQR Score" methods.  
+	- Some of the methods of eliminating Outlier are the "Z-Score" and the "IQR Score" methods.  
 
 **Cons of Regression Analysis:**  
 - One of the Cons of Regression analysis is that is sensitive and dependent on outliner.  
@@ -200,7 +201,7 @@ which can then be plugged into the VIF formula.
 
 **What is Gradient descent and When to use Gradient descent ?**  
 - Gradient descent is an optimization algorithm.  
--  In linear regression, it is used to optimize the cost function and find the values of the βs (estimators) corresponding to the optimized value of the cost function.  
+- In linear regression, it is used to optimize the cost function and find the values of the βs (estimators) corresponding to the optimized value of the cost function.  
 - Needs hyper-parameter tuning for alpha (learning parameter)  
 - It is an iterative process  
 - O(kn2) time complexity  
@@ -227,7 +228,7 @@ which can then be plugged into the VIF formula.
 - One can use linear regression for time series analysis, but the results are not promising.  
 - So, it is generally not advisable to do so. The reasons behind this are Time series data is mostly used for the prediction of the future, but linear regression seldom gives good results for future prediction as it is not meant for extrapolation.  
 - Mostly, time series data have a pattern, such as during peak hours, festive seasons, etc.,   
-- which would most likely be treated as outliners in the linear regression analysis.  
+- which would most likely be treated as Outlier in the linear regression analysis.  
 
 **What value is the sum of the residuals of a linear regression close to Justify ?**  
 - The sum of the residuals of a linear regression is 0.  
