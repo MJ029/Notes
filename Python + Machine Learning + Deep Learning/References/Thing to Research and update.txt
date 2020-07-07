@@ -1,0 +1,30 @@
+multi-layer Recurrent Neural Network (RNN, LSTM, and GRU) for training/sampling from character-level language models
+https://github.com/karpathy/char-rnn
+
+Deep Learning with OpenCV
+https://www.pyimagesearch.com/2017/08/21/deep-learning-with-opencv/
+
+Deep Learning Reading Group: SqueezeNet
+https://www.kdnuggets.com/2016/09/deep-learning-reading-group-squeezenet.html
+
+Face detection with OpenCV and Deep Learning from image (ResNet based)
+https://becominghuman.ai/face-detection-with-opencv-and-deep-learning-90b84735f421
+
+Face detection with OpenCV and deep learning
+https://www.pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/
+
+CNN Architectures: LeNet, AlexNet, VGG, GoogLeNet, ResNet and more…
+https://medium.com/analytics-vidhya/cnns-architectures-lenet-alexnet-vgg-googlenet-resnet-and-more-666091488df5
+
+
+Google Inception:
+https://software.intel.com/content/www/us/en/develop/articles/inception-v3-deep-convolutional-architecture-for-classifying-acute-myeloidlymphoblastic.html
+
+YOLO (Simplified CNN)
+https://towardsdatascience.com/yolo-you-only-look-once-real-time-object-detection-explained-492dc9230006
+
+
+
+Note:
+https://nyhackr.blob.core.windows.net/presentations/Choosing-a-Deep-Learning-Library_Jesse-Brizzi.pdf
+
