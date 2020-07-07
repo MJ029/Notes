@@ -70,6 +70,10 @@
 	- conda install -c conda-forge lxml
 	- conda install -c anaconda openpyxl
 	- conda install -c anaconda statsmodels
+	
+- Conda update environment
+	- conda update -n base -c defaults conda
+
 ********************************Spyder********************************
  
 - to find jupyter notebook password
