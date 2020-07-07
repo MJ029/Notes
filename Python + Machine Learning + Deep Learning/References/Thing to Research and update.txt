@@ -23,8 +23,13 @@ https://software.intel.com/content/www/us/en/develop/articles/inception-v3-deep-
 YOLO (Simplified CNN)
 https://towardsdatascience.com/yolo-you-only-look-once-real-time-object-detection-explained-492dc9230006
 
+mlflow opensource library
+https://github.com/mlflow/mlflow
 
 
 Note:
 https://nyhackr.blob.core.windows.net/presentations/Choosing-a-Deep-Learning-Library_Jesse-Brizzi.pdf
+
+
+
 
