@@ -34,10 +34,10 @@ Note:
 - Compute resources are cloud-based resources on which you can run model training and data exploration processes.
 - It is also known as compute targets.
 - Types of compute resources:
-	- **Compute Instances:** Development workstations that data scientists can use to work with data and models.
-	- **Compute Clusters:** Scalable clusters of virtual machines for on-demand processing of experiment code.
-	- **Inference Clusters:** Deployment targets for predictive services that use your trained models.
-	- **Attached Compute:** Links to existing Azure compute resources, such as Virtual Machines or Azure Databricks clusters.
+	- **Compute Instances (***dev-instance***):** Development workstations that data scientists can use to work with data and models.
+	- **Compute Clusters (***train-instance***) :** Scalable clusters of virtual machines for on-demand processing of experiment code.
+	- **Inference Clusters (***test/prod-instance***):** Deployment targets for predictive services that use your trained models.
+	- **Attached Compute (***external services***):** Links to existing Azure compute resources, such as Virtual Machines or Azure Databricks clusters.
 
 - To add new compute instance click **create** in **compute instance** tab and enter below fields, In background it will create Databricks cluster
 	- **Compute name:** Unique name
