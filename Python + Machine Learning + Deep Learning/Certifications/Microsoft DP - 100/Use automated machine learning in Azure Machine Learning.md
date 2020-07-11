@@ -53,4 +53,37 @@ Note:
 	- **Idle seconds before scale down:** Keep alive time used to keep the cluster up and running idle for specified duration.
 
 ### Explore data:
+- Machine learning models must be trained with existing data. 
+- DataSet:
+	- In Azure Machine Learning, **data** for model training and other operations is usually encapsulated in an object called a **dataset**.
+	- In [Azure Machine Learning studio](https://ml.azure.com/) , view the Datasets page (under Assets), and create a new dataset.
+	- We can create dataset from below listed sources.
+		- **From Local File system:** Allows user to load data from local storage.
+		- **From datastore:** Allows user to load data from datastore.
+		- **From web files:** Allows user to load data from web scraps and web API's.
+		- **From Open Dataset:** Allows user to load data from Open Dataset.
+	- Each type takes its own set of input parameters
+	
+	- Ex (WEB-API):
+		- To simulate the above usecase we leared in [What is Machine Leraning page](#what-is-machine-learning) we need to load data from below web API [https://aka.ms/bike-rentals](https://aka.ms/bike-rentals).
+		- In-order to load data from web-api we need below list of parameters.
+			- **Basic Info:**
+				- **URL:** source API url to be scrapped.
+				- **Name:** Unique dataset name.
+				- **Dataset Type:** Tabular/File.
+				- **Description:** More detail about the data.
+				- **Skip data validation (checkbox):** Optional if enabled it will perform data validation while loading.
+			- **Settings and preview:**
+				- **File format:** Used to specify the file format.
+				- **Delimiter: ** used to specify the delimiter.
+				- **Encoding:** Used to specify the encoding standard.
+				- **Column headers:** Used to specify the column header info.
+				- **Skip Rows:** Used to specify the skip rows when reading file.
+			- **Schema:**
+				- Automatically detect schema and load its type.
+				- Used to alred autodetected schema definition.
+		- After the dataset has been created, open it and view the Explore page to see a sample of the data. This data contains historical features and labels for bike rentals.
+
+### Train a machine learning model:
+- 
 - 
