@@ -75,7 +75,7 @@ Note:
 				- **Skip data validation (checkbox):** Optional if enabled it will perform data validation while loading.
 			- **Settings and preview:**
 				- **File format:** Used to specify the file format.
-				- **Delimiter: ** used to specify the delimiter.
+				- **Delimiter:** used to specify the delimiter.
 				- **Encoding:** Used to specify the encoding standard.
 				- **Column headers:** Used to specify the column header info.
 				- **Skip Rows:** Used to specify the skip rows when reading file.
@@ -85,5 +85,85 @@ Note:
 		- After the dataset has been created, open it and view the Explore page to see a sample of the data. This data contains historical features and labels for bike rentals.
 
 ### Train a machine learning model:
-- 
-- 
+- Azure Machine Learning includes an automated machine learning capability that leverages the scalability of cloud compute to automatically try multiple pre-processing techniques and model-training algorithms in parallel to find the best performing model for your data.
+- In Azure Machine Learning, ***operations*** that you run are called **experiments**.
+- Currently we cannot delete exprements from UI we have only powershell commands to delete exprements.
+
+- In [Azure Machine Learning studio](https://ml.azure.com/), view the **Automated ML** page (under **Author**).
+- Follow below steps to create a new Automated ML and run it.
+	- **Select dataset:**
+		- Choose the dataset that has been created earlier, if not you will be having an option to create a new dataset in teh same page.
+	- **Configure run:**
+		- **New experiment name:** Unique expriment Name.
+		- **Target column:** Specifies target column in dataset to be used as predictor(Y)
+		- **Training compute target:** Choose the **Compute Clusters** that created previously
+	- **Task type and settings:**
+		- **Task type:** Specifies type of task (**Regression**, **Classification**, **Clustering**)
+		- **Additional configuration settings:**
+			- **Primary metric:** Specifies metrics availabel for regression and classification models like MSE, MAE and etc...
+			- Classification:
+				- Accuracy
+				- AUC Weight
+				- Norm Macro recall
+				- Average precision score weighted
+				- Precision score weighted
+			- Regression:
+				- Spearman Correlation
+				- Normelized root mean squared error
+				- R2 Score
+				- Normalized mean squared error
+			
+			- Time Series:
+				- Normelized root mean squared error
+				- R2 Score
+				- Normalized mean squared error
+				
+			- Validations:
+				- k-fold cross validation
+				- Monte carlo cross validation
+				- Train-validation split
+				- Auto			
+			- **Explain best model: ** Checkbox, this option causes automated machine learning to calculate feature importance for the best model; making it possible to determine the influence of each feature on the predicted label.
+			- **Blocked algorithms:** Specifies that algorithms not the be performed
+			- Regression:
+				- ElasticNet
+				- GradientBoosting
+				- Decision Tree
+				- KNN
+				- LassoLars
+				- SGD
+				- RandomForest
+				- ExtreemRandomTrees
+				- LightGBM
+				- XGBoostRegressor
+				- FastLinearRegression
+				- OnlineGradientRegressor
+			- Classification:
+				- LogisticRegression
+				- SGD
+				- MultinomialNaiveBayes
+				- BernouliNaiveBayes
+				- SVM
+				- LinearSVM
+				- KNN
+				- DecisionTree
+				- RandomForest
+				- ExtremeRandomTrees
+				- LightGBM
+				- GradientBoosting
+				- XGBoostClassifier
+				- AveragedPerceptronClassifier
+			- TimeSeries Forecasting:
+				- AutoArima
+				- Prophet
+				- TCNForecaster
+				- ElasticNet
+				- GradientBoosting
+				- DecisionTree
+				- KNN
+				- LassoLars
+				- SGD
+				- RandomForest
+				- ExtreemRandomTrees
+				- LightGBM
+				- XGBoostRegressor
