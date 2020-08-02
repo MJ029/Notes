@@ -1,0 +1,1606 @@
+Links: https://www.learnpython.org/en/Pandas_Basics
+       https://datacarpentry.org/python-ecology-lesson/03-index-slice-subset/
+       https://www.tutorialspoint.com/python_pandas/index.htm
+       https://pypi.org/project/pandas/
+Pandas:
+
+pandas is a Python package providing fast, flexible, and expressive data structures designed to make working with structured (tabular, multidimensional, potentially heterogeneous) and time series data both easy and intuitive.It aims to be the fundamental high-level building block for doing practical, real world data analysis in Python. Additionally, it has the broader goal of becoming the most powerful and flexible open source data analysis / manipulation tool available in any language. It is already well on its way toward this goal.
+
+
+Using Pandas, we can accomplish five typical steps in the processing and analysis of data, regardless of the origin of data — load, prepare, manipulate, model, and analyze.
+
+
+pandas is well suited for many different kinds of data:
+
+>Tabular data with heterogeneously-typed columns, as in an SQL table or Excel spreadsheet
+>Ordered and unordered (not necessarily fixed-frequency) time series data.
+>Arbitrary matrix data (homogeneously typed or heterogeneous) with row and column labels
+>Any other form of observational / statistical data sets. The data actually need not be labeled at all to be placed  into a pandas data structure
+
+Pandas deals with the following three data structures −
+
+ 1) Series - 1D labeled homogeneous array, sizeimmutable
+ 2) DataFrame - General 2D labeled, size-mutable tabular structure with potentially heterogeneously typed columns
+ 3) Panel - General 3D labeled, size-mutable array
+   These data structures are built on top of Numpy array, which means they are fast.
+
+   All Pandas data structures are value mutable (can be changed) and except Series all are size mutable. Series is size immutable.
+
+Series:
+      Series is a one-dimensional array like structure with homogeneous data. For example, the following series is a collection of integers 10, 23, 56, …
+
+ 10	23	56	17	52	61	73	90	26	72
+ Key Points:
+>Homogeneous data
+>Size Immutable
+>Values of Data Mutable
+
+DataFrame:
+         DataFrame is a two-dimensional array with heterogeneous data. For example,
+
+Name	Age	Gender	Rating
+Steve	32	Male	3.45
+Lia	28	Female	4.6
+Vin	45	Male	3.9
+Katie	38	Female	2.78
+The table represents the data of a sales team of an organization with their overall performance rating. The data is represented in rows and columns. Each column represents an attribute and each row represents a person.
+
+Data Type of Columns
+The data types of the four columns are as follows −
+
+Column	Type
+Name	String
+Age	Integer
+Gender	String
+Rating	Float
+
+Key Points:
+>Heterogeneous data
+>Size Mutable
+>Data Mutable
+
+Panel:
+      Panel is a three-dimensional data structure with heterogeneous data. It is hard to represent the panel in graphical representation. But a panel can be illustrated as a container of DataFrame.
+
+Key Points:
+>Heterogeneous data
+>Size Mutable
+>Data Mutable
+
+------------------
+pandas.Series
+------------------
+
+Series is a one-dimensional labeled array capable of holding data of any type (integer, string, float, python objects, etc.). The axis labels are collectively called index.
+
+It can be created using the following constructor-
+
+pandas.Series( data, index, dtype, copy)
+
+1) data - data takes various forms like ndarray, list, constants
+2) index - Index values must be unique and hashable, same length as data. Default np.arrange(n) if no index is passed.
+3) dtype - dtype is for data type. If None, data type will be inferred
+4) copy - Copy data. Default False
+
+Series can be created using various inputs like
+   - Array
+   - Dict
+   - Scalar value or constant
+
+Create an Empty Series:
+
+
+import pandas as pd
+s = pd.Series()
+print (s)
+
+Create a Series from ndarray:
+
+import pandas as pd
+import numpy as np
+data = np.array([1,'b',3,'123d'])
+s = pd.Series(data)
+print (s)
+
+import pandas as pd
+import numpy as np
+data = np.array(['a','b','c','d',5])
+s = pd.Series(data,index=[100,101,102,103,104])
+print (s)
+
+Create a Series from dict:
+
+EX 1:
+import pandas as pd
+import numpy as np
+data = {'a' : 0., 'b' : 1., 'c' : 2.}
+s = pd.Series(data)
+print (s)
+
+EX 2:
+import pandas as pd
+import numpy as np
+data = {'a' : 0., 'b' : 1., 'c' : 2.}
+s = pd.Series(data,index=['b','c','d','a'])
+print s
+
+EX 3:
+import pandas as pd
+import numpy as np
+data = {'a' : 0., 'b' : 1., 'c' : 2.,3 : 'f',3 : 'g'}
+s = pd.Series(data,index=['b','c','d','a',3])
+print (s)
+
+Output for EX 3:
+
+b      1
+c      2
+d    NaN
+a      0
+3      g
+
+Create a Series from Scalar:
+
+EX 1:
+import pandas as pd
+import numpy as np
+s = pd.Series(5, index=[0, 1, 2, 3])
+print (s)
+
+Accessing Data from Series with Position :
+
+EX 1:
+
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve the first element
+print (s[0])
+
+EX 2: 
+
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve the first three element
+print s[:3]
+
+EX 3:
+
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve the first three element
+print (s[:-3])
+
+Retrieve Data Using Label (Index):
+
+EX 1:
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve a single element
+print (s['a'])
+
+
+EX 2:
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve multiple elements
+print (s[['a','c','e']])
+
+EX 3:
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+
+#retrieve multiple elements
+print (s[['A']]) #print (s[['n']])
+
+output:"None of [Index(['A'], dtype='object')] 
+
+------------------------------------------
+Python Pandas - DataFrame
+------------------------------------------
+A Data frame is a two-dimensional data structure, i.e., data is aligned in a tabular fashion in rows and columns.
+
+Features of DataFrame:
+>Potentially columns are of different types
+>Size – Mutable
+>Labeled axes (rows and columns)
+>Can Perform Arithmetic operations on rows and columns
+
+pandas.DataFrame:
+
+A pandas DataFrame can be created using the following constructor −
+
+pandas.DataFrame( data, index, columns, dtype, copy)
+
+1) Data : data takes various forms like ndarray, series, map, lists, dict, constants and also another DataFrame.
+2) index : For the row labels, the Index to be used for the resulting frame is Optional Default np.arange(n) if no            index is passed.
+3) columns : For column labels, the optional default syntax is - np.arange(n). This is only true if no index is              passed.
+4) dtype : Data type of each column.
+5) copy : This command (or whatever it is) is used for copying of data, if the default is False.
+
+
+Create DataFrame:
+A pandas DataFrame can be created using various inputs like −
+
+>Lists
+>dict
+>Series
+>Numpy ndarrays
+>Another DataFrame
+
+Create an Empty DataFrame:
+
+import pandas as pd
+df = pd.DataFrame()
+print (df)
+
+Create a DataFrame from Lists:
+
+EX :1
+import pandas as pd
+data = [1,2,3,4,5]
+df = pd.DataFrame(data)
+print (df)
+
+EX :2
+import pandas as pd
+data = [['Alex',10],['Bob',12],['Clarke',13]]
+df = pd.DataFrame(data,columns=['Name','Age'])
+print (df)
+
+EX:3
+import pandas as pd
+data = [['Alex',10],['Bob',12],['Clarke',13],['',]]
+df = pd.DataFrame(data,columns=['Name','Age'],dtype=float)
+print (df)
+
+Create a DataFrame from Dict of ndarrays / Lists:
+
+EX: 1
+import pandas as pd
+data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky'],'Age':[28,34,29,42]}
+df = pd.DataFrame(data)
+print (df)
+
+EX 2:
+import pandas as pd
+data = {'Name':['Tom', 'Jack', 'Steve', 'Ricky'],'Age':[28,34,29,42]}
+df = pd.DataFrame(data, index=['rank1','rank2','rank3','rank4'])
+print (df)
+
+Create a DataFrame from List of Dicts:
+
+EX : 1
+import pandas as pd
+data = [{'a': 1, 'b': 2},{'a': 5, 'b': 10, 'c': 20}]
+df = pd.DataFrame(data)
+print (df)
+
+EX : 2
+
+import pandas as pd
+data = [{'a': 1, 'b': 2},{'a': 5, 'b': 10, 'c': 20}]
+df = pd.DataFrame(data, index=['first', 'second'])
+print (df)
+
+EX : 3
+
+import pandas as pd
+data = [{'a': 1, 'b': 2},{'a': 5, 'b': 10, 'c': 20}]
+
+#With two column indices, values same as dictionary keys
+df1 = pd.DataFrame(data, index=['first', 'second'], columns=['a', 'b','c'])
+
+#With two column indices with one index with other name
+df2 = pd.DataFrame(data, index=['first', 'second'], columns=['a', 'b1'])
+print (df1)
+print (df2)
+
+Create a DataFrame from Dict of Series:
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print (df)
+
+Column Selection:
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print df ['one']
+
+Column Addition:
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+
+# Adding a new column to an existing DataFrame object with column label by passing new series
+
+print ("Adding a new column by passing as Series:")
+df['three']=pd.Series([10,20,30],index=['a','b','c'])
+print (df)
+
+print ("Adding a new column using the existing columns in DataFrame:")
+df['four']=df['one']+df['three']
+
+print (df)
+
+Column Deletion: del or pop
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd']),
+   'three' : pd.Series([10,20,30], index=['a','b','c'])}
+
+df = pd.DataFrame(d)
+print ("Our dataframe is:")
+print (df)
+
+# using del function
+print ("Deleting the first column using DEL function:")
+del df['one']
+print (df)
+
+# using pop function
+print ("Deleting another column using POP function:")
+df.pop('two')
+print (df)
+
+Row Selection, Addition, and Deletion:
+
+Selection by Label:
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print (df.loc['b'])
+
+Selection by integer location:
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print (df.iloc[2])
+
+Slice Rows
+
+import pandas as pd
+
+d = {'one' : pd.Series([1, 2, 3], index=['a', 'b', 'c']),
+   'two' : pd.Series([1, 2, 3, 4], index=['a', 'b', 'c', 'd'])}
+
+df = pd.DataFrame(d)
+print (df[2:4])
+
+Addition of Rows:Combining the dataframes using append
+
+import pandas as pd
+
+df = pd.DataFrame([[1, 2], [3, 4]], columns = ['a','b'])
+df2 = pd.DataFrame([[5, 6], [7, 8]], columns = ['a','b'])
+print(df)
+print(df2)
+df3 = df.append(df2)
+print (df3)
+
+locate the array:
+
+import pandas as pd
+
+df = pd.DataFrame([[1, 2], [3, 4]], columns = ['a','b'])
+
+print (df.loc[0])
+print (df.a.loc[0])
+
+
+Deletion of Rows:
+
+import pandas as pd
+
+df = pd.DataFrame([[1, 2], [3, 4]], columns = ['a','b'])
+df2 = pd.DataFrame([[5, 6], [7, 8]], columns = ['a','b'])
+
+df = df.append(df2)
+
+# Drop rows with label 0
+df = df.drop(0)
+
+print (df)
+
+-------------------------------------
+Python Pandas - Basic Functionality
+-------------------------------------
+
+Series Functionality:
+
+1) axes - List of row axis returned
+2) dtype - Provides the datatype for the object
+3) empty - Provides true,if series is empty
+4) ndim - Provides the number of dimensions
+5) size - provides number of elements for that data
+6) values - Provides series in ndarray
+7) head() - provides the first n rows
+8) tail() - provides the last n rows
+
+EX: 
+import pandas as pd
+import numpy as np
+
+#Create a series with 100 random numbers
+s = pd.Series(np.random.randn(6))
+print (s)
+
+Output:
+0    1.977681
+1    0.714395
+2    1.520756
+3    0.992208
+4    0.451657
+5   -0.728279
+
+dtype: float64
+
+
+import pandas as pd
+import numpy as np
+
+test = pd.Series(np.random.randn(4))
+print (test.empty)
+print (test.axes)
+print (test.ndim)
+print (test.size)
+print (test.values)
+print (test.head(1))
+print (test.tail(1))
+
+
+Output:
+
+False
+[RangeIndex(start=0, stop=4, step=1)]
+1
+4
+[ 1.03747673 -0.4428148   1.09993131  0.67299211]
+0    1.037477
+dtype: float64
+3    0.672992
+dtype: float64
+
+DataFrame Functionality:
+************************
+
+1) T - Rows to column or columns to rows.
+2) axes - Returns a list with the row axis labels and column axis labels as the only members.
+3) dtypes -  Provides the datatype for the object
+4) empty - Provides true,if series is empty
+5) ndim - Provides number of axes/array dimensions
+6) shape - Returns a tuple representing the dimensionality of the DataFrame.
+7) size - Number of elements in the NDFrame.
+8) values - Numpy representation of NDFrame.
+9) head() - Returns the first n rows.
+10) tail() - Returns last n rows.
+
+EX:
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our data series is:")
+print (df)
+
+EX2:
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+xy = {'Name':pd.Series(['ABC','CDE','EFG','HIJ','KLM','NOP','QRS']),
+   'Age':pd.Series([10,15,20,25,30,35,40]),
+   'Rating':pd.Series([3.45,2.37,3.62,4.21,4.9,3.9,4.1])}
+
+#Create a DataFrame
+Test = pd.DataFrame(xy)
+print ("xy:")
+print (Test)
+print(Test.T)
+print(Test.axes)
+print(Test.dtypes)
+print(Test.empty)
+print(Test.ndim)
+print(Test.shape)
+print(Test.size)
+print(Test.values)
+print(Test.head(3))
+print(Test.tail(2))
+
+Output:
+xy:
+  Name  Age  Rating
+0  ABC   10    3.45
+1  CDE   15    2.37
+2  EFG   20    3.62
+3  HIJ   25    4.21
+4  KLM   30    4.90
+5  NOP   35    3.90
+6  QRS   40    4.10
+
+The transpose of the data series is:
+           0     1     2     3    4    5    6
+Name     ABC   CDE   EFG   HIJ  KLM  NOP  QRS
+Age       10    15    20    25   30   35   40
+Rating  3.45  2.37  3.62  4.21  4.9  3.9  4.1
+
+Row axis labels and column axis labels are:
+[RangeIndex(start=0, stop=7, step=1), Index(['Name', 'Age', 'Rating'], dtype='object')]
+
+The data types of each column are:
+Name       object
+Age         int64
+Rating    float64
+dtype: object
+
+Is the object empty?
+False
+
+The dimension of the object is:
+2
+
+The shape of the object is:
+(7, 3)
+
+The total number of elements in our object is:
+21
+
+The actual data in our data frame is:
+[['ABC' 10 3.45]
+ ['CDE' 15 2.37]
+ ['EFG' 20 3.62]
+ ['HIJ' 25 4.21]
+ ['KLM' 30 4.9]
+ ['NOP' 35 3.9]
+ ['QRS' 40 4.1]]
+
+The first two rows of the data frame is:
+  Name  Age  Rating
+0  ABC   10    3.45
+1  CDE   15    2.37
+2  EFG   20    3.62
+
+The last two rows of the data frame is:
+  Name  Age  Rating
+5  NOP   35     3.9
+6  QRS   40     4.1
+
+--------------------------------------
+
+Python Pandas - Descriptive Statistics
+
+--------------------------------------
+
+EX:
+
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+xy = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+test = pd.DataFrame(xy)
+print ('xy:',test)
+print ('sum of xy',test.sum())
+print('when axis=1 then',test.sum(1))
+print ('mean of xy',test.mean())
+print ('standard deviation of xy',test.std())
+
+Output:
+
+xy: 
+    Name  Age  Rating
+0    Tom   25    4.23
+1  James   26    3.24
+2  Ricky   25    3.98
+3    Vin   23    2.56
+4  Steve   30    3.20
+5  Smith   29    4.60
+6   Jack   23    3.80
+
+sum of xy:
+Name      TomJamesRickyVinSteveSmithJack
+Age                                  181
+Rating                             25.61
+dtype: object
+
+when axis=1 then:
+
+0    29.23
+1    29.24
+2    28.98
+3    25.56
+4    33.20
+5    33.60
+6    26.80
+dtype: float64
+
+mean of xy:
+Age       25.857143
+Rating     3.658571
+dtype: float64
+
+standard deviation of xy
+Age       2.734262
+Rating    0.698628
+dtype: float64
+
+Functions & Description:
+************************
+
+1) count() - Number of non-null observations
+2) sum() - Sum of values
+3) mean() - Mean of Values
+4) median() - Median of Values
+5) mode() - Mode of values
+6) std() - Standard Deviation of the Values
+7) min() - Minimum Value
+8) max() - Maximum Value
+9) abs() - Absolute Value
+10 prod() - Product of Values
+11) cumsum() - Cumulative Sum
+12) cumprod() - Cumulative Product
+
+Note − Since DataFrame is a Heterogeneous data structure. Generic operations don’t work with all functions.
+
+Functions like sum(), cumsum() work with both numeric and character (or) string data elements without any error. Though n practice, character aggregations are never used generally, these functions do not throw any exception.
+
+Functions like abs(), cumprod() throw exception when the DataFrame contains character or string data because such operations cannot be performed.
+
+Links :
+https://www.mathsisfun.com/mean.html
+https://www.mathsisfun.com/data/standard-deviation-formulas.html
+
+Summarizing Data:
+******************
+The describe() function computes a summary of statistics pertaining to the DataFrame columns.
+
+EX:
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+xy = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+test = pd.DataFrame(xy)
+print(test.describe())
+
+This function gives the mean, std and IQR values. And, function excludes the character columns and given summary about numeric columns. 'include' is the argument which is used to pass necessary information regarding what columns need to be considered for summarizing. Takes the list of values; by default, 'number'.
+
+object − Summarizes String columns
+number − Summarizes Numeric columns
+all − Summarizes all columns together (Should not pass it as a list value)
+
+
+Now, use the following statement in the program and check the output −
+
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+xy = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+test = pd.DataFrame(xy)
+print(test.describe(include=['object']))
+print(test.describe(include=['number']))
+print(test.describe(include='all'))
+
+Output:
+
+include=['object']:
+
+         Name
+count       7
+unique      7
+top     Smith
+freq        1
+
+include=['Number']
+             Age    Rating
+count   7.000000  7.000000
+mean   25.857143  3.658571
+std     2.734262  0.698628
+min    23.000000  2.560000
+25%    24.000000  3.220000
+50%    25.000000  3.800000
+75%    27.500000  4.105000
+max    30.000000  4.600000
+
+include='all'
+         Name        Age    Rating
+count       7   7.000000  7.000000
+unique      7        NaN       NaN
+top     Smith        NaN       NaN
+freq        1        NaN       NaN
+mean      NaN  25.857143  3.658571
+std       NaN   2.734262  0.698628
+min       NaN  23.000000  2.560000
+25%       NaN  24.000000  3.220000
+50%       NaN  25.000000  3.800000
+75%       NaN  27.500000  4.105000
+max       NaN  30.000000  4.600000
+
+---------------------------------------------
+
+Python Pandas - Function Application
+
+---------------------------------------------
+
+To apply your own or another library’s functions to Pandas objects, you should be aware of the three important methods. The methods have been discussed below. The appropriate method to use depends on whether your function expects to operate on an entire DataFrame, row- or column-wise, or element wise.
+
+Table wise Function Application: pipe()
+Row or Column Wise Function Application: apply()
+Element wise Function Application: applymap()
+
+Table-wise Function Application
+*********************************
+
+adder function:
+
+def adder(ele1,ele2):
+   return ele1+ele2
+
+operation using the dataframe:
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.pipe(adder,2)
+
+
+EX:
+
+import pandas as pd
+import numpy as np
+
+def adder(ele1,ele2):
+   return ele1+ele2
+
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.pipe(adder,2)
+print (df.apply(np.mean))
+
+Output:
+col1    0.387828
+col2   -0.507557
+col3   -0.263511
+
+Row or Column Wise Function Application:
+****************************************
+
+EX 01:
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.apply(np.mean)
+print (df.apply(np.mean))
+
+Output:
+
+col1   -0.290405
+col2    0.064331
+col3   -0.192260
+
+Ex02:
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.apply(np.mean,axis=1)
+print (df.apply(np.mean))
+
+Output:
+
+col1    0.275649
+col2    0.004423
+col3    0.312218
+dtype: float64
+
+EX 03:
+
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.apply(lambda x: x.max() - x.min())
+print (df.apply(np.mean))
+
+Output:
+
+col1    0.033788
+col2    0.146944
+col3    0.117228
+dtype: float64
+
+
+Element Wise Function Application
+*************************************
+
+EX: 01
+
+import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+
+# My custom function
+df['col1'].map(lambda x:x*100)
+print (df.apply(np.mean))
+
+Output:
+col1    0.304536
+col2   -0.108459
+col3   -0.902462
+dtype: float64
+
+EX: 02
+
+import pandas as pd
+import numpy as np
+
+# My custom function
+df = pd.DataFrame(np.random.randn(5,3),columns=['col1','col2','col3'])
+df.applymap(lambda x:x*100)
+print (df.apply(np.mean))
+
+Output:
+col1   -0.198515
+col2   -0.300451
+col3   -0.053905
+
+
+--------------------------------------------------
+
+Python Pandas - Reindexing
+
+--------------------------------------------------
+
+Reindexing changes the row labels and column labels of a DataFrame. To reindex means to conform the data to match a given set of labels along a particular axis.
+
+Multiple operations can be accomplished through indexing like −
+
+	>Reorder the existing data to match a new set of labels.
+
+	>Insert missing value (NA) markers in label locations where no data for the label existed.
+
+EX:
+
+
+import pandas as pd
+import numpy as np
+
+N=20
+
+df = pd.DataFrame({
+   'A': pd.date_range(start='2016-01-01',periods=N,freq='D'),
+   'x': np.linspace(0,stop=N-1,num=N),
+   'y': np.random.rand(N),
+   'C': np.random.choice(['Low','Medium','High'],N).tolist(),
+   'D': np.random.normal(100, 10, size=(N)).tolist()
+})
+
+#reindex the DataFrame
+df_reindexed = df.reindex(index=[0,2,5], columns=['A', 'C', 'B'])
+
+print (df_reindexed)
+
+
+Output:
+
+           A       C   B
+0 2016-01-01  Medium NaN
+2 2016-01-03    High NaN
+5 2016-01-06    High NaN
+
+
+Reindex to Align with Other Objects
+***************************************
+
+EX:
+import pandas as pd
+import numpy as np
+
+df1 = pd.DataFrame(np.random.randn(10,3),columns=['col1','col2','col3'])
+df2 = pd.DataFrame(np.random.randn(7,3),columns=['col1','col2','col3'])
+
+df1 = df1.reindex_like(df2)
+print (df1)
+
+Output:
+       col1      col2      col3
+0  0.106056  1.002697  0.195585
+1  1.289278 -1.026787 -1.519735
+2 -0.276652  0.216880 -1.418643
+3 -1.471027  0.403674 -1.648912
+4 -0.749316 -0.114331  0.921200
+5  0.513973  0.929057 -2.351503
+6  0.866698  0.660145  3.179442
+
+Filling while ReIndexing:
+*****************************
+
+reindex() takes an optional parameter method which is a filling method with values as follows −
+
+	>pad/ffill − Fill values forward
+
+	>bfill/backfill − Fill values backward
+
+	>nearest − Fill from the nearest index values
+
+EX:1
+
+import pandas as pd
+import numpy as np
+
+df1 = pd.DataFrame(np.random.randn(6,3),columns=['col1','col2','col3'])
+df2 = pd.DataFrame(np.random.randn(2,3),columns=['col1','col2','col3'])
+
+# Padding NAN's
+print (df2.reindex_like(df1))
+
+# Now Fill the NAN's with preceding Values
+print ("Data Frame with Forward Fill:")
+print (df2.reindex_like(df1,method='ffill'))
+
+
+Output:
+       col1      col2      col3
+0  0.840610  0.357595  2.451096
+1 -1.307923  0.427915 -0.701394
+2       NaN       NaN       NaN
+3       NaN       NaN       NaN
+4       NaN       NaN       NaN
+5       NaN       NaN       NaN
+Data Frame with Forward Fill:
+       col1      col2      col3
+0  0.840610  0.357595  2.451096
+1 -1.307923  0.427915 -0.701394
+2 -1.307923  0.427915 -0.701394
+3 -1.307923  0.427915 -0.701394
+4 -1.307923  0.427915 -0.701394
+5 -1.307923  0.427915 -0.701394
+
+
+Limits on Filling while Reindexing:
+************************************
+
+import pandas as pd
+import numpy as np
+
+df1 = pd.DataFrame(np.random.randn(6, 3), columns=['col1', 'col2', 'col3'])
+df2 = pd.DataFrame(np.random.randn(2, 3), columns=['col1', 'col2', 'col3'])
+
+# Padding NAN's
+print (df2.reindex_like(df1))
+
+# Now Fill the NAN's with preceding Values
+print("Data Frame with Forward Fill limiting to 1:")
+print (df2.reindex_like(df1, method='ffill', limit=1))
+
+Output:
+       col1      col2      col3
+0 -0.376287  1.553611  2.112810
+1 -1.256094  0.894701  0.465294
+2       NaN       NaN       NaN
+3       NaN       NaN       NaN
+4       NaN       NaN       NaN
+5       NaN       NaN       NaN
+Data Frame with Forward Fill limiting to 1:
+       col1      col2      col3
+0 -0.376287  1.553611  2.112810
+1 -1.256094  0.894701  0.465294
+2 -1.256094  0.894701  0.465294
+3       NaN       NaN       NaN
+4       NaN       NaN       NaN
+5       NaN       NaN       NaN
+
+Renaming:
+*********
+
+
+import pandas as pd
+import numpy as np
+
+df1 = pd.DataFrame(np.random.randn(6,3),columns=['col1','col2','col3'])
+print (df1)
+
+print ("After renaming the rows and columns:")
+print (df1.rename(columns={'col1' : 'c1', 'col2' : 'c2'},
+index = {0 : 'apple', 1 : 'banana', 2 : 'durian'}))
+
+Output:
+
+       col1      col2      col3
+0  0.609824  1.325941  0.860495
+1 -0.678786  0.677580  1.572426
+2  0.022369  1.098708 -1.000271
+3  0.592432 -0.746209  1.584082
+4 -1.515200 -0.427161 -0.268614
+5  0.711625 -1.434652  0.340142
+After renaming the rows and columns:
+              c1        c2      col3
+apple   0.609824  1.325941  0.860495
+banana -0.678786  0.677580  1.572426
+durian  0.022369  1.098708 -1.000271
+3       0.592432 -0.746209  1.584082
+4      -1.515200 -0.427161 -0.268614
+5       0.711625 -1.434652  0.340142
+
+---------------------------------------------------
+
+Python Pandas - Statistical Functions
+
+---------------------------------------------------
+
+Statistical methods will help to understand and analyze the behavior of data.It can be using the statistical function which is applied on objects.
+
+pct_change():
+Comparing every element with the prior element.
+
+Example:
+
+import pandas as ps
+import numpy as ny
+d=ps.Series([5,4,3])
+print(d.pct_change())
+g=ps.DataFrame(ny.random.rand(3,3))
+print(g.pct_change())
+
+Output:
+0     NaN
+1   -0.20
+2   -0.25
+dtype: float64
+          0         1         2
+0       NaN       NaN       NaN
+1  0.283680  1.262164  2.971228
+2  1.136902 -0.772506  0.001548
+
+Covariance:
+Covariance is a measure of how much two variables vary together.
+Example:
+import pandas as ps
+import numpy as ny
+a=ps.Series(ny.random.rand(5))
+b=ps.Series(ny.random.rand(5))
+print(a.cov(b))
+
+Output:
+0.03932090425734729
+
+Correlation:
+Correlation shows linear relationship between two values.Its is calculated using pearson(default),spearman,kendall.
+
+Example:
+import pandas as ps
+import numpy as ny
+t=ps.DataFrame(ny.random.rand(7,3),columns=['q','w','e'])
+print(t['q'].corr(t['e']))
+print(t.corr())
+
+Output:
+-0.32085117071127056
+          q         w         e
+q  1.000000  0.236192 -0.320851
+w  0.236192  1.000000 -0.119916
+e -0.320851 -0.119916  1.000000
+
+Data Ranking:
+Data Ranking produces ranking for each element in the array of elements. In case of ties, assigns the mean rank.
+
+Rank optionally takes a parameter ascending which by default is true; when false, data is reverse-ranked, with larger values assigned a smaller rank.
+
+Example:
+
+import pandas as ps
+import numpy as ny
+t=ps.Series(ny.random.rand(6),index=list('qwerty'))
+t['q'] = t['t']
+print(t.rank())
+
+Output:
+q    4.5
+w    6.0
+e    3.0
+r    1.0
+t    4.5
+y    2.0
+dtype: float64
+---------------------------------------------------
+
+Python Pandas - GroupBy
+
+---------------------------------------------------
+
+Pandas can also perform sql operation like group by using dataframe objects
+
+Example:
+
+import pandas as ps
+xy = {'Name':['ABC','CDE','EFG','HIJ','KLM','NOP','QRS','ABC','CDE'],
+      'Age':[10,15,20,25,30,35,40,10,15],
+      'Height':[3.45,6.37,5.62,6.21,5.9,7.9,5.1,3,6],
+      'Year(DOB)':[2010,2005,2000,1995,1990,1985,1980,2010,2005]}
+test = ps.DataFrame(xy)
+print(test.groupby('Name').groups)
+
+Output:
+{'ABC': Int64Index([0, 7], dtype='int64'),
+ 'CDE': Int64Index([1, 8], dtype='int64'),
+ 'EFG': Int64Index([2], dtype='int64'),
+ 'HIJ': Int64Index([3], dtype='int64'),
+ 'KLM': Int64Index([4], dtype='int64'),
+ 'NOP': Int64Index([5], dtype='int64'),
+ 'QRS': Int64Index([6], dtype='int64')}
+
+----------------------------------------------------
+
+Python Pandas - Merging/Joining
+
+----------------------------------------------------
+Pandas has feature to do in-memory join operation which is like sql database.
+
+merge - which perform join operation between dataframe objects.
+
+Example:
+import pandas as ps
+one = ps.DataFrame({'User_ID':[123,456,678,901,321,654],
+                    'Name':['ABC','CDE','EFG','HIJ','KLM','NOP'],
+                    'Customer_ID':[1,2,3,4,5,6]})
+two = ps.DataFrame({'User_ID':[123,456,678,901,321,654],
+                    'Name':['zxc','cvb','vbn','mnb','azx','csd'],
+                    'Customer_ID':[1,7,8,2,3,6]})
+# print("\n",one,"\n",two)
+print(ps.merge(one,two,on=['User_ID','Customer_ID']))
+
+Output:
+   User_ID Name_x  Customer_ID Name_y
+0      123    ABC            1    zxc
+1      654    NOP            6    csd
+
+Merge using 'how':
+The how argument to merge specifies how to determine which keys are to be included in the resulting table. If a key combination does not appear in either the left or the right tables, the values in the joined table will be NA.
+
+left--left outer join--use keys from left object
+right--right outer join--use keys from right object
+outer--full outer join--use union of keys
+
+Example:
+
+import pandas as ps
+one = ps.DataFrame({'User_ID':[123,456,678,901,321,654],
+                    'Name':['ABC','CDE','EFG','HIJ','KLM','NOP'],
+                    'Customer_ID':[1,2,3,4,5,6]})
+two = ps.DataFrame({'User_ID':[123,456,678,901,321,654],
+                    'Name':['zxc','cvb','vbn','mnb','azx','csd'],
+                    'Customer_ID':[1,7,8,2,3,6]})
+# print("\n",one,"\n",two)
+# print(ps.merge(one,two,on=['User_ID','Customer_ID']))
+print(ps.merge(one,two,on='Customer_ID',how='inner'))
+# print(ps.merge(one,two,on='Customer_ID',how='left'))
+# print(ps.merge(one,two,on='Customer_ID',how='right'))
+# print(ps.merge(one,two,on='Customer_ID',how='outer'))
+
+Output:
+   User_ID Name_x  Customer_ID_x Name_y  Customer_ID_y
+0      123    ABC              1    zxc              1
+1      456    CDE              2    cvb              7
+2      678    EFG              3    vbn              8
+3      901    HIJ              4    mnb              2
+4      321    KLM              5    azx              3
+5      654    NOP              6    csd              6
+
+
+---------------------------------------------------------------
+
+Python Pandas - Reindexing
+
+---------------------------------------------------------------
+
+
+Reindexing changes the row labels and column labels of a DataFrame. To reindex means to conform the data to match a given set of labels along a particular axis.
+
+Multiple operations can be accomplished through indexing like −
+
+Reorder the existing data to match a new set of labels.
+
+Insert missing value (NA) markers in label locations where no data for the label existed.
+
+Example:
+
+
+import pandas as pd
+import numpy as np
+N=30
+ab=pd.DataFrame({
+    'A':pd.date_range(start='2020-01-01',periods=N,freq='D'),
+    'X':np.linspace(1,stop=N,num=N,dtype=int),
+    'Y':np.random.rand(N),
+    'C':np.random.choice(['Normal','Medium','Large'],N).tolist(),
+    'D':np.random.normal(200,20,size=(N)).tolist()
+})
+print(ab.filter(items=['A','Y','D']))
+qaz=ab.reindex(columns=['A','Y','D'])
+print(qaz)
+
+Output:
+          A         Y           D
+0  2020-01-01  0.163509  185.738563
+1  2020-01-02  0.749340  200.231560
+2  2020-01-03  0.734536  193.523573
+3  2020-01-04  0.136333  175.090180
+4  2020-01-05  0.813908  181.067316
+5  2020-01-06  0.648684  211.245264
+6  2020-01-07  0.720215  216.911201
+7  2020-01-08  0.145903  217.174158
+8  2020-01-09  0.376630  178.171698
+9  2020-01-10  0.155575  222.564457
+10 2020-01-11  0.375306  194.857232
+11 2020-01-12  0.037245  212.635039
+12 2020-01-13  0.887371  182.971445
+13 2020-01-14  0.538559  186.601667
+14 2020-01-15  0.354542  205.311463
+15 2020-01-16  0.700425  199.717055
+16 2020-01-17  0.254993  229.736370
+17 2020-01-18  0.717933  219.629132
+18 2020-01-19  0.008304  194.590432
+19 2020-01-20  0.277837  187.536513
+20 2020-01-21  0.519613  212.377336
+21 2020-01-22  0.612922  209.505763
+22 2020-01-23  0.249140  169.360715
+23 2020-01-24  0.159391  187.134240
+24 2020-01-25  0.172858  182.632514
+25 2020-01-26  0.017525  182.345467
+26 2020-01-27  0.096094  191.506878
+27 2020-01-28  0.569883  183.524188
+28 2020-01-29  0.797317  189.433672
+29 2020-01-30  0.658682  201.288922
+            A         Y           D
+0  2020-01-01  0.163509  185.738563
+1  2020-01-02  0.749340  200.231560
+2  2020-01-03  0.734536  193.523573
+3  2020-01-04  0.136333  175.090180
+4  2020-01-05  0.813908  181.067316
+5  2020-01-06  0.648684  211.245264
+6  2020-01-07  0.720215  216.911201
+7  2020-01-08  0.145903  217.174158
+8  2020-01-09  0.376630  178.171698
+9  2020-01-10  0.155575  222.564457
+10 2020-01-11  0.375306  194.857232
+11 2020-01-12  0.037245  212.635039
+12 2020-01-13  0.887371  182.971445
+13 2020-01-14  0.538559  186.601667
+14 2020-01-15  0.354542  205.311463
+15 2020-01-16  0.700425  199.717055
+16 2020-01-17  0.254993  229.736370
+17 2020-01-18  0.717933  219.629132
+18 2020-01-19  0.008304  194.590432
+19 2020-01-20  0.277837  187.536513
+20 2020-01-21  0.519613  212.377336
+21 2020-01-22  0.612922  209.505763
+22 2020-01-23  0.249140  169.360715
+23 2020-01-24  0.159391  187.134240
+24 2020-01-25  0.172858  182.632514
+25 2020-01-26  0.017525  182.345467
+26 2020-01-27  0.096094  191.506878
+27 2020-01-28  0.569883  183.524188
+28 2020-01-29  0.797317  189.433672
+29 2020-01-30  0.658682  201.288922
+
+*****************************************************
+
+Reindex to Align with Other Objects
+
+*****************************************************
+
+You may wish to take an object and reindex its axes to be labeled the same as another object. Consider the following example to understand the same.
+
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+bc=pd.DataFrame(np.random.randn(2,2),columns=['h1','h2'])
+de=ab.reindex_like(bc)
+print(de)
+
+Filling while ReIndexing:
+
+reindex() takes an optional parameter method which is a filling method with values as follows −
+
+	pad/ffill − Fill values forward
+
+	bfill/backfill − Fill values backward
+
+	nearest − Fill from the nearest index values
+
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+bc=pd.DataFrame(np.random.randn(2,2),columns=['h1','h2'])
+de=ab.reindex_like(bc)
+print(bc.reindex_like(ab))
+print("Forward Fill:")
+print(bc.reindex_like(ab,method='ffill'))
+
+Limits on Filling while Reindexing:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+bc=pd.DataFrame(np.random.randn(2,2),columns=['h1','h2'])
+de=ab.reindex_like(bc)
+print(bc.reindex_like(ab))
+print("Forward Fill:")
+print(bc.reindex_like(ab,method='ffill',limit=1))
+
+Renaming
+
+The rename() method allows you to relabel an axis based on some mapping (a dict or Series) or an arbitrary function.
+
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+print(ab)
+print("Renaming:")
+print(ab.rename(columns={'h1':'head1','h2':'head2','h3':'head3'},
+                index={0:'x',1:'y',2:'z'}))
+
+
+
+--------------------------------------------------------
+
+Python Pandas - Iteration
+
+--------------------------------------------------------
+
+The behavior of basic iteration over Pandas objects depends on the type. When iterating over a Series, it is regarded as array-like, and basic iteration produces the values. Other data structures, like DataFrame and Panel, follow the dict-like convention of iterating over the keys of the objects.
+
+In short, basic iteration (for i in object) produces −
+
+Series − values
+
+DataFrame − column labels
+
+Iterating a DataFrame:
+Iterating a DataFrame gives column names. Let us consider the following example to understand the same.
+
+
+Example:
+
+import pandas as pd
+import numpy as np
+N=30
+ab=pd.DataFrame({
+    'A':pd.date_range(start='2020-01-01',periods=N,freq='D'),
+    'X':np.linspace(1,stop=N,num=N,dtype=int),
+    'Y':np.random.rand(N),
+    'C':np.random.choice(['Normal','Medium','Large'],N).tolist(),
+    'D':np.random.normal(200,20,size=(N)).tolist()
+})
+for col in ab:
+    print(col)
+
+Output:
+A
+X
+Y
+C
+D
+
+To iterate over the rows of the DataFrame, we can use the following functions −
+
+iteritems() − to iterate over the (key,value) pairs
+
+iterrows() − iterate over the rows as (index,series) pairs
+
+itertuples() − iterate over the rows as namedtuples
+
+
+iteritems():
+
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+for key,value in ab.iteritems():
+    print (key,value)
+
+Output:
+h1 0   -0.445484
+1    0.469967
+2   -0.560476
+3   -0.215645
+4   -0.754938
+Name: h1, dtype: float64
+h2 0   -0.457053
+1    1.447827
+2    1.050802
+3   -1.707483
+4   -1.596614
+Name: h2, dtype: float64
+h3 0   -1.438586
+1    1.103042
+2    0.638142
+3   -1.597156
+4    0.152421
+Name: h3, dtype: float64
+
+
+iterrows():
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,4),columns=['h1','h2','h3','h4'])
+for key,value in ab.iterrows():
+    print(key,value)
+
+Output:
+0 h1    0.068124
+h2    0.782270
+h3   -0.378381
+h4    1.055692
+Name: 0, dtype: float64
+1 h1   -1.310517
+h2   -1.777725
+h3    0.046111
+h4    0.268581
+Name: 1, dtype: float64
+2 h1   -0.058264
+h2   -0.630494
+h3    1.627160
+h4   -0.629820
+Name: 2, dtype: float64
+3 h1    1.200249
+h2    0.477720
+h3    0.002720
+h4    0.973641
+Name: 3, dtype: float64
+4 h1   -2.255722
+h2    0.388566
+h3    0.277061
+h4   -0.519778
+Name: 4, dtype: float64
+
+itertuples:
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),columns=['h1','h2','h3'])
+for row in ab.itertuples():
+    print(row)
+
+Output:
+Pandas(Index=0, h1=-0.7402934663644479, h2=0.14636721356361257, h3=-1.045328160858767)
+Pandas(Index=1, h1=0.3625739807118749, h2=-0.4409238973025681, h3=0.34795072966627477)
+Pandas(Index=2, h1=0.1732963699616036, h2=0.8639763032383021, h3=0.4756844614747522)
+Pandas(Index=3, h1=-0.010360828581228086, h2=-1.0294511290893573, h3=0.3858535498642369)
+Pandas(Index=4, h1=0.18553880133766582, h2=1.3027003130709514, h3=1.0621350871199196)
+
+
+--------------------------------------------
+
+Python Pandas - Sorting
+
+--------------------------------------------
+
+There are two kinds of sorting the available.
+>by label
+>by actual value
+
+By Label
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),index=[3,1,5,2,4],columns=['h1','h2','h3'])
+bb=ab.sort_index()
+print(bb)
+
+Order of Sorting
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),index=[3,1,5,2,4],columns=['h1','h2','h3'])
+bb=ab.sort_index()
+cc=ab.sort_index(ascending=False)
+print(bb)
+print("CC:/n",cc)
+
+Output:
+         h1        h2        h3
+1 -3.028924 -0.634494  0.492371
+2  0.148444 -0.088149  0.426537
+3  0.482239  0.437383  1.655610
+4  0.550551 -0.176513 -0.885514
+5 -0.017248 -1.740840 -0.965218
+CC:/n          h1        h2        h3
+5 -0.017248 -1.740840 -0.965218
+4  0.550551 -0.176513 -0.885514
+3  0.482239  0.437383  1.655610
+2  0.148444 -0.088149  0.426537
+1 -3.028924 -0.634494  0.492371
+
+Sort the Columns:
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),index=[3,1,5,2,4],columns=['h1','h2','h3'])
+bc=ab.sort_index(axis=1)
+print(bc)
+
+Output:
+         h1        h2        h3
+3  1.026964 -2.082312  1.372325
+1  0.484257  0.109422 -0.219746
+5  1.198909  1.794029  0.523145
+2 -0.505656 -0.271917 -0.115609
+4 -0.915583 -0.187530 -1.948890
+
+By Value:
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),index=[3,1,5,2,4],columns=['h1','h2','h3'])
+bb=ab.sort_values(by='h1')
+print(bb)
+
+Output:
+         h1        h2        h3
+3 -1.330827 -0.173459 -0.509463
+5 -0.415711 -0.432956 -1.382365
+1 -0.370328 -0.847432  0.644210
+4 -0.291384 -0.805350  0.068411
+2  1.245594  0.363907  0.802063
+
+Sorting Algorithm:
+
+sort_values() provides a provision to choose the algorithm from mergesort, heapsort and quicksort. Mergesort is the only stable algorithm.
+Example:
+import pandas as pd
+import numpy as np
+ab=pd.DataFrame(np.random.randn(5,3),index=[3,1,5,2,4],columns=['h1','h2','h3'])
+bb=ab.sort_values(by='h1',kind='mergesort')
+print(bb)
+
+Output:
+         h1        h2        h3
+5 -1.168150 -2.397165  1.195692
+4 -1.096362 -1.322257  0.442276
+2 -0.823663  0.391908  2.422607
+1  1.154271 -0.651803 -1.675518
+3  1.922856 -1.391971  0.820877
+
