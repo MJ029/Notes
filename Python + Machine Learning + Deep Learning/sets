@@ -1,7 +1,6 @@
 - SET is a collection of unordered, unindexed items, which can be written as a list of comma-separated values (items) between “{ }” curly brackets. 
-- Once a set is created, you cannot change its items, but you can add new items.
-- Every set element is unique (no duplicates) and must be immutable (cannot be changed).
-- However, a set itself is mutable. We can add or remove items from it.
+- Every set element is unique and must be immutable.
+- However, a set itself is mutable. We can add or remove items from it, but you cannot update its items.
 - It can have any number of items and they may be of different types (integer, float, tuple, string etc.)
 - But a set cannot have mutable elements like lists, sets or dictionaries as its elements.
 - Common uses include membership testing, removing duplicates from a sequence, and computing standard.
