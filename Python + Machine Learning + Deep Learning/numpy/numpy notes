@@ -1,0 +1,17 @@
+***************************************Numpy*********************************************
+Introduction
+- NumPy is the fundamental package for scientific computing in Python was created in 2005 by Travis Oliphant.
+- It stands for Numerical Python.
+- It is a Python library that provides a multidimensional array object at the core of the NumPy package[ndarray object].
+- This encapsulates n-dimensional arrays of homogeneous datatypes.
+- Numpy offers comprehensive mathematical functions, random number generators, linear algebra routines, Fourier transforms, and more.
+- Numpy is Platform independent and interoperable library[supports wide range of Hardware & computing platforms.]
+- Numpy array are 50x faster[core of NumPy is well-optimized C code] than traditional Python sequences.
+- NumPy’s high level syntax makes it accessible and productive for programmers from any background or experience level.
+- 
+
+Points to Remember:
+- Numpy arrays are fixed size at creation[Changing the size of an ndarray will create a new array and delete the original.], unlike python lists[which can grow dynamically].
+- The elements in a NumPy array are all required to be homogeneous datatypes[same data types].
+- NumPy arrays facilitate advanced mathematical and other types of operations on large numbers of data.
+
