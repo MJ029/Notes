@@ -71,6 +71,11 @@
 	- conda install -c anaconda openpyxl
 	- conda install -c anaconda statsmodels
 	
+	# Installing Anaconda in a new environment
+	- conda install -c conda-forge jupyterlab
+	- conda install -c anaconda jupyter
+	- conda install -c anaconda ipykernel
+	
 - Conda update environment
 	- conda update -n base -c defaults conda
 
@@ -78,4 +83,8 @@
  
 - to find jupyter notebook password
 	/home/ubuntu/.jupyter/jupyter_notebook_config.json
-	
+
+# Enable newly created environment go Jupyter client
+	python -m ipykernel install --user --name=<<env name>>
+	ex:
+	python -m ipykernel install --user --name=ds_prep
