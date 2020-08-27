@@ -1,0 +1,135 @@
+python Spark:
+
+Spark consists of Spark sql,spark streaming ,Mlib,Graphx.
+
+What is spark?
+spark is open source cluster computing framework which is built around speed, ease of use and streamining analytics
+
+Python: Its high level programing and interpreted language.Python is object based.
+
+Pyspark:It is python api on spark majorly used on data science and analysis.
+using pyspark ,we can also work with spark RDD in python.
+
+Advantage for Pyspark:
+>Easy to use.
+>simple and comprehensive API
+>Better code readability & mainteniance 
+>Ability of visualization
+>wide range of libraries in python
+>Active community
+
+Red hat (centos ) linux system
+
+Spark Fundamental:
+>Spark context
+>RDD
+>Broadcast & Accumulator
+>spark conf
+>sparkfiles
+>Dataframe
+>storage levels
+>Mlib
+
+Life cycle of pyspark
+>Create RDD
+>Lazy transformation
+>Cache RDD
+>perform actions
+
+Spark Context:
+---------------
+>Spark context is heart of the any spark application.and establish a connection to the spark execution environment.
+>through spark context objects we can create rdd ,broadcast and accumulators 
+>and also access spark services and run jobs
+>spark context allows the spark driver application to access the driver through a resource manager which can be yarn and spark cluster manager.
+Driver program runs the operations inside the executer on the worker notes and spark context uses py4j to launch the jvm inturns create the java spark context.
+Spark context parameters: master ,appName,sparkHome,pyFiles,enviroment,batchsize,serilizer,conf,gateway,JSC,profiler_cls
+
+Broadcast & Accumulator:
+--------------------------------
+>parallel processing is achieved through the shared variables
+>This is fault tolerance is achived because it passes or send the data parallely to the remote node or backup nodes or replica nodes.
+>shared variables are broadcast and accumulators
+broadcast-this will save the variable across the all nodes.
+accumulators-these variables are used to aggregate the information through associative and commulative operations 
+
+RDD:
+----------
+RDD is building block of spark application and it is immutable.
+Resilient- Fault tolerance and is capabale of rebuilding data on failure.
+Distributed-Data is distributed amoung multiple nodes in cluster.
+Dataset-collection of partitioned value or values of value.
+
+RDD is done using the transformation and actions
+
+transformation:
+>map
+>flatmap
+>filter
+>distinct
+>reducebykey
+>mapPartitions
+>sortby
+
+Actions:
+>collect
+>collectAsMap
+>reduce
+>countByKey/countByvalue
+>take
+>first
+
+example:flatmap,map is transformation
+take is action
+
+Spark Conf:
+---------------------
+>sparkconf provides the configuration to run a spark application on a local system or cluster
+>sparkConf object is used to set different parameters which takes priority over the system properties
+>once sparkConf object is passed to spark,it becomes immutable.
+
+sparkConf Attributes-
+set(key,value)----set config property
+setMaster(value)----set masters URL
+setAppName(value)----set application name
+get(key,defaultValue=None)----Gets the configurations value of a key
+setSparkHome(value)----set spark installation path on worker nodes.
+
+SparkFiles:
+---------------------
+sparkFiles class helps in resolving the path of files added to the spark.
+
+get(filename)----It specify the path of the file that is added through sc.addFile()
+getrootdirectory()----It specifies the path to root directory of the file that is added through sc.addFile()
+
+DataFrame:
+-----------------------
+Dataframe is distributed collection of rows under named columns
+Immutable---lazy evaluation---distributed
+
+dataframe data can contain the excel files,rdbms,json,hive,RDD,xml,Parquet and casandra db.
+
+Storage Levels:
+-----------------------
+This part helps the data where it should be stored.
+In disk or in-memory.
+its serialize and replicated
+
+MLlib:
+----------------
+Machine Learning API in spark interoperates with NumPy in python is called MLlib
+It provides an integrated data analysis workflow.
+enhance speed and performance
+
+Various algorithms supported by MLlib:
+Spark MLlib
+clustering
+Frequent Pattern Matching
+Linear Algebra
+Collaborative Filtering
+Classification 
+Linear regression
+
+
+
+ 
