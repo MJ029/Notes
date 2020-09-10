@@ -1,0 +1,9 @@
+name: ds_dev
+dependencies:
+  - python<=3.8
+  - pandas
+  - scikit-learn
+  - matplotlib
+  - spyder-kernels
+  - ipykernel
+  - jupyterlab

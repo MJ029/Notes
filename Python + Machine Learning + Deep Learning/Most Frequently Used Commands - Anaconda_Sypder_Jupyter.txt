@@ -9,7 +9,10 @@
 	
 	Creates environment from yml file
 		conda env create -f environment.yml
-		
+		Ex:
+			conda env create -f data-engg.yml
+			conda env create -f ds_dev.yml
+			
 	Creates environment on secific path
 		conda create --prefix ./envs python=3.6
 	and activate usig below command

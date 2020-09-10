@@ -1,0 +1,7 @@
+name: data_engg
+dependencies:
+  - python<=3.8
+  - pandas
+  - spyder-kernels
+  - ipykernel
+  - jupyterlab
