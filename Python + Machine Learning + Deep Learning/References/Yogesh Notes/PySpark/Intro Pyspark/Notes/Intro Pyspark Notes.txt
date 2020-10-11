@@ -42,7 +42,7 @@ Spark Context:
 >through spark context objects we can create rdd ,broadcast and accumulators 
 >and also access spark services and run jobs
 >spark context allows the spark driver application to access the driver through a resource manager which can be yarn and spark cluster manager.
-Driver program runs the operations inside the executer on the worker notes and spark context uses py4j to launch the jvm inturns create the java spark context.
+Driver program runs the operations inside the executer on the worker nodes and spark context uses py4j to launch the jvm inturns create the java spark context.
 Spark context parameters: master ,appName,sparkHome,pyFiles,enviroment,batchsize,serilizer,conf,gateway,JSC,profiler_cls
 
 Broadcast & Accumulator:
