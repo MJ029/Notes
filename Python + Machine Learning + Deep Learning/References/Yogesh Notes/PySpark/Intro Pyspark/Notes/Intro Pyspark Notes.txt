@@ -10,6 +10,16 @@ Python: Its high level programing and interpreted language.Python is object base
 Pyspark:It is python api on spark majorly used on data science and analysis.
 using pyspark ,we can also work with spark RDD in python.
 
+what is spark core?
+
+Spark core is fundamental unit of the whole spark project. It provides functionalities like in-memory computation, 
+fault tolerance,task,dispatching,scheduling and input/output operation.
+
+Spark make use of special data structure Known as RDD.
+
+Spark core is distributed execution engine with all functionalities attached on top
+
+
 Advantage for Pyspark:
 >Easy to use.
 >simple and comprehensive API
