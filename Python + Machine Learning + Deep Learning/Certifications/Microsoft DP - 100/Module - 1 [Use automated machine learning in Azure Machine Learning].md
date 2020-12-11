@@ -167,3 +167,26 @@ Note:
 				- ExtreemRandomTrees
 				- LightGBM
 				- XGBoostRegressor
+
+### Deploy a model as a service:
+- After you've used automated machine learning to train some models, you can deploy the best performing model as a service for client applications to use.
+- In Azure Machine Learning, you can deploy a service as an **Azure Container Instances (ACI)** or to an **Azure Kubernetes Service (AKS)** cluster.
+- For production scenarios, an AKS deployment is recommended
+- In [Azure Machine Learning studio](https://ml.azure.com/)), on the Automated ML page, select the run for your automated machine learning experiment and view the Details tab.
+- Select the algorithm name for the best model.
+- Goto Model tab, use the Deploy button to deploy the model
+- Use the following setting to deploy the model.
+	- **Name:** Unique Name
+	- **Description:** More detail about the deployment.
+	- **Compute type:** ACI/AKS
+	- **Enable authentication:** checkbox to used to enable authentication
+- Once after filling above information click deploy and wait for sometime till the deployment to finish.
+- To check model deployment status use **Model summary** section in same model page. The status will be running wait for it to show as Successfull.
+- Once after successfull click deployment name will take you to deployment page, Click **endpoint tab --> consume** page and notedown below information.
+	- **URL:** The REST endpoint for your service
+	- **key:** he Primary Key for your service
+	
+Note:
+	- To delete a model you need to delete the endpoint first, 
+	- To delete the endpoint go to **EndPoints** in ***Assets*** the select eht end point and click delete.
+	- Then click **Models** in ***Assets*** Select the model and click delete.
