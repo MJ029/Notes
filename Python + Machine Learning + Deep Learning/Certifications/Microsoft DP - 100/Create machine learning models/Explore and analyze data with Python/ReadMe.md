@@ -1,6 +1,12 @@
 # Explore and analyze data with Python
 
-[[_TOC_]]
+## Table Of Content
+[Objetive](#objective)  
+[Pre-Requisites](#pre-requisites)  
+[1. Introduction](#1-introduction)  
+[2. Explore Data](#2-explore-data)  
+
+
 
 ### Objective:
 - Common Data Exploration and Analysis tasks.
