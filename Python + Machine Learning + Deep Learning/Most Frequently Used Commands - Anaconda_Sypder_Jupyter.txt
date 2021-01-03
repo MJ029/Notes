@@ -91,3 +91,6 @@
 	python -m ipykernel install --user --name=<<env name>>
 	ex:
 	python -m ipykernel install --user --name=ds_prep
+
+# Launch Jupyter Notebook custom path
+	jupyter notebook --notebook-dir="C:/Your/Desired/Start/Directory/"
