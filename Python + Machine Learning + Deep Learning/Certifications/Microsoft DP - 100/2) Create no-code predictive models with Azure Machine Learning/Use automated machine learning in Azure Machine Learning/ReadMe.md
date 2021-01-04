@@ -196,11 +196,13 @@ Note:
             		- Train-Validation Split
       		- **Concurrency:** Specifies maximum parallel Iterations to run.
         		- **Max concurrent iterations:** Integer Value >= 1
+  		- **Featurization settings:**
+    		- **Enable featurization:** Selected - this causes Azure Machine Learning to automatically preprocess the features before training.
 
 ### Deploy a model as a service:
 - After you've used automated machine learning to train some models, you can deploy the best performing model as a service for client applications to use.
 - In Azure Machine Learning, you can deploy a service as an **Azure Container Instances (ACI)** or to an **Azure Kubernetes Service (AKS)** cluster.
-- For production scenarios, an AKS deployment is recommended
+- For production scenarios, an AKS deployment is recommended. [for which you must create an inference cluster compute target.]
 - In [Azure Machine Learning studio](https://ml.azure.com/)), on the Automated ML page, select the run for your automated machine learning experiment and view the Details tab.
 - Select the algorithm name for the best model.
 - Goto Model tab, use the Deploy button to deploy the model
@@ -215,7 +217,9 @@ Note:
 	- **URL:** The REST endpoint for your service
 	- **key:** he Primary Key for your service
 	
-Note:
-	- To delete a model you need to delete the endpoint first, 
-	- To delete the endpoint go to **EndPoints** in ***Assets*** the select eht end point and click delete.
+Note:  
+	- To delete a model you need to delete the endpoint first.  
+	- To delete the endpoint go to **EndPoints** in ***Assets*** the select the end point and click delete.  
 	- Then click **Models** in ***Assets*** Select the model and click delete.
+
+### Test the deployed service:
