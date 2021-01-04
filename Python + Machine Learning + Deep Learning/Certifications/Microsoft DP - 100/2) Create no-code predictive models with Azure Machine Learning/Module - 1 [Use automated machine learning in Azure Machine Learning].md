@@ -1,3 +1,11 @@
+## Table of Content
+[What is machine Learning](#what-is-machine-learning)  
+[Create Azure Maxhine Learning Workspace](#create-an-azure-machine-learning-workspace)  
+[Create Compute Resources](#create-compute-resources)  
+[Explore Data](#explore-data)  
+[Train Machine Learening Model](#train-a-machine-learning-model)  
+[Deploy Model as a Serivice](#deploy-a-model-as-a-service)  
+
 ### What is Machine Learning:
 - Machine learning is a technique that uses mathematics and statistics to create a model that can predict unknown values.
 - It is data driven approach.
@@ -16,13 +24,19 @@ Note:
 - But there are some readymade services available[such as AzureML-Service, Amazon Seagemager and etc...] in-ourder ro reduce the work load
 
 ### Create an Azure Machine Learning workspace:
+- Azure Machine Learning is a cloud-based platform for building and operating machine learning solutions in Azure. 
+- It includes a wide range of features and capabilities that help data scientists prepare data, train models, publish predictive services, and monitor their usage.
+- Most importantly, it helps data scientists increase their efficiency by automating many of the time-consuming tasks associated with training models; and it enables them to use cloud-based compute resources that scale effectively to handle large volumes of data while incurring costs only when actually used.
 - Go to [azure portal](https://portal.azure.com/#home) and click create resource then search and select **new Machine Learning** resource.
 - The below listed properties are important when creating Azure ML resource.
 	- Workspace Name
 	- Subscription
 	- Resource group
-	- Location
-	- Workspace edition
+	- Region
+	- Storage account
+	- Key Vault
+	- Application insights
+	- Container registry
 - Fill the above fields and click create button, It will create new Azure ML workspace wait for some time and navigate to **Home** tab you can see your resources created.
 - On the Overview page for your workspace, launch Azure Machine Learning studio (or open a new browser tab and navigate to https://ml.azure.com ), and sign into Azure Machine Learning studio using your Microsoft account.
 - Choose Subscription and resourcegorup and ML flow in next window and click launch.
@@ -43,14 +57,17 @@ Note:
 	- **Compute name:** Unique name
 	- **Virtual Machine type:** CPU/GPU 
 	- **Virtual Machine size:** Standard Databricks Cluster VM config name
+	- **Enable SSH access:** Unselected
 - While the compute instance is being created, switch to the Compute Clusters tab, and add a new compute cluster with the following settings. You'll use this to train a machine learning model:
 - To add a new Compute cluster click **creat** in **compute clusters** tab and enter the below fields. In background it will create Databricks cluster
 	- **Compute name:** enter a unique name
-	- **Virtual Machine size:** Standard Databricks Cluster VM config name
+	- **Virtual Machine size:** Standard Databricks Cluster VM config name [***ex:*** Standard_DS11_v2]
+	- **Virtual Machine type:** CPU
 	- **Virtual Machine priority:** Dedicated
-	- **Maximum number of nodes:** MAximum required nodes to tain your model.
+	- **Maximum number of nodes:** Maximum required nodes to tain your model.
 	- **Minimum number of nodes:** Minimum required nodes to tain your model. This will always keep 2 clusters up and running so it is recommended to set 0, then cluster will be spin up during only training execution.
 	- **Idle seconds before scale down:** Keep alive time used to keep the cluster up and running idle for specified duration.
+	- **Enable SSH access:** Unselected
 
 ### Explore data:
 - Machine learning models must be trained with existing data. 
@@ -81,7 +98,7 @@ Note:
 				- **Skip Rows:** Used to specify the skip rows when reading file.
 			- **Schema:**
 				- Automatically detect schema and load its type.
-				- Used to alred autodetected schema definition.
+				- Used to alter autodetected schema definition.
 		- After the dataset has been created, open it and view the Explore page to see a sample of the data. This data contains historical features and labels for bike rentals.
 
 ### Train a machine learning model:
@@ -89,7 +106,7 @@ Note:
 - In Azure Machine Learning, ***operations*** that you run are called **experiments**.
 - Currently we cannot delete exprements from UI we have only powershell commands to delete exprements.
 
-- In [Azure Machine Learning studio](https://ml.azure.com/), view the **Automated ML** page (under **Author**).
+- In [Azure Machine Learning studio](https://ml.azure.com/), view the **Automated ML** page (under **Author** section).
 - Follow below steps to create a new Automated ML and run it.
 	- **Select dataset:**
 		- Choose the dataset that has been created earlier, if not you will be having an option to create a new dataset in teh same page.
@@ -98,75 +115,87 @@ Note:
 		- **Target column:** Specifies target column in dataset to be used as predictor(Y)
 		- **Training compute target:** Choose the **Compute Clusters** that created previously
 	- **Task type and settings:**
-		- **Task type:** Specifies type of task (**Regression**, **Classification**, **Clustering**)
+		- **Task type:** Specifies type of task (**Regression**, **Classification**, **Time Series**)
 		- **Additional configuration settings:**
 			- **Primary metric:** Specifies metrics availabel for regression and classification models like MSE, MAE and etc...
-			- Classification:
-				- Accuracy
-				- AUC Weight
-				- Norm Macro recall
-				- Average precision score weighted
-				- Precision score weighted
-			- Regression:
-				- Spearman Correlation
-				- Normelized root mean squared error
-				- R2 Score
-				- Normalized mean squared error
-			
-			- Time Series:
-				- Normelized root mean squared error
-				- R2 Score
-				- Normalized mean squared error
-				
-			- Validations:
-				- k-fold cross validation
-				- Monte carlo cross validation
-				- Train-validation split
-				- Auto			
-			- **Explain best model: ** Checkbox, this option causes automated machine learning to calculate feature importance for the best model; making it possible to determine the influence of each feature on the predicted label.
-			- **Blocked algorithms:** Specifies that algorithms not the be performed
-			- Regression:
-				- ElasticNet
-				- GradientBoosting
-				- Decision Tree
-				- KNN
-				- LassoLars
-				- SGD
-				- RandomForest
-				- ExtreemRandomTrees
-				- LightGBM
-				- XGBoostRegressor
-				- FastLinearRegression
-				- OnlineGradientRegressor
-			- Classification:
-				- LogisticRegression
-				- SGD
-				- MultinomialNaiveBayes
-				- BernouliNaiveBayes
-				- SVM
-				- LinearSVM
-				- KNN
-				- DecisionTree
-				- RandomForest
-				- ExtremeRandomTrees
-				- LightGBM
-				- GradientBoosting
-				- XGBoostClassifier
-				- AveragedPerceptronClassifier
-			- TimeSeries Forecasting:
-				- AutoArima
-				- Prophet
-				- TCNForecaster
-				- ElasticNet
-				- GradientBoosting
-				- DecisionTree
-				- KNN
-				- LassoLars
-				- SGD
-				- RandomForest
-				- ExtreemRandomTrees
-				- LightGBM
-				- XGBoostRegressor
+      			- Classification:
+    				- Accuracy
+    				- AUC Weight
+    				- Norm Macro recall
+    				- Average precision score weighted
+    				- Precision score weighted
+    			- Regression:
+    				- Spearman Correlation
+    				- Normelized root mean squared error
+    				- R2 Score
+    				- Normalized mean squared error
+    			
+    			- Time Series:
+    				- Normelized root mean squared error
+    				- R2 Score
+    				- Normalized mean squared error
+    				
+    			- Validations:
+    				- k-fold cross validation
+    				- Monte carlo cross validation
+    				- Train-validation split
+    				- Auto			
+			- **Explain best model:** Checkbox, this option causes automated machine learning to calculate feature importance for the best model; making it possible to determine the influence of each feature on the predicted label.
+			- **Blocked algorithms:** Specifies that algorithms not the be performed.
+    			- **Regression:**
+    				- ElasticNet
+    				- GradientBoosting
+    				- Decision Tree
+    				- KNN
+    				- LassoLars
+    				- SGD
+    				- RandomForest
+    				- ExtreemRandomTrees
+    				- LightGBM
+    				- XGBoostRegressor
+    				- FastLinearRegression
+    				- OnlineGradientRegressor
+    			- **Classification:**
+    				- LogisticRegression
+    				- SGD
+    				- MultinomialNaiveBayes
+    				- BernouliNaiveBayes
+    				- SVM
+    				- LinearSVM
+    				- KNN
+    				- DecisionTree
+    				- RandomForest
+    				- ExtremeRandomTrees
+    				- LightGBM
+    				- GradientBoosting
+    				- XGBoostClassifier
+    				- AveragedPerceptronClassifier
+    			- **TimeSeries Forecasting:**
+    				- AutoArima
+    				- Prophet
+    				- TCNForecaster
+    				- ElasticNet
+    				- GradientBoosting
+    				- DecisionTree
+    				- KNN
+    				- LassoLars
+    				- SGD
+    				- RandomForest
+    				- ExtreemRandomTrees
+    				- LightGBM
+    				- XGBoostRegressor
+    		- **Exit Criterian:** Specifies the threshold to exit from job training. usually it will be Time bound or Metric bound.
+        		- **Training job time (hours):** The maximum amount of time, in hours, for an experiment to train the models.
+        		- **Metric score threshold:** When this threshold value will be reached for an iteration metric the training job will terminated.
+            		- ***Note:*** Keep in mind that meaningful models have correlation > 0, otherwise they are as good as guessing the average Metric threshold should be between bounds -1 - 1
+      		- **Validation:** Specifies type of validation we are going to use in our expriment.
+        		- **Validation type:** 
+            		- Auto
+            		- K-Fold Cross Validation
+            		- Monte Carlo Cross Validation
+            		- Train-Validation Split
+      		- **Concurrency:** Specifies maximum parallel Iterations to run.
+        		- **Max concurrent iterations:** Integer Value >= 1
 
 ### Deploy a model as a service:
 - After you've used automated machine learning to train some models, you can deploy the best performing model as a service for client applications to use.
