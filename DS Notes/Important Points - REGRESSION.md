@@ -52,3 +52,9 @@
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between two continuous (quantitative) variables.
 - One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**.
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
+
+### Multi Linear Regression:
+- Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between more than two continuous (quantitative) variables.
+- One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**. In Multiple Linear model we will be having more than one variable.
+- The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
+- Adding too many independent variables without any theoretical justification may result in an over-fit model.
