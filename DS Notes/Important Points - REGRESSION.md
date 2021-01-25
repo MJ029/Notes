@@ -12,12 +12,13 @@
 - **Linearity:** 
   - The relationship between X and the mean of Y is **linear** & **additive**.
   - It can best be tested with **Scatter-plots**.
-  - Look for **residual (vs) fitted value plots**.
+  - <del>Look for **residuals (errors) [vs] fitted values (predicted values) plots**</del>.
 
 - **Homoscedasticity:** 
   - The **variance** of residual is the same for any value of X.
   - **Scatter-plot** is good way to check whether the data are homoscedastic.
-  - The **Breusch-PaganTest** is the ideal one to determine homoscedasticity. where **Goldfeld-Quandt** Test can also be used to test for heteroscedasticity.
+  - The **Breusch-Pagan / Cook – Weisberg test or White general Test** is the ideal one to determine homoscedasticity. where **Goldfeld-Quandt** Test can also be used to test for heteroscedasticity.
+  - Look for **residuals (errors) [vs] fitted values (predicted values) plots**. If heteroskedasticity exists, the plot would exhibit a funnel shape pattern
 
 - **Autocorrelation:**
   - There is **little** or **no autocorrelation** in the data.
@@ -45,7 +46,8 @@
 - If multicollinearity is found in the data, **centering** the data (that is deducting the mean of the variable from each score) might help to solve the problem.  However, the simplest way to address the problem is to **remove** independent variables with high VIF values.
 - If homoscedasticity is present, a non-linear correction might fix the problem.
 - Check for **Influential cases** in dataset which also can affects the slope of a regression line.
-
+- Generally, non-constant variance arises in presence of outliers or extreme leverage values. Look
+- 
 ### 1. Simple Linear Regression:
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between two continuous (quantitative) variables.
 - One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**.
