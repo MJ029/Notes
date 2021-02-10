@@ -64,9 +64,10 @@
 - It is a type of linear regression model which uses **Shrinkage**. 
 - **Shrinkage** is the point where values are shrunk towards a central point similar to ***mean***.
 - It procedure encourages simple, sparse models (i.e. models with fewer parameters).
-- This model is s **well-suited** for models showing high levels of ***muticollinearity*** or when you want to automate certain parts of model selection.
+- This model is **well-suited** for models showing high levels of ***muticollinearity*** or when you want to automate certain parts of model selection.
+- It is similar to ***stepwise selection***.
 - It performs **L1 Regularization** which adds a **penalty** equal to the ***absolute value*** of the ***magnitude*** of coefficients.
-- Tuning Parameters:
+- **Tuning Parameters**:
   - lambda(**λ**):
     - It controls the ***strength*** of the L1 penalty (**or**)  basically the ***amount of shrinkage***.
     - When **λ** == 0 --> no parameters are eliminated. 
@@ -74,7 +75,20 @@
     - **Variance** < **λ** < **Bias**
 
 ### 4. Ridge Regression
+- **Ridge regression** is a way to create a ***parsimonious*** model when the number of **predictor variables** in a set **exceeds** the number of **observations**, or when a data set has ***multicollinearity*** (correlations between predictor variables).
+- It is Similar to ***Tikhivov’s method***.
+- While least squares produces ***unbiased estimates***, **variances** can be so large that they may be wholly **inaccurate**. Ridge regression **adds** just enough **bias** to make the estimates reasonably reliable approximations to true population values.
+- This model is well suited for models tend to over-fitting. It generally reduces overfitting.
+- It performs **L2 Regularization** which adds a **penalty** equal to the ***square value*** of the magnitude of coefficients. This is equivalent to saying **minimizing** the cost function.
+- All coefficients are shrunk by the same factor, so none are eliminated. Unlike **L1 regularization**, It will not result in ***sparse models***.
+- **Tuning Parameters**:
+  - lambda(**λ**):
+    - It controls the ***strength*** of the L1 penalty (**or**)  basically the ***amount of shrinkage***.
+    - When **λ** == 0 --> equals least squares regression. 
+    - When **λ** == ∞ --> all coefficients are shrunk to zero.
+    - <del>**Variance** < **λ** < **Bias**</del>
+
+### 5. Gradient Descent:
 - 
-### 5. Gradient Descent
 
 ## Non Linear Regression
