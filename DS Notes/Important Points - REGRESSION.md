@@ -7,8 +7,9 @@
 - Regression analysis includes several variations, such as linear, multiple linear, and nonlinear. The most common models are simple linear and multiple linear. 
 - Nonlinear regression analysis is commonly used for more complicated data sets in which the dependent and independent variables show a nonlinear relationship.
 
-### Linear Regression:
-#### Assumptions:
+## Linear Regression:
+- Linear Regression is the process of estimating the relationships among variables/factors which are linear in nature. The Model is considered as linear when the relationship between **X** and **Y** is linear [***One of the main Assumptions of Linear model***].
+### Assumptions:
 - **Linearity:** 
   - The relationship between X and the mean of Y is **linear** & **additive**.
   - It can best be tested with **Scatter-plots**.
@@ -37,7 +38,7 @@
   - It can best be checked with a **histogram** or a **Q-Q-Plot**.
   - Normality can be checked with a **goodness of fit test**, e.g., the Kolmogorov-Smirnov test.
 
-#### Rule of Thumb:
+### Rule of Thumb:
 - Regression analysis requires at least **20 cases** (***samples size***) per independent variable in the analysis.
 - It is important to check for **outliers** since linear regression is sensitive to outlier effects.
 
@@ -47,14 +48,33 @@
 - If homoscedasticity is present, a non-linear correction might fix the problem.
 - Check for **Influential cases** in dataset which also can affects the slope of a regression line.
 - Generally, non-constant variance arises in presence of outliers or extreme leverage values. Look
-- 
+
 ### 1. Simple Linear Regression:
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between two continuous (quantitative) variables.
 - One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**.
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
 
-### Multi Linear Regression:
+### 2. Multi Linear Regression:
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between more than two continuous (quantitative) variables.
 - One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**. In Multiple Linear model we will be having more than one variable.
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
 - Adding too many independent variables without any theoretical justification may result in an over-fit model.
+
+### 3. Lasso Regression: [**L**east **A**bsolute **S**hrinkage **S**elector **O**perator]
+- It is a type of linear regression model which uses **Shrinkage**. 
+- **Shrinkage** is the point where values are shrunk towards a central point similar to ***mean***.
+- It procedure encourages simple, sparse models (i.e. models with fewer parameters).
+- This model is s **well-suited** for models showing high levels of ***muticollinearity*** or when you want to automate certain parts of model selection.
+- It performs **L1 Regularization** which adds a **penalty** equal to the ***absolute value*** of the ***magnitude*** of coefficients.
+- Tuning Parameters:
+  - lambda(**λ**):
+    - It controls the ***strength*** of the L1 penalty (**or**)  basically the ***amount of shrinkage***.
+    - When **λ** == 0 --> no parameters are eliminated. 
+    - When **λ** == ∞ --> all coefficients are eliminated.
+    - **Variance** < **λ** < **Bias**
+
+### 4. Ridge Regression
+- 
+### 5. Gradient Descent
+
+## Non Linear Regression
