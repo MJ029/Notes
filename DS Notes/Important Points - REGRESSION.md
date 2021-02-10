@@ -9,6 +9,7 @@
 
 ## Linear Regression:
 - Linear Regression is the process of estimating the relationships among variables/factors which are linear in nature. The Model is considered as linear when the relationship between **X** and **Y** is linear [***One of the main Assumptions of Linear model***].
+
 ### Assumptions:
 - **Linearity:** 
   - The relationship between X and the mean of Y is **linear** & **additive**.
@@ -89,6 +90,9 @@
     - <del>**Variance** < **λ** < **Bias**</del>
 
 ### 5. Gradient Descent:
-- 
-
+- **TODO:** Need to put right content Here
+  
 ## Non Linear Regression
+- **Nonlinear** regression is a form of regression analysis in which observational data are modeled by a function which is a **nonlinear combination of the model parameters** and depends on one or more independent variables.
+
+### Assumptions:
