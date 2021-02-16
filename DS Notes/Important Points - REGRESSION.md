@@ -61,7 +61,11 @@
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
 - Adding too many independent variables without any theoretical justification may result in an over-fit model.
 
-### 3. Lasso Regression: [**L**east **A**bsolute **S**hrinkage **S**elector **O**perator]
+### 3. Polynomial Regression:
+-  **polynomial regression** is a form of regression analysis in which the relationship between the independent variable x and the dependent variable y is modelled as an **n'th** degree polynomial in x.
+-  It is considered to be a special case of multiple linear regression.
+
+### 4. Lasso Regression: [**L**east **A**bsolute **S**hrinkage **S**elector **O**perator]
 - It is a type of linear regression model which uses **Shrinkage**. 
 - **Shrinkage** is the point where values are shrunk towards a central point similar to ***mean***.
 - It procedure encourages simple, sparse models (i.e. models with fewer parameters).
@@ -75,7 +79,7 @@
     - When **λ** == ∞ --> all coefficients are eliminated.
     - **Variance** < **λ** < **Bias**
 
-### 4. Ridge Regression
+### 5. Ridge Regression
 - **Ridge regression** is a way to create a ***parsimonious*** model when the number of **predictor variables** in a set **exceeds** the number of **observations**, or when a data set has ***multicollinearity*** (correlations between predictor variables).
 - It is Similar to ***Tikhivov’s method***.
 - While least squares produces ***unbiased estimates***, **variances** can be so large that they may be wholly **inaccurate**. Ridge regression **adds** just enough **bias** to make the estimates reasonably reliable approximations to true population values.
@@ -89,10 +93,23 @@
     - When **λ** == ∞ --> all coefficients are shrunk to zero.
     - <del>**Variance** < **λ** < **Bias**</del>
 
-### 5. Gradient Descent:
+### 6. Gradient Descent:
 - **TODO:** Need to put right content Here
   
 ## Non Linear Regression
 - **Nonlinear** regression is a form of regression analysis in which observational data are modeled by a function which is a **nonlinear combination of the model parameters** and depends on one or more independent variables.
 
 ### Assumptions:
+- **TODO:** Need to work on Assumptions of NLR.
+
+### 1. Support Vector Regression:
+- **TODO:** Need to work.
+
+### 2. Decision Tree Regression:
+- **TODO:** Need to work.
+
+### 3. Random Forest Regression:
+- **TODO:** Need to work.
+
+## Evaluation Metrics:
+- **TODO:** Need to work on Assumptions of Metrics.
