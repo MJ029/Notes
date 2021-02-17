@@ -7,8 +7,10 @@
 - Regression analysis includes several variations, such as linear, multiple linear, and nonlinear. The most common models are simple linear and multiple linear. 
 - Nonlinear regression analysis is commonly used for more complicated data sets in which the dependent and independent variables show a nonlinear relationship.
 
+
 ## Linear Regression:
 - Linear Regression is the process of estimating the relationships among variables/factors which are linear in nature. The Model is considered as linear when the relationship between **X** and **Y** is linear [***One of the main Assumptions of Linear model***].
+
 
 ### Assumptions:
 - **Linearity:** 
@@ -39,9 +41,11 @@
   - It can best be checked with a **histogram** or a **Q-Q-Plot**.
   - Normality can be checked with a **goodness of fit test**, e.g., the Kolmogorov-Smirnov test.
 
+
 ### Rule of Thumb:
 - Regression analysis requires at least **20 cases** (***samples size***) per independent variable in the analysis.
 - It is important to check for **outliers** since linear regression is sensitive to outlier effects.
+
 
 #### Notes:
 - When the data is **not normally distributed** a non-linear transformation (e.g., log-transformation) might fix this issue.
@@ -50,10 +54,12 @@
 - Check for **Influential cases** in dataset which also can affects the slope of a regression line.
 - Generally, non-constant variance arises in presence of outliers or extreme leverage values. Look
 
+
 ### 1. Simple Linear Regression:
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between two continuous (quantitative) variables.
 - One variable, denoted **X**, is regarded as the **predictor**, **explanatory**, or **independent variable**.
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
+
 
 ### 2. Multi Linear Regression:
 - Simple linear regression is a statistical method that allows us to summarize and study relationships(trend) between more than two continuous (quantitative) variables.
@@ -61,9 +67,18 @@
 - The other variable, denoted **y**, is regarded as the **response**, **outcome**, or **dependent variable**.
 - Adding too many independent variables without any theoretical justification may result in an over-fit model.
 
+
 ### 3. Polynomial Regression:
 -  **polynomial regression** is a form of regression analysis in which the relationship between the independent variable x and the dependent variable y is modelled as an **n'th** degree polynomial in x.
--  It is considered to be a special case of multiple linear regression.
+-  It fits a **nonlinear relationship** between the value of **X** and the corresponding conditional ***mean*** of **y**.
+- Although polynomial regression fits a **nonlinear** model to the data, as a statistical estimation problem it is **linear**.
+-  It is considered to be a **special** case of **multiple linear regression**.
+-  This model try's to fit the best fit model which is not **under-fitting** and **Over-Fiting**.
+- It is highly sensitive to **Outliers**. Presence of one or two outliers in the data can seriously affect the results of the nonlinear analysis.
+- <u>**Tuning Parameters:**</u>
+  - degree:
+    - The degree of the polynomial features. ***Default*** to 2.
+
 
 ### 4. Lasso Regression: [**L**east **A**bsolute **S**hrinkage **S**elector **O**perator]
 - It is a type of linear regression model which uses **Shrinkage**. 
@@ -72,12 +87,13 @@
 - This model is **well-suited** for models showing high levels of ***muticollinearity*** or when you want to automate certain parts of model selection.
 - It is similar to ***stepwise selection***.
 - It performs **L1 Regularization** which adds a **penalty** equal to the ***absolute value*** of the ***magnitude*** of coefficients.
-- **Tuning Parameters**:
+- <u>**Tuning Parameters:**</u>
   - lambda(**λ**):
     - It controls the ***strength*** of the L1 penalty (**or**)  basically the ***amount of shrinkage***.
     - When **λ** == 0 --> no parameters are eliminated. 
     - When **λ** == ∞ --> all coefficients are eliminated.
     - **Variance** < **λ** < **Bias**
+
 
 ### 5. Ridge Regression
 - **Ridge regression** is a way to create a ***parsimonious*** model when the number of **predictor variables** in a set **exceeds** the number of **observations**, or when a data set has ***multicollinearity*** (correlations between predictor variables).
@@ -86,30 +102,45 @@
 - This model is well suited for models tend to over-fitting. It generally reduces overfitting.
 - It performs **L2 Regularization** which adds a **penalty** equal to the ***square value*** of the magnitude of coefficients. This is equivalent to saying **minimizing** the cost function.
 - All coefficients are shrunk by the same factor, so none are eliminated. Unlike **L1 regularization**, It will not result in ***sparse models***.
-- **Tuning Parameters**:
+- <u>**Tuning Parameters:**</u>
   - lambda(**λ**):
     - It controls the ***strength*** of the L1 penalty (**or**)  basically the ***amount of shrinkage***.
     - When **λ** == 0 --> equals least squares regression. 
     - When **λ** == ∞ --> all coefficients are shrunk to zero.
     - <del>**Variance** < **λ** < **Bias**</del>
 
+
 ### 6. Gradient Descent:
 - **TODO:** Need to put right content Here
-  
+
+
 ## Non Linear Regression
 - **Nonlinear** regression is a form of regression analysis in which observational data are modeled by a function which is a **nonlinear combination of the model parameters** and depends on one or more independent variables.
+- <u>**Equation:**</u>
+  - **Y = f(X, β) + ε**
+|Parameter|Description|  
+|---------|-----------|  
+| X | Vector Of *p* Predictors. |  
+| β | Vector o *k* parameters. |  
+| f(-) | Regressor Functions. |  
+| ε | Error Term. |
+
 
 ### Assumptions:
 - **TODO:** Need to work on Assumptions of NLR.
 
+
 ### 1. Support Vector Regression:
 - **TODO:** Need to work.
+
 
 ### 2. Decision Tree Regression:
 - **TODO:** Need to work.
 
+
 ### 3. Random Forest Regression:
 - **TODO:** Need to work.
+
 
 ## Evaluation Metrics:
 - **TODO:** Need to work on Assumptions of Metrics.
