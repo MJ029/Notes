@@ -155,6 +155,11 @@
     - Is **SVM** It is the important factor which separates the data classes, on we can say it the line between data classes.
     - In **SVR**, Hyper Plane will play the same role as SVM, but as we discussed before the key change is, here it is a line between linear(continuous) data.
   
+  - <u>Boundary Plane (**or**) Decision Boundary (**margin of tolerance**):</u>
+    - It is defining the **upper/lower** boundaries from the Hyper-Plane.
+    - It act as a **margin** between Hyper-Plane and data points.
+    - The distance between Boundary-Plane and Hyper-Plane are considered as **epsilon (*ε*)** distance. So the lines that we draw are at *‘+ε’* and *‘-ε ’* distance from Hyper Plane.
+
   - <u>C - Regularization Parameter:</u>
     - When the C parameter is set to infinite, The optimal hyperplane (if exists) will be the one that completely separates the data.
     - At such a high level of misclassification penalty, soft margin will not hold existence as there will be no room for error.
@@ -165,11 +170,7 @@
       - The model will be too constrained and include all points of the training dataset, without really capturing the shape.
     - If GAMA is high:
       - The model will capture the shape of the dataset well.
-  
-  - <u>Boundary Plane (**or**) Decision Boundary (**margin of tolerance**):</u>
-    - It is defining the **upper/lower** boundaries from the Hyper-Plane.
-    - It act as a **margin** between Hyper-Plane and data points.
-    - The distance between Boundary-Plane and Hyper-Plane are considered as **epsilon (*ε*)** distance. So the lines that we draw are at *‘+ε’* and *‘-ε ’* distance from Hyper Plane.
+
   - **Notes:**
     - The minimum time complexity for training an SVM is **O(n2)**. According to this fact, we can train Large datasets in SVM.
 
