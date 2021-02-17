@@ -135,8 +135,30 @@
 
 
 ### 1. Support Vector Regression:
-- **TODO:** Need to work.
+- Support Vector Regression [SVR] is a *nonlinear generalization* of the **Generalized Portrait** algorithm, it is firmly grounded in the framework of ***statistical learning theory***, or ***VC theory***.
+- Our goal is to find a function **f(*x*)** that has at most ***ε*** deviation from the actually obtained targets **y** for all the training data, and at the same time is as flat as possible.
+- Our objective, when we are moving on with **SVR**, is to basically consider the points that are within the decision boundary line.
+- It is considered a ***non parametric technique*** because it **relies** on **kernel** functions.
+- In other words, we do not care about errors as long as they are less than ***ε***, but will not accept any deviation larger than ***ε***.
+- <u>**Hyper-Parameters:**</u>
+  - <u>Kernal:</u>
+    - Maps **lower** dimentional data into a **higher** dimentional data.
+    - Generally it could be ***linear***, ***polynomial***, ***sigmoid*** & ***rbf***.
+    - Changing Kernal is known as ***kernal Trick***.
+    - **Note:**
+      - A kernel helps us find a hyperplane in the higher dimensional space without increasing the computational cost. Usually, the computational cost will increase if the dimension of the data increases.
 
+  - <u>Support Vectors:</u>
+    - Actual **data-points** which are close to ***line of boundary***.
+  
+  - <u>Hyper Plane:</u>
+    - Is **SVM** It is the important factor which separates the data classes, on we can say it the line between data classes.
+    - In **SVR**, Hyper Plane will play the same role as SVM, but as we discussed before the key change is, here it is a line between linear(continuous) data.
+  
+  - <u>Boundary Plane (**or**) Decision Boundary (**margin of tolerance**):</u>
+    - It is defining the **upper/lower** boundaries from the Hyper-Plane.
+    - It act as a **margin** between Hyper-Plane and data points.
+    - The distance between Boundary-Plane and Hyper-Plane are considered as **epsilon (*ε*)** distance. So the lines that we draw are at *‘+ε’* and *‘-ε ’* distance from Hyper Plane.
 
 ### 2. Decision Tree Regression:
 - **TODO:** Need to work.
