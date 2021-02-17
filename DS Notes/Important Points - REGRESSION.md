@@ -117,7 +117,8 @@
 ## Non Linear Regression
 - **Nonlinear** regression is a form of regression analysis in which observational data are modeled by a function which is a **nonlinear combination of the model parameters** and depends on one or more independent variables.
 - <u>**Equation:**</u>  
-  - **Y = f(X, β) + ε**    
+  - **Y = f(X, β) + ε**   
+ 
 | Parameter | Description |  
 | :---------: | :-----------: |  
 | X | Vector Of *p* Predictors. |  
