@@ -119,6 +119,8 @@
 - <u>**Equation:**</u>  
   - **Y = f(X, β) + ε**   
  
+<center>
+
 | Parameter | Description |  
 | :---------: | :-----------: |  
 | X | Vector Of *p* Predictors. |  
@@ -126,6 +128,7 @@
 | f(-) | Regressor Functions. |  
 | ε | Error Term. |
 
+</center>
 
 ### Assumptions:
 - **TODO:** Need to work on Assumptions of NLR.
