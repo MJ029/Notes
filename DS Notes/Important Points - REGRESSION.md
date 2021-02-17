@@ -161,8 +161,11 @@
     - The distance between Boundary-Plane and Hyper-Plane are considered as **epsilon (*ε*)** distance. So the lines that we draw are at *‘+ε’* and *‘-ε ’* distance from Hyper Plane.
 
   - <u>C - Regularization Parameter:</u>
+    - The C parameter tells the SVM/SVR optimization how much you want to avoid misclassifying each training example.
     - When the C parameter is set to infinite, The optimal hyperplane (if exists) will be the one that completely separates the data.
     - At such a high level of misclassification penalty, soft margin will not hold existence as there will be no room for error.
+    - Conversely, a very small value of C will cause the optimizer to look for a larger-margin separating hyperplane, even if that hyperplane misclassifies more points.
+    -  For very tiny values of C, you should get misclassified examples, often even if your training data is linearly separable.
   
   - <u>Gama:</u>
     - The gamma parameter in SVM tuning signifies the influence of points either near or far away from the hyperplane.
@@ -173,6 +176,8 @@
 
   - **Notes:**
     - The minimum time complexity for training an SVM is **O(n2)**. According to this fact, we can train Large datasets in SVM.
+    - Remaining things related to SVM/SVR can be seen in [More](../Interview%20Questions/../Interview%20Questions/Interview%20Questions%20-%20Support%20Vector%20Machine.md)
+- **TODO:** Still Yet to get more info on How to Choose Right Kernal for our model.
 
 ### 2. Decision Tree Regression:
 - **TODO:** Need to work.
