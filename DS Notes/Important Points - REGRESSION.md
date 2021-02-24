@@ -235,7 +235,15 @@
     - This is also known as ***Rotation Tree***.
     - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
 
+#### Hyper Parameters
 
+| Parameter | Defaults | Possible Values | Description | Comments |
+|-----------|----------|-----------------|-------------|----------|
+| **criterion** | mse | mse, friedman_mse, mae, poisson | The function to measure the quality of a split. | [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
+| **min_samples_split** | 2 |  possitive integer | The minimum number of samples required to split an internal node | [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
+| ***max_depth** | None |  Possitive Integer | The maximum depth of the tree. | If None, then nodes are expanded until all leaves are pure or until all leaves contain less than min_samples_split samples. [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
+| ***min_samples_leaf** | 1 | Positive Integer | The minimum number of samples required to be at a leaf node. | [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
+| **max_leaf_nodes** | None | Possitive Integer | Grow a tree with max_leaf_nodes in best-first fashion. | [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
 
 ### 3. Random Forest Regression:
 - **TODO:** Need to work.
