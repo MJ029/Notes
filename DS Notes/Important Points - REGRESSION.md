@@ -202,6 +202,21 @@
     - This is also known as ***Rotation Tree***.
     - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
 
+#### Types of Decision Tree:
+
+| Type | Description | Comments |
+|------|-------------|----------|
+| ID3 | Iterative Dichotomiser 3 | It can be used in both Regression and Classification tasks. <br /> When it is used in **Regression** it uses ***Standard Deviation Reduction*** technique to solve the problem. <br /> When it is used in **Classification** it uses ***Entropy and Information Gain*** techniques to solve the problem.|
+| C4.5 (or) J4.8 | successor of ID3 | It can be used only for **Classification** problem, It uses ***Information Gain Ratio*** technique to solve the problem. |
+| CART | Classification And Regression Tree | It can be used only for **Classification** problem, It uses ***Gini Index*** technique to solve the problem. |
+| CHAID | Chi-square automatic interaction detection | |
+| MARS | extends decision trees to handle numerical data better | |
+| Conditional Inference Trees | | Statistics-based approach that uses non-parametric tests as splitting criteria, corrected for multiple testing to avoid overfitting.<br /> This approach results in unbiased predictor selection and does not require pruning.|
+
+
+#### Note:
+- **Decision List** is one special type of decision tree algorithm available which is a *one-sided decision tree*, so that every internal node has exactly 1 leaf node and exactly 1 internal node as a child (except for the bottom-most node, whose only child is a single leaf node).
+
 
 ### 3. Random Forest Regression:
 - **TODO:** Need to work.
