@@ -180,7 +180,27 @@
 - **TODO:** Still Yet to get more info on How to Choose Right Kernal for our model.
 
 ### 2. Decision Tree Regression:
-- **TODO:** Need to work.
+- Decision tree builds ***Classification*** or ***Regression*** models in the form of a **tree** structure. It breaks down a data-set into smaller subsets while at the same time an associated decision tree is incrementally developed.
+- D-Tree is one of the predictive modeling approaches used in statistics, data mining and machine learning.
+- D-Tree has 3 main components:
+
+| Component | Description |
+|-----------|-------------|
+| Root Node | It is considered to be the Best predictor which placed as topmost node in tree. |
+| Decision Node | It is considered to be the intermediate nodes which is derived from root node or other Decision nodes.<br /> A Decision Node has two or more branches which holds attributes(IV's) or leaf nodes|
+| Leaf Node | It represents a classification or decision (DV). |
+
+- Some techniques, often called ensemble methods will construct more than one decision tree as follows
+  - <u>**AdaBoost:**</u>
+    - This method is a subset of ***Boosted Tree*** algorithms.
+    - Incrementally building an ensemble by training each new instance to emphasize the training instances previously mis-modeled.
+    - This can be used for regression-type and classification-type problems.
+  - <u>**Random Forest:**</u>
+    - This is also known as ***Bagged Decision**8 Tree or ***Bootstrap Aggregated Tree***.
+    - This is one of the early ensemble method, builds multiple decision trees by repeatedly resampling training data with replacement, and voting the trees for a consensus prediction.
+  - <u>**PCA: Principal Component Analysis**</u>
+    - This is also known as ***Rotation Tree***.
+    - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
 
 
 ### 3. Random Forest Regression:

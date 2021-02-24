@@ -2,8 +2,8 @@
 
 ### Hints:
 - Linear relationship between the dependent and independent variable
-- Independent variables in the dataset should not exhibit any multicollinearity.
-- There should be an equal distribution of errors(Homoscedasticity).
+- Independent variables in the dataset should not exhibit any <u>multicollinearity</u>.
+- There should be an <u>equal distribution of errors</u>(Homoscedasticity).
 - Remember formulas of RMSE / MSE / MAE
 - Q-Q plots
 - curse of dimensionality
