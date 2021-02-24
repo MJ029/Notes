@@ -190,18 +190,6 @@
 | Decision Node | It is considered to be the intermediate nodes which is derived from root node or other Decision nodes.<br /> A Decision Node has two or more branches which holds attributes(IV's) or leaf nodes|
 | Leaf Node | It represents a classification or decision (DV). |
 
-- Some techniques, often called ensemble methods will construct more than one decision tree as follows
-  - <u>**AdaBoost:**</u>
-    - This method is a subset of ***Boosted Tree*** algorithms.
-    - Incrementally building an ensemble by training each new instance to emphasize the training instances previously mis-modeled.
-    - This can be used for regression-type and classification-type problems.
-  - <u>**Random Forest:**</u>
-    - This is also known as ***Bagged Decision**8 Tree or ***Bootstrap Aggregated Tree***.
-    - This is one of the early ensemble method, builds multiple decision trees by repeatedly resampling training data with replacement, and voting the trees for a consensus prediction.
-  - <u>**PCA: Principal Component Analysis**</u>
-    - This is also known as ***Rotation Tree***.
-    - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
-
 #### Types of Decision Tree:
 
 | Type | Description | Comments |
@@ -213,10 +201,35 @@
 | MARS | extends decision trees to handle numerical data better | |
 | Conditional Inference Trees | | Statistics-based approach that uses non-parametric tests as splitting criteria, corrected for multiple testing to avoid overfitting.<br /> This approach results in unbiased predictor selection and does not require pruning.|
 
+- ***Overfitting*** is one of the problem we will encounter in most of the machine learning models is a significant practical difficulty for **D-Trees** and other predictive algorithms.
+- In simple, "*Overfitting is a modeling error which occurs when a function is too closely fit to a limited set of data points*".
+- In statistics, *"The production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit additional data or predict future observations reliably"*.
+
+#### Workflow:
+<p align="center">
+  <img src="draw%20files/D-Tree/ID3-Regression.png">
+</p>
+
 
 #### Note:
 - **Decision List** is one special type of decision tree algorithm available which is a *one-sided decision tree*, so that every internal node has exactly 1 leaf node and exactly 1 internal node as a child (except for the bottom-most node, whose only child is a single leaf node).
-
+- Concepts like **Pre-Pruning** and **Post-Pruning** will help us to avoid overfitting in building decision trees.
+- **Pre-Pruning**:
+  - Stop growing the tree earlier, before it perfectly classifies the training set.
+- **Post-Pruning**:
+  - Allows the tree to perfectly classify the training set, and then post prune the tree.
+  - Practically This approach gives us better result compare to Pre-Pruning, because it is not easy to precisely estimate when to stop growing the tree.
+- Some techniques, often called ensemble methods will construct more than one decision tree as follows
+  - <u>**AdaBoost:**</u>
+    - This method is a subset of ***Boosted Tree*** algorithms.
+    - Incrementally building an ensemble by training each new instance to emphasize the training instances previously mis-modeled.
+    - This can be used for regression-type and classification-type problems.
+  - <u>**Random Forest:**</u>
+    - This is also known as ***Bagged Decision**8 Tree or ***Bootstrap Aggregated Tree***.
+    - This is one of the early ensemble method, builds multiple decision trees by repeatedly resampling training data with replacement, and voting the trees for a consensus prediction.
+  - <u>**PCA: Principal Component Analysis**</u>
+    - This is also known as ***Rotation Tree***.
+    - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
 
 ### 3. Random Forest Regression:
 - **TODO:** Need to work.
