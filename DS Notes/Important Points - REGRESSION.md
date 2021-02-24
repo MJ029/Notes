@@ -259,6 +259,7 @@
 - Bootstrap aggregating, also called bagging is a special case of the model averaging approach.
 - It is a machine learning ensemble meta-algorithm designed to improve the stability and accuracy of machine learning algorithms used in classification and regression problems.
 - It also helps avoid overfitting by reducing the Variance in training set. 
+- Random Forest is highly sensitive to Missing values.
 - **How Bagging works:** 
   - It generates new training set **D(*i*)** with **M** samples each size of **n'** from the given training set **D** of size **n** by sampling from *D* ***Uniformly with Replacement***.
   - By ***Sampling Uniformly with Replacement***, some Observations may repeat in each **D(*i*)**.
