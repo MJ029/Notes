@@ -246,7 +246,26 @@
 | **max_leaf_nodes** | None | Possitive Integer | Grow a tree with max_leaf_nodes in best-first fashion. | [more details found here.](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html) |
 
 ### 3. Random Forest Regression:
-- **TODO:** Need to work.
+- **Random Forest** / **Random Decision Forest** is the part of *ensemble learning* method for ***classification*** & ***regression***. 
+- Random Forest operates by constructing a multitude of decision trees at training time and outputing the class that is the mode of the classes (classification) or mean prediction (regression) of the individual trees.
+- In Simple, Random forest builds multiple decision trees and merges them together to get a more accurate and stable prediction.
+- Random forests are a way of averaging multiple deep decision trees, trained on different parts of the same training set, with the goal of reducing the variance.
+- Random Forest ***does not over-fit***, which means it give us the solution for major problem in D-Trees which is known as *OverFitting* the Training set.
+- Random Forest adds additional randomness to the model, while growing the trees.
+- Instead of searching for the most important feature while splitting a node, it searches for the best feature among a random subset of features. 
+- This results in a wide diversity that generally results in a better model. Therefore, in Random Forest, a random subset of the features is taken into consideration by the algorithm for splitting a node.
+
+#### Bagging (or) Bootstrap aggregating:
+- Bootstrap aggregating, also called bagging is a special case of the model averaging approach.
+- It is a machine learning ensemble meta-algorithm designed to improve the stability and accuracy of machine learning algorithms used in classification and regression problems.
+- It also helps avoid overfitting by reducing the Variance in training set. 
+- **How Bagging works:** 
+  - It generates new training set **D(*i*)** with **M** samples each size of **n'** from the given training set **D** of size **n** by sampling from *D* ***Uniformly with Replacement***.
+  - By ***Sampling Uniformly with Replacement***, some Observations may repeat in each **D(*i*)**.
+  - Some **M** samples were **missed out** during *Sampling Uniformly with Replacement* which are known as **[OOB]Out-Of-Bag records**.
+    - Basically these OOB were used to evaluate the model during the testset in Random Forest.
+  - Models were fitted using the above m bootstrap samples and predict the output by averaging the output (for regression) or voting (for classification).
+  - It helps D-Trees to improve accuracy but in the other hand it can mildly degrade the performance of stable methods such as K-nearest neighbors.
 
 
 ## Evaluation Metrics:
