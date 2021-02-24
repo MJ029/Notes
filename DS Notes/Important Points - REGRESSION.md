@@ -235,7 +235,7 @@
     - This is also known as ***Rotation Tree***.
     - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
 
-#### Hyper Parameters
+#### HyperParameter Tuning:
 
 | Parameter | Defaults | Possible Values | Description | Comments |
 |-----------|----------|-----------------|-------------|----------|
