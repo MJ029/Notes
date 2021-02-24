@@ -179,6 +179,8 @@
     - Remaining things related to SVM/SVR can be seen in [More](../Interview%20Questions/../Interview%20Questions/Interview%20Questions%20-%20Support%20Vector%20Machine.md)
 - **TODO:** Still Yet to get more info on How to Choose Right Kernal for our model.
 
+
+
 ### 2. Decision Tree Regression:
 - Decision tree builds ***Classification*** or ***Regression*** models in the form of a **tree** structure. It breaks down a data-set into smaller subsets while at the same time an associated decision tree is incrementally developed.
 - D-Tree is one of the predictive modeling approaches used in statistics, data mining and machine learning.
@@ -201,15 +203,17 @@
 | MARS | extends decision trees to handle numerical data better | |
 | Conditional Inference Trees | | Statistics-based approach that uses non-parametric tests as splitting criteria, corrected for multiple testing to avoid overfitting.<br /> This approach results in unbiased predictor selection and does not require pruning.|
 
+#### Disadvantages:
 - ***Overfitting*** is one of the problem we will encounter in most of the machine learning models is a significant practical difficulty for **D-Trees** and other predictive algorithms.
 - In simple, "*Overfitting is a modeling error which occurs when a function is too closely fit to a limited set of data points*".
 - In statistics, *"The production of an analysis that corresponds too closely or exactly to a particular set of data, and may therefore fail to fit additional data or predict future observations reliably"*.
+- Generally, it gives low prediction accuracy for a dataset as compared to other machine learning algorithms.
+- Information gain in a decision tree with categorical variables gives a biased response for attributes with greater no. of categories.
 
 #### Workflow:
 <p align="center">
   <img src="draw%20files/D-Tree/ID3-Regression.png">
 </p>
-
 
 #### Note:
 - **Decision List** is one special type of decision tree algorithm available which is a *one-sided decision tree*, so that every internal node has exactly 1 leaf node and exactly 1 internal node as a child (except for the bottom-most node, whose only child is a single leaf node).
@@ -230,6 +234,8 @@
   - <u>**PCA: Principal Component Analysis**</u>
     - This is also known as ***Rotation Tree***.
     - Every decision tree is trained by first applying principal component analysis (PCA) on a random subset of the input features.
+
+
 
 ### 3. Random Forest Regression:
 - **TODO:** Need to work.
