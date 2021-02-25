@@ -39,7 +39,7 @@
 |-----------|----------|----------|
 | Transformation to binary | **One-vs-Rest [OVR] (or) One-Against-All [OAA]** | It involves training a single classifier per class, with the samples of that class as positive samples and all other samples as negatives. <br />  This strategy requires the base classifiers to produce a real-valued confidence score for its decision. |
 | Transformation to binary | **One-vs-One [OVO]** | It trains **K (K − 1) / 2** binary classifiers for a **K**-way multiclass problem. <br />  Each receives the samples of a pair of classes from the original training set, and must learn to distinguish these two classes. <br /> At prediction time, a voting scheme is applied: all **K (K − 1) / 2** classifiers are applied to an unseen sample and the class that got the highest number of "+1" predictions gets predicted by the combined classifier. |
-| Extention from binary |  **neural networks <br /> decision trees <br /> k-nearest neighbors </br> naive Bayes <br /> support vector machines** | This section discusses strategies of extending the existing binary classifiers to solve multi-class classification problems. <br /> These types of techniques can also be called algorithm adaptation techniques.
+| Extention from binary |  **NeuralNetworks <br /> D-Trees <br /> KNN </br> Naive Bayes <br /> SVM** | This section discusses strategies of extending the existing binary classifiers to solve multi-class classification problems. <br /> These types of techniques can also be called algorithm adaptation techniques.
 
 ### 3. Multi-Label Classification:
 
