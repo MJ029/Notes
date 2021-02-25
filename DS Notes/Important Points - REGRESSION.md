@@ -131,7 +131,7 @@
 </center>
 
 ### Assumptions:
-- **TODO:** Need to work on Assumptions of NLR.
+- **Random Forests** are *non-parametric* and can thus handle ***skewed*** and ***multi-modal*** data as well as ***categorical*** data that are ***ordinal*** or ***non-ordinal***.
 
 
 ### 1. Support Vector Regression:
@@ -268,6 +268,62 @@
   - Models were fitted using the above m bootstrap samples and predict the output by averaging the output (for regression) or voting (for classification).
   - It helps D-Trees to improve accuracy but in the other hand it can mildly degrade the performance of stable methods such as K-nearest neighbors.
 
+#### Note:
+- One amazing fact of random forest is that it is very easy to measure the relative importance of each feature on the prediction.
+- It computes this score automatically for each feature after training and scales the results, so that the sum of all importance is equal to 1.
+
+#### Limitations:
+- Random Forest can overfit datasets that are particularly noisy.
+- For data including categorical predictor variables with different number of levels, random forests are biased in favor of those predictors with more levels. Therefore, the variable importance scores from random forest are not always reliable for this type of data.
+
+
 
 ## Evaluation Metrics:
-- **TODO:** Need to work on Assumptions of Metrics.
+- **Evaluation metrics** are a measure of how ***good*** a model performs and how well it approximates the relationship. 
+- We can use **MSE, MAE, RMSE, R-squared, Adjusted R-squared**
+
+**Residual Plots:**
+  - For any linear regression model we must use Residual plots to Interpret model results and check for any bias in model.
+  - Residual plots expose a biased model than any other evaluation metric.
+  - **Note:**
+    - An Unbiased model results no systematic pattern of distribution of the predicted values, where Biased model results systematic pattern of distribution of the predicted values.
+    - It is important to note that, before assessing or evaluating our model with evaluation metrics like R-squared, we must make use of residual plots.
+
+<center><b>Residual(<i>e</i>) = Actual(<i>y</i>) - Predictid(<i>y</i>)</b></center>
+
+- One of the **assumptions** of a linear regression model is that the errors must be **normally distributed**.
+- This means, make sure your residuals are distributed around zero for the entire range of predicted values. 
+- Thus, if the residuals are evenly scattered, then your model may perform well.
+
+**MSE: Mean Suqared Error**
+- The most **common** metric for regression tasks
+- It has a **convex** shape.
+- It is the **average** of the **squared difference** between the **predicted** and **actual** value.
+- Since it is differentiable and has a convex shape, it is easier to optimize.
+- **Limitations**:
+  - It penalizes large errors.
+
+**RMSE: Root Mean Suqared Error**
+- This is the square root of the average of the squared difference of the predicted and actual value.
+- ***R-squared error is better than RMSE***. This is because R-squared is a relative measure while RMSE is an absolute measure of fit (highly dependent on the variables — not a normalized measure).
+- **Limitations**:
+  - It penalizes large errors
+
+**MAE: Mean Absolute Error**
+- This is simply the **average** of the **absolute difference between** the **Actual** value and **predicted** value.
+- The MAE is more robust to outliers. It is not suitable for applications where you want to pay more attention to the outliers.
+- It does not penalize large errors.
+- MAE is a linear score which means all the individual differences are weighted equally.
+
+**R-squared:**
+- It measures the strength of the relationship between your model and the dependent variable.
+- This metric represents the part of the variance of the dependent variable explained by the independent variables of the model. 
+- If the data points are very close to the regression line, then the model accounts for a good amount of variance, thus resulting in a high R² value.
+- However do not let the R² value fool you. A good model can have low R² value and a biased model can have a high R² value as well. because it consider all the valiable used in model for calculation.
+- **Note:**
+  - It is not possible to see a model with an R² of 1. In that case, all predicted values are the same as actual values and this essentially means that all values fall on the regression line.
+  -  R² is a scale-free score that implies it doesn't matter whether the values are too large or too small.
+
+**Adjusted R-squared:**
+- The main difference between adjusted R-squared and R-square is that R-squared describes the amount of variance of the dependent variable represented by every single independent variable, while adjusted R-squared measures variation explained by only the independent variables that actually affect the dependent variable.
+- It can be used to model selection as well, to select the model with subset of variables which has significant effect.
