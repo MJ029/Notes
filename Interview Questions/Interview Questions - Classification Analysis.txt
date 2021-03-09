@@ -11,12 +11,14 @@ Hint:
 
 How to calculate accuracy, precision, recall using confusion matrix ?
 	- Accuracy = (True Positive + True Negative) / Total Observations
-	- Precision = (True positive) / (True Positive + False Positive)
-	- Recall Rate = (True Positive) / (Total Positive + False Negative)
+	- Precision = (True positive) / (True Positive + False Positive) [or] (Total Actual Possitives)
+	- Recall Rate = (True Positive) / (Total Positive + False Negative) [or] (Total predictive Possitives)
 
 Define precision and recall.
-	- Recall is also known as the true positive rate: the amount of positives your model claims compared to the actual number of positives there are throughout the data. 
-	- Precision is also known as the positive predictive value, and it is a measure of the amount of accurate positives your model claims compared to the number of positives it actually claims.
+	- Recall is also known as the true positive rate: 
+		- The amount of positives your model claims compared to the actual number of positives there are throughout the data. 
+	- Precision is also known as the positive predictive value:
+		- it is a measure of the amount of accurate positives your model claims compared to the number of positives it actually claims.
 	- Suppose a computer program for recognizing dogs in photographs identifies 8 dogs in a picture containing 12 dogs and some cats. 
 	- Of the 8 dogs identified, 5 actually are dogs (true positives), while the rest are cats (false positives).
 	- The program's precision is 5/8 while its recall is 5/12.
@@ -31,7 +33,8 @@ What’s the difference between Type I and Type II error?
 	
 Explain how a ROC curve works. (Receiver operating characteristic)
 	- The ROC curve is a graphical representation of the contrast between true positive rates(Recall) and the false positive rate(Precision) at various thresholds.
-	- It’s often used as a proxy for the trade-off between the sensitivity of the model (true positives) vs the fall-out or the probability it will trigger a false alarm (false positives).
+	- It’s often used as a proxy for the trade-off between 
+		- the sensitivity of the model (true positives) vs the fall-out or the probability it will trigger a false alarm (false positives).
 	- The true-positive rate is also known as sensitivity, recall or probability of detection in machine learning. 
 	- The false-positive rate is also known as the fall-out or probability of false alarm and can be calculated as (1 − specificity).
 	
