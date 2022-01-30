@@ -5,6 +5,7 @@
 	- buy LOW and sell HIGH
 	- Trade (one BUYS where one SELLS)
 	- PITFALL: Stock may go down and may not return.
+	
 #### 1.2 Divident:
 	- Regular Passive Income (Quarterly Payment).
 	- we are consider as stock owner.
@@ -15,7 +16,7 @@
 #### 2.1 Investing:
 	- Long Term Play. (5-10+ years)
 	- To save for specific Goals. (Have to stick with Plan)
-	- Rebalance Potfolio as needed.
+	- Rebalance Portfolio as needed.
 	- Can Succeed with basic principles over time.
 
 #### 2.2 Trading:
@@ -28,3 +29,21 @@
 	- Without prior knolwdge or proper analysis, we tend to invest on the company.
 	- Best Practice is to invest small/tiny amount, not recommended to invest some value money.
 
+### 3. Stocks Diversification
+#### 3.1 Size Categories
+	- Small Cap
+	- Mid Cap
+	- Large Cap
+
+#### 3.2 Growth & Income
+#### 3.3 International
+#### 3.4 Sectors
+
+### 4. Different Types of Stocks
+	- Stock Price X No.Of.Shares
+	- General Cap Ranges:
+		- Large Cap: $10+ Billion
+		- Mid Cap: $2 - $10 billion
+		- Small Cap: <= $2 billion
+		
+	
