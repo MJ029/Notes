@@ -9,7 +9,7 @@
 	- Standard Deviation [SD]
 	- Sharpe Ratio
 
-### 2.4 SD - Standard Deviation
+### 2.4 [SD - Standard Deviation](#24-sd---standard-deviation)
 - Statistically, SD measures the **dispresion** [or] **variety** [or] **variability** of data from its expected value.
 - As it relates to investments, the standard deviation measures how much return on investment is deviating from the expected normal or average returns.
 - Ex: A stock with higher SD indicates [or] experiences higher volatility, therefore higher values of risk associated with it.
