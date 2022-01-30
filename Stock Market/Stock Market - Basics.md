@@ -102,7 +102,7 @@
 		**Note:**
 		Dispression: 
 	- Sharpe Ratio:
-		- 
+	- Sortino Ratio:
 ### Note:
 - How to build a portfolio ?
 	- Determine how far is your goal .
@@ -114,7 +114,7 @@
 		- Average ANual returns
 		- Best Year
 		- Worst Year
-		- # Years with loss
+		- Number of Years with loss
 		- Large Cap Stocks / Bonds / Treasury's.
 	Ref: https://investor.vanguard.com/investor-resources-education/education/model-portfolio-allocation
 
