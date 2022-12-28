@@ -10,6 +10,9 @@
 - It is also know as *Price Multiple* (or) *Earnings Multiple*.
 - It helps the **investors** & **Analysts** to determine the relative value of a company shares.
 
+** Note:  
+[^1]: Companies that have no earnings or that are losing money do not have a P/E ratio because there is nothing to put in the denominator.
+
 ### 3.Types
 - Generally we can differenciate the PE ratio in to two types as shown below.
   - Trailing 
