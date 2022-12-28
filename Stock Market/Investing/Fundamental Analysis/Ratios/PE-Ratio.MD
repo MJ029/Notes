@@ -18,7 +18,7 @@
 ### 2.Formula
 - To determine P/E ratio, we must simply divide the current stock price by the earnings per share (EPS)
 
-$$ P/E = { Market \ \ Value \ \ Per \ \ Share \over Earnings \ \ Per \ \ Share} $$
+$$P/E = { Market \ \ Value \ \ Per \ \ Share \over Earnings \ \ Per \ \ Share}$$
 ### 3.Types
 - Generally we can use two different types of PE ratio in realtime as shown below.
   - Trailing 
