@@ -6,7 +6,7 @@
     - [3.Types](#3types)
       - [3.1 Trailing P/E Ratio:](#31-trailing-pe-ratio)
 
-**Note:** 
+:point_right: **Note:** 
 > P/E - Price To Earnings  
 > TTM - Trailing 12 months
 
@@ -18,8 +18,10 @@
 - The P/E ratio helps us determine whether a stock is overvalued or undervalued. 
 - A company's P/E can also be benchmarked against other stocks in the same industry or against the broader market, such as the `Nifty50` Index.
 
-:exclamation: **Note:** 
+:exclamation: **Warning:** 
 > - Companies that have no earnings or that are losing money do not have a P/E ratio.
+
+:point_right: **Note:**
 > - P/E ratio holds the most value to an analyst when compared against similar companies in the same industry or for a single company across a period of time.  
 > - Sometimes, analysts are interested in long-term valuation trends and consider the P/E 10 or P/E 30 measures, which average the past 10 or past 30 years of earnings, respectively. 
 
