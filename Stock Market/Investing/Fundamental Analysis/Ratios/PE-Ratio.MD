@@ -4,7 +4,7 @@
     - [1.Introduction](#1introduction)
     - [2.Formula](#2formula)
     - [3.Types](#3types)
-      - [3.1 Trailing P/E Ratio:](#31-trailing-pe-ratio)
+      - [3.1 Forward P/E Ratio:](#31-forward-pe-ratio)
 
 :point_right: **Note:** 
 > P/E - Price To Earnings  
@@ -37,5 +37,15 @@ $P- Stock \ \ Price \ \ of \ \ the \ \ day$
   - Trailing 
   - Forward
 
-#### 3.1 Trailing P/E Ratio:
-- 
+:point_right: **Note**:
+> A third and less common variation uses the sum of the last two actual quarters and the estimates of the next two quarters.
+
+#### 3.1 Forward P/E Ratio:
+- Forward price-to-earnings (forward P/E) is a version of PE ratio that uses forecasted earnings for the P/E calculation.
+- The forward (or leading) P/E uses future earnings guidance and Sometimes called "estimated price to earnings".
+- While the earnings used in this formula are just an estimate and not as reliable as current or historical earnings data, there are still benefits to estimated P/E analysis.
+
+:exclamation: **Warning:** 
+> - Because forward P/E uses estimated earnings per share (EPS), it may produce incorrect or biased results if actual earnings prove to be different.
+> - Analysts often combine forward and trailing P/E estimates to make a better judgment.
+> - There are inherent problems with the forward P/E metric—namely, companies could underestimate (or) overestimate earnings.
