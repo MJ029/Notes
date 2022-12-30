@@ -4,7 +4,8 @@
     - [1.Introduction](#1introduction)
     - [2.Formula](#2formula)
     - [3.Types](#3types)
-      - [3.1 Forward P/E Ratio:](#31-forward-pe-ratio)
+      - [3.1 Forward P/E Ratio](#31-forward-pe-ratio)
+        - [3.1.1 Limitations](#311-limitations)
 
 :point_right: **Note:** 
 > P/E - Price To Earnings  
@@ -40,12 +41,27 @@ $P- Stock \ \ Price \ \ of \ \ the \ \ day$
 :point_right: **Note**:
 > A third and less common variation uses the sum of the last two actual quarters and the estimates of the next two quarters.
 
-#### 3.1 Forward P/E Ratio:
-- Forward price-to-earnings (forward P/E) is a version of PE ratio that uses forecasted earnings for the P/E calculation.
-- The forward (or leading) P/E uses future earnings guidance and Sometimes called "estimated price to earnings".
+#### 3.1 Forward P/E Ratio
+- Forward price-to-earnings (forward P/E) is a version of PE ratio that uses forecasted earnings [which can be found from *future earnings guidance* in financial results] for the P/E calculation, Sometimes called "estimated price to earnings".
 - While the earnings used in this formula are just an estimate and not as reliable as current or historical earnings data, there are still benefits to estimated P/E analysis.
+
+$$Forward \ \ P/E = { Current \ \ Share \ \ Price \ \ (P) \over Estimated \ \ Future \ \ Earnings \ \ Per \ \ Share \ \ (E)}$$
 
 :exclamation: **Warning:** 
 > - Because forward P/E uses estimated earnings per share (EPS), it may produce incorrect or biased results if actual earnings prove to be different.
 > - Analysts often combine forward and trailing P/E estimates to make a better judgment.
 > - There are inherent problems with the forward P/E metric—namely, companies could underestimate (or) overestimate earnings.
+
+##### 3.1.1 Limitations
+- Since forward P/E relies on estimated future earnings, it is subject to miscalculation and/or analysts' bias.
+- Companies could underestimate earnings to beat the consensus estimate P/E when the next quarter's earnings are announced.
+- Other companies may overstate the estimate and later adjust it going into their next earnings announcement.
+- Furthermore, external analysts may also provide estimates, which may diverge from the company estimates, creating confusion.
+
+
+| Forward PE | Trailing PE |
+|------------|-------------|
+| It uses Projected EPS | It uses total EPS earnings of last 12 months. |
+| It is least popular since it is subjective [forcasted not actual] | It is most popular since it is most objective [historic actuals] |
+| Investors does not prefer to look forward PE because it is estimated earnings | Investors does prefer this because this is Actual Earnings for last 12 months. |
+
